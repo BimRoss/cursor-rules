@@ -1,12 +1,21 @@
 ---
-description: "Private company context. Copy to local-context.mdc (gitignored) for metrics, infra names, and roadmap specifics."
+description: "Template — copy to local-context.mdc (gitignored). Repo ships no private content."
 alwaysApply: true
 ---
 
-# Local context (not in git)
+# Local context (example)
 
-Replace this file with your real notes, e.g.:
+**Copy this file to `local-context.mdc`** (same folder). That path is in `.gitignore` so it never pushes.
 
-- Revenue lines, emissions %, infra vendors
-- Private GitOps repo names, internal service names
-- Roadmap bullets you don’t want public
+Suggested sections (fill with your real details):
+
+| Section | Purpose |
+|--------|---------|
+| **Persona** | Names, tone, how you like the assistant to address you |
+| **Company & revenue** | What you build, metrics you’re OK keeping local |
+| **Roadmap & ops** | GitOps repo names, cloud, priorities |
+| **Security** | What “production” means for your stack |
+| **Triggers** | Wake phrases + paths (e.g. resume repo, transcribe folder) |
+| **Tooling** | Absolute paths only here, not in public rules |
+
+The maintainer’s filled-in `local-context.mdc` is **not** in the repo—clone and create your own.
