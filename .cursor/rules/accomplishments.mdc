@@ -5,5 +5,5 @@ alwaysApply: false
 ---
 
 - Primary focus: decentralized / on-chain product work (validator–miner style ops, infra, tooling).
-- Company priorities: grow revenue, cut cost, ship safely.
+- Priorities: revenue, cost, shipping safely.
 - **Details (metrics, %, cloud choices):** keep in `local-context.mdc` — see `local-context.mdc.example`.

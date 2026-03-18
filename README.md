@@ -4,6 +4,6 @@ Personal [Cursor](https://cursor.com) **rules** (`.cursor/rules/`) and **skills*
 
 **Use:** clone or copy into a project’s `.cursor/` (or symlink). Edit to fit your stack.
 
-**Private context:** copy `.cursor/rules/local-context.mdc.example` → `local-context.mdc` (gitignored) for metrics, repo names, etc.
+**Private context:** copy `local-context.mdc.example` → `local-context.mdc` (gitignored). For custom wake phrases, persona, or absolute paths, add other **gitignored** `.mdc` files under `.cursor/rules/` so they never ship.
 
 **License:** see per-skill `LICENSE.txt` files where present; rules here are shared as-is.

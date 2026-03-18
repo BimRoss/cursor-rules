@@ -1,0 +1,16 @@
+---
+description: Apply when user focuses on a resume/job-applications repository (multi-root workspace).
+alwaysApply: false
+---
+
+# Resume / job-applications repository
+
+When the user signals they want to work on **resumes**, **CVs**, or **job application materials** in a **dedicated repo** (often a separate workspace folder):
+
+1. **That repo is primary context** — paths and edits relative to its root.
+2. **Follow that repo’s** `.cursor/rules/` and skills (e.g. resume sync, templates, master.json workflows).
+3. **Use its resume-builder or equivalent skill** if present under that repo’s `.cursor/skills/`.
+
+Typical signals: “resume project”, “job applications repo”, “tailor this resume”, “application for {company}”.
+
+*(Personal wake phrases or family names belong in a **gitignored** local rule if you use them.)*

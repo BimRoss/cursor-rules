@@ -1,10 +1,37 @@
 ---
-description: "Never add or commit macOS .DS_Store files. They are local folder metadata and belong in .gitignore."
+description: "Never add or commit macOS .DS_Store files. Use repo .gitignore + optional global git ignore."
 alwaysApply: true
 ---
 
 # No .DS_Store in Git
 
-- **Do not stage or commit** any `.DS_Store` file. These are macOS folder view metadata and are not part of the project.
-- Ensure **.DS_Store** is listed in the project’s **.gitignore**. When committing, ensure no .DS_Store files are included in the diff.
-- If .DS_Store appears in a diff or `git status`, remove it from the index and add .DS_Store to .gitignore if missing.
+macOS creates `.DS_Store` in every folder you browse in Finder. They must **never** be committed.
+
+## Agent / developer rules
+
+- **Do not stage or commit** any `.DS_Store` file (any path).
+- Every repo’s **root `.gitignore`** must include `.DS_Store` (matches recursively).
+- If `.DS_Store` is **already tracked**, remove from the index only:  
+  `git rm -r --cached '**/.DS_Store' 2>/dev/null; git rm --cached .DS_Store 2>/dev/null`  
+  (or `find . -name .DS_Store -print0 | xargs -0 git rm --cached --ignore-unmatch` from repo root), then commit with `.gitignore` updated.
+- Never stage `.git/.DS_Store` or anything under `.git/` except via normal git operations.
+
+## One-time machine setup (macOS)
+
+Use a **global git ignore** so new repos are covered even before `.gitignore` exists:
+
+```bash
+echo '.DS_Store' >> ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+Optional: stop Finder creating them (reduces noise locally):
+
+```bash
+defaults write com.apple.desktopservices DSDontWriteNetworkStores true
+defaults write com.apple.desktopservices DSDontWriteUSBStores true
+```
+
+## Sweep checklist
+
+When touching a repo: confirm `.DS_Store` is in root `.gitignore`; run `git ls-files | grep -i ds_store` — if any lines, untrack them as above.
