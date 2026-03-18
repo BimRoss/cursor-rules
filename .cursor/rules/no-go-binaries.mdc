@@ -1,0 +1,9 @@
+---
+description: "Never add or commit Go binaries or local build artifacts in any project. They are build outputs and belong in .gitignore."
+alwaysApply: true
+---
+
+# No Go Binaries in Git
+
+- **Do not stage or commit** any Go binary produced by `go build` (e.g. `server`, `myapp`, `cmd/foo/foo`, or any `*.exe`). These are local build artifacts.
+- Ensure such paths are listed in the project’s **.gitignore**. When committing, ensure no Go binaries are included in the diff.

@@ -1,0 +1,49 @@
+---
+description: "Product & Technical Roadmap"
+globs: "*"
+alwaysApply: false
+---
+
+# Roadmap & Future Plans
+
+## Current State
+
+- Running Bittensor Subnet 42 with ~18% mining emissions
+- Infrastructure on Azure DCsv3 with SGX support
+- GitOps deployment via Rancher Fleet (rancher-miners, rancher-admin)
+- No formal observability/monitoring yet (manual Rancher checking)
+
+## Active Priorities
+
+1. **Revenue** - Increase mining/validation efficiency
+2. **Cost** - Optimize infrastructure spend
+3. **Security** - Prevent cheating, maintain TEE integrity
+
+## Future Considerations
+
+### Observability (Not Implemented Yet)
+
+When we're ready:
+- Prometheus + Grafana for metrics
+- Centralized logging (Loki or similar)
+- Alerting on critical failures
+- Dashboard for subnet health
+
+### Scale
+
+- Multi-region deployments?
+- Automated miner orchestration?
+- Additional subnets?
+
+## Technical Debt
+
+Things to revisit when time permits:
+- Add comprehensive test coverage to legacy components
+- Standardize error handling across all repos
+- Improve TEE attestation validation
+
+## When to Update This File
+
+- New major features planned
+- Architecture changes
+- Shifts in business priorities

@@ -1,0 +1,80 @@
+---
+description: "Security & Secrets Management — K8s secrets, no credentials in code; use when touching code, config, or infra."
+globs: "*.go,**/*.yaml,**/Dockerfile*,*.env.example,**/k8s/**"
+alwaysApply: false
+---
+
+# Security Standards
+
+## Secrets Management
+
+### Production
+
+**All secrets live in Kubernetes, read from the cluster at runtime.**
+
+- Use Kubernetes Secrets or Sealed Secrets (see `rancher-miners` for examples)
+- Never commit real credentials to git
+- Secrets are mounted as files in `/etc/secrets/` or injected as env vars by K8s
+
+### Local Development
+
+- Use `.env` files (already in `.gitignore`)
+- Use `docker-compose up --build` for local testing
+- Keep `.env.example` with dummy values for documentation
+
+### Code Patterns
+
+```go
+// Read from env or mounted secret file
+func loadPrivateKey() (string, error) {
+    // 1. Try env var (K8s injected)
+    if key := os.Getenv("PRIVATE_KEY"); key != "" {
+        return key, nil
+    }
+    
+    // 2. Try mounted secret file
+    data, err := os.ReadFile("/etc/secrets/private_key")
+    if err != nil {
+        return "", fmt.Errorf("private key not found in env or file: %w", err)
+    }
+    
+    return string(data), nil
+}
+```
+
+## Crypto-Specific Safety
+
+We're running Bittensor Subnet 42 with real money at stake.
+
+### NEVER Do This
+
+- ❌ Log private keys, mnemonics, or seed phrases
+- ❌ Return secrets in API responses
+- ❌ Store keys in plain text files outside K8s
+- ❌ Print full error traces that might contain sensitive data
+- ❌ Hardcode any production credentials
+
+### ALWAYS Do This
+
+- ✅ Mask sensitive data in logs: `logger.Info("key_loaded", "key_id", keyID)` not the key itself
+- ✅ Use TEE (Trusted Execution Environment) for sensitive operations
+- ✅ Validate all external inputs (cheating prevention)
+- ✅ Rate limit sensitive endpoints
+- ✅ Audit log security events (who did what, when)
+
+## Cheat Prevention
+
+Since we run a decentralized subnet:
+
+1. **Validate everything** - Don't trust miner inputs
+2. **Cryptographic proofs** - Require TEE attestations where possible
+3. **Anomaly detection** - Flag unusual patterns (see exploit history in subnet-42)
+4. **Defense in depth** - Multiple validation layers, not just one check
+
+## Emergency Protocol
+
+If I detect a critical security issue (exploit, key exposure, data breach):
+
+1. **Immediately flag it** - Stop current task, alert you
+2. **Do NOT commit the fix** until we discuss (might need coordinated disclosure)
+3. **Document the issue** with severity and impact assessment

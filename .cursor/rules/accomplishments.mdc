@@ -1,0 +1,8 @@
+---
+description: "USE WHEN discussing company context, revenue, Bittensor subnet, or what we're building. One line of revenue, Subnet 42, mining, infra."
+globs: "*"
+alwaysApply: false
+---
+
+- We have one existing line of revenue currently, our Bittensor Subnet 42.  We both design and run the validator and miner code, as well as the infrastructure and tools to support it.  We actively mine as well, currently earning about 18% of mining emissions.  We earn 20% of owner emissions as well.
+- We work on two things at this company - increasing revenue and decreasing costs.  Recently we have made infrastructure improvements, moving to Azure DCsv3 machines that are cheaper to run but still provide the SGX hardware that the miners need to participate on the subnet.

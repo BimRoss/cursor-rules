@@ -1,0 +1,14 @@
+---
+description: "USE WHEN creating or editing Kubernetes CronJobs (e.g. in rancher-admin). Keep minimal job history."
+globs: "**/*cronjob*.yaml,**/*CronJob*.yaml,admin/**/*.yaml"
+alwaysApply: false
+---
+
+# Kubernetes CronJob Job History
+
+For **one-shot / agent-style CronJobs** (e.g. x-post-agent, sentiment, discovery, scraping):
+
+- **successfulJobsHistoryLimit: 1** — Keep only the most recent successful run. We don't need a long tail of completed jobs.
+- **failedJobsHistoryLimit: 2** — Keep a couple of failed runs for debugging; then they age out.
+
+Always set these explicitly so we don't accumulate many completed Job objects. Defaults in Kubernetes can retain more than we want.

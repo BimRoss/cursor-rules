@@ -1,0 +1,74 @@
+---
+description: "Testing Standards (Ginkgo/Gomega) — use when writing or editing Go tests."
+globs: "*_test.go"
+alwaysApply: false
+---
+
+# Testing Standards
+
+## Framework: Ginkgo + Gomega
+
+We use Ginkgo for BDD-style test structure and Gomega for matchers.
+
+### Unit Tests
+
+```go
+package mypackage_test
+
+import (
+    . "github.com/onsi/ginkgo/v2"
+    . "github.com/onsi/gomega"
+    "testing"
+)
+
+func TestMyPackage(t *testing.T) {
+    RegisterFailHandler(Fail)
+    RunSpecs(t, "MyPackage Suite")
+}
+
+var _ = Describe("Miner", func() {
+    Describe("ValidateRequest", func() {
+        Context("when request is valid", func() {
+            It("should return nil error", func() {
+                req := &Request{ID: "test", Amount: 100}
+                err := ValidateRequest(req)
+                Expect(err).To(BeNil())
+            })
+        })
+        
+        Context("when amount is negative", func() {
+            It("should return validation error", func() {
+                req := &Request{ID: "test", Amount: -1}
+                err := ValidateRequest(req)
+                Expect(err).To(MatchError(ErrInvalidAmount))
+            })
+        })
+    })
+})
+```
+
+### E2E Tests
+
+```go
+var _ = Describe("Miner E2E", func() {
+    It("should complete full validation flow", func() {
+        // Test the entire flow: request -> validate -> process -> response
+        result, err := FullFlow(ctx, testRequest)
+        Expect(err).ToNot(HaveOccurred())
+        Expect(result.Status).To(Equal(StatusCompleted))
+    })
+})
+```
+
+## Testing Philosophy
+
+- **General coverage over exhaustive** - Test critical paths and edge cases, not every branch
+- **Table-driven for repetitive cases** - Use Ginkgo's `DescribeTable` for multiple similar inputs
+- **Mock external dependencies** - Use interfaces to mock TEE, blockchain clients, etc.
+- **Fast feedback** - Unit tests should run in <1s, E2E in <30s per suite
+
+## What NOT to Test
+
+- Simple getters/setters
+- Third-party library internals
+- Generated code

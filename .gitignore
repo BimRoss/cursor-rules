@@ -1,0 +1,5 @@
+# macOS folder metadata — never commit
+.DS_Store
+
+# Private business/project charters — do not share
+.cursor/businesses/

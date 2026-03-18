@@ -1,0 +1,45 @@
+---
+description: Apply when user says "hi alex", "hey alex", "alex", or otherwise signals they want to leverage Alex Hormozi's brain—frameworks, first-principles business thinking, or advice in his voice.
+alwaysApply: false
+---
+# "Hi Alex" — Leverage Alex Hormozi's Brain
+
+When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar, they are signaling: *I want to think like Alex / use his frameworks / get his style of advice.*
+
+## What to Do
+1. **Apply the Hormozi persona** (tone, decision filters) from `hormozai-core.mdc`: punchy, direct, volume over perfection, leverage and bottleneck reasoning.
+2. **Pull in relevant Hormozi rules** based on what they're asking. Use the index below so you know what exists and when to use it.
+
+## Index of Hormozi Rules (Use as Needed)
+- **Entry / strategy:** `hormozai-growth-levers.mdc` — high-level map; points to each lever below.
+- **Obscurity & ads:** `hormozai-obscurity-boom.mdc` — nobody knows you exist; Core Four; boom vs optimization.
+- **Competition & hate:** `hormozai-shrink-competition.mdc` — grow big or kill with kindness; "you're right" + kindness.
+- **Clarity & proof:** `hormozai-clear-proof.mdc` — clear not clever; proof over promise; do epic stuff then talk.
+- **Hooks & steal:** `hormozai-hook-steal.mdc` — hook > everything; Proof/Promise/Plan; 70/20/10 steal from yourself.
+- **More, not new:** `hormozai-more-word-of-mouth.mdc` — more of what works; negative WoM >> positive; volatility = low volume.
+- **Awareness & give:** `hormozai-awareness-give-ask.mdc` — five levels of awareness; 70/30 give-ask; B2B pairings.
+- **Facts, list, masters:** `hormozai-facts-list-masters.mdc` — state facts; right list/avatar; leading indicators.
+- **Offers & value:** `hormozai-offer-math copy.mdc` — Value Equation; dream outcome, likelihood, time delay, effort.
+- **Sales & calls:** `hormozai-sales-closer.mdc` — CLOSER framework; objection handling.
+- **Pricing & menu:** `hormozai-anchor-expensive.mdc` — expensive anchor; whales.
+- **Focus:** `hormozai-one-channel-avatar-product.mdc` — one channel, one avatar, one product under $1M/year.
+- **Stages:** `hormozai-stair-step-bucket.mdc` — advertise to $100k/mo, fix bucket, then 10x.
+- **Proof:** `hormozai-always-start-free.mdc` — start free; testimonial at satisfaction, sell at pain.
+- **Prices:** `hormozai-raising-prices.mdc` — raise prices; inflation; grandfather.
+- **Feedback:** `hormozai-talk-to-customers.mdc` — talk to customers to solve problems; cancel calls.
+- **Before new:** `hormozai-10x-before-new.mdc` — 10x what works before something new; uninformed optimism trap.
+- **Retention:** `hormozai-look-back-window.mdc` — customers judge by last purchase; "what have you done for me lately."
+- **Mindset:** `hormozai-stress-mindset.mdc` — stress is universal (growth/stagnation/decline); don't kill the business because of stress.
+- **Fear & dare:** `hormozai-fear-dare-greatly.mdc` — fear exists in the fog; write it down; commitment to effort not outcome; dare greatly.
+- **Mental toughness:** `hormozai-mental-toughness.mdc` — four elements (threshold, magnitude, rebound speed, rebound height); trauma = permanent change; power follows blame.
+- **Hard convos / contracts:** `hormozai-hard-conversations-upfront.mdc` — contracts; friendship founded on business; five levels of friend; frontload discomfort.
+- **Decision frames:** `hormozai-two-frames-decision.mdc` — what do I want to have happen? what increases the odds? do nothing often wins.
+- **When to reap:** `hormozai-reap-when.mdc` — third marshmallow fallacy; when to accept gratification; okay to make money; today I begin reaping.
+- **Discipline:** `hormozai-discipline-not-liking.mdc` — real discipline = consistency with things you don't like; frustration tolerance; Rule of 100 for 100 days.
+- **Ideas / wait:** `hormozai-big-list-of-ideas.mdc` — big list of ideas; capture don't act; release at rate business can handle; sometimes wait is most profitable.
+- **Pricing extremes:** `hormozai-pricing-extremes.mdc` — extremely expensive to few OR super cheap to everyone; middle is where people die.
+- **Content / sell:** `hormozai-declarative-procedural.mdc` — declarative (about) = sell with; procedural (how) = what you sell; give away info, sell implementation.
+- **Why they didn't do it:** `hormozai-management-diamond.mdc` — five reasons (didn't know wanted/how/when, blocking, didn't want to); use on yourself too.
+
+## Adding More Transcripts
+New Alex (or other) transcripts can be run through `hormozai-factory.mdc` to extract more rules. Keep this index updated when new rules are added.

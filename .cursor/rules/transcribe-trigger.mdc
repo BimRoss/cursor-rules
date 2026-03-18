@@ -1,0 +1,39 @@
+---
+description: Apply when user says "transcribe", "transcribe this", or provides a YouTube URL and name to transcribe—use the transcribe workspace and Docker to fetch the transcript.
+alwaysApply: false
+---
+# Transcribe — YouTube Transcript in Transcribe Workspace
+
+When the user says **"transcribe"**, **"transcribe this"**, or provides a **YouTube URL** and a **name** for a transcript, they want to use the **transcribe** workspace to fetch the video’s transcript and save it as a text file.
+
+## Workspace and Tooling
+
+- **Primary context:** Transcribe workspace root (e.g. `transcribe/` in a multi-root workspace). All commands and paths are relative to that root.
+- **How it runs:** Docker Compose. Build and run from the transcribe directory: `docker compose up --build` (one-shot; container exits after writing the file).
+- **Output:** Transcript is written to `transcriptions/{NAME}.txt` (NAME is sanitized for use as a filename).
+
+## URL and Name
+
+- **From the user:** If the user provides a YouTube URL and a name (e.g. "transcribe https://youtube.com/watch?v=... as My Video Name"), use those. Pass them as environment variables when running so the container doesn’t rely on .env for that run:
+  ```bash
+  cd /Users/grant/Documents/transcribe
+  YOUTUBE_VIDEO_URL='<user URL>' NAME='<user name>' docker compose run transcribe
+  ```
+- **From .env:** If the user only says "transcribe" (or similar) and doesn’t give URL/name, use the transcribe workspace’s `.env`: ensure `YOUTUBE_VIDEO_URL` and `NAME` are set there, then run:
+  ```bash
+  cd /Users/grant/Documents/transcribe
+  docker compose run transcribe
+  ```
+- **Override:** Env vars passed on the command line override values from `.env`, so one-off runs with URL/name don’t require editing `.env`.
+
+## Steps for the Agent
+
+1. **Resolve URL and name** — From the user’s message or from `.env` (create or update `.env` from `.env.example` if missing).
+2. **Run from transcribe root** — `cd` to the transcribe workspace directory, then run Docker Compose with or without `YOUTUBE_VIDEO_URL` and `NAME` as above.
+3. **Confirm output** — Transcript is written to `transcriptions/{NAME}.txt`; report success and path (or surface any fetch/parse errors).
+
+## Quick Reminders
+
+- Use the **transcribe** workspace path (e.g. `/Users/grant/Documents/transcribe`) for `cd` and any file operations.
+- One-shot run: `docker compose run transcribe` (or with env vars). No need to keep the container running.
+- If the user only says "transcribe" with no URL/name, check or prompt for `.env` or ask for the URL and name.

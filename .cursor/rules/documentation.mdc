@@ -1,0 +1,75 @@
+---
+description: "Documentation Standards — READMEs light and high-level; use when editing README or docs."
+globs: "README.md,**/README*,*.md"
+alwaysApply: false
+---
+
+# Documentation Standards
+
+## README Philosophy
+
+**READMEs should be light and high-level.** Code changes frequently; READMEs shouldn't need constant updates.
+
+### README Structure
+
+```markdown
+# Project Name
+
+One sentence describing what this does and why it exists.
+
+## What It Does
+
+2-3 paragraphs max describing:
+- The problem it solves
+- Who uses it (internal tool, customer-facing, etc.)
+- Key features at a glance
+
+## Quick Start
+
+```bash
+docker-compose up --build
+```
+
+## Architecture
+
+Link to architecture docs (if they exist elsewhere).
+
+## Related Projects
+
+- Links to other repos in the ecosystem
+- How this fits into the bigger picture
+```
+
+### What NOT to Include
+
+- ❌ Detailed API documentation (use OpenAPI/Swagger)
+- ❌ Internal implementation details
+- ❌ Function-level documentation
+- ❌ Changelogs (use git history + PRs)
+
+### What TO Include
+
+- ✅ Project purpose (the "why")
+- ✅ How to run it locally
+- ✅ High-level architecture diagram (if complex)
+- ✅ Contact/context for questions
+
+## Technical Documentation
+
+Technical docs live elsewhere (Notion, Confluence, or a dedicated docs repo). READMEs point to them but don't duplicate.
+
+## Code Comments
+
+- Explain the "why", not the "what"
+- Document non-obvious business logic
+- Call out cheat prevention measures
+- Flag security-critical sections
+
+```go
+// ValidateTEEAttestation ensures the response came from an
+// enclave with the expected measurement. This prevents 
+// miners from running outside secure hardware.
+func ValidateTEEAttestation(attestation []byte) error {
+    // ... implementation
+}
+```

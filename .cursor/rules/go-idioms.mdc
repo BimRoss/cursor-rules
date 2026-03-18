@@ -1,0 +1,52 @@
+---
+description: "Go Code Standards & Idioms — error handling, context; use when editing Go code."
+globs: "*.go"
+alwaysApply: false
+---
+
+# Go Idioms & Standards
+
+## Error Handling Philosophy
+
+**Every function that can fail must return an error.**
+
+### Pattern
+
+```go
+// 1. Define sentinel errors at the top of the file
+var (
+    ErrMinerNotFound    = errors.New("miner not found")
+    ErrInvalidSignature = errors.New("invalid signature provided")
+    ErrRateLimitExceeded = errors.New("rate limit exceeded")
+)
+
+// 2. Functions return (T, error) or error only
+func ProcessRequest(ctx context.Context, req *Request) (*Response, error) {
+    if req == nil {
+        return nil, ErrInvalidRequest
+    }
+    
+    // Dynamic error messages with context
+    miner, err := getMiner(req.MinerID)
+    if err != nil {
+        return nil, fmt.Errorf("failed to get miner %s: %w", req.MinerID, err)
+    }
+    
+    return miner.Process(ctx, req)
+}
+```
+
+### Rules
+
+1. **Sentinel errors** - Define at package level with `errors.New()`
+2. **Error wrapping** - Use `fmt.Errorf("...: %w", err)` to preserve error chains
+3. **Error checking** - Always check errors immediately: `if err != nil { return ..., err }`
+4. **No panic** - Never use panic for control flow; return errors
+5. **Context propagation** - First param should be `ctx context.Context` for cancellable operations
+
+## Code Organization
+
+- Keep functions small and focused (do one thing)
+- Group related functions together
+- Interface definitions near their primary consumer
+- Implementations in separate files by concern

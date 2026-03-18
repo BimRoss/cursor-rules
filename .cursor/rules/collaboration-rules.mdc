@@ -1,0 +1,134 @@
+---
+description: "Collaboration & Swarm Rules"
+globs: "*"
+alwaysApply: true
+---
+
+# Collaboration Rules
+
+## Execution Mode: Swarm vs Ask
+
+**Default to Swarm (auto-execute) in Agent Mode. Ask for confirmation in Ask/Plan Mode or for major changes.**
+
+### Auto-Execute (No Confirmation Needed)
+
+✅ Safe to swarm:
+- Refactoring within existing patterns
+- Adding tests to existing code
+- Documentation updates
+- Docker/CI configuration tweaks
+- Bug fixes with clear scope
+- Copy changes
+- Minor dependency updates
+
+### Request Confirmation (Always Ask First)
+
+⚠️ Always confirm with you:
+- New features or APIs
+- Database schema changes
+- Infrastructure changes (K8s, networking)
+- Changes to core business logic
+- Anything touching money (emissions calculations, reward distributions)
+- Security-related changes
+- Breaking changes to existing APIs
+- When you explicitly say "plan this" or "ask mode"
+
+### Context Awareness
+
+- **Agent Mode** (chatting casually): I swarm and execute quickly
+- **Ask/Plan Mode** (exploring ideas): I ask clarifying questions, explore trade-offs
+- **Major Decisions**: Always confirm, even in agent mode
+
+## Planning Protocol
+
+When planning (especially in Ask/Plan Mode):
+
+1. **Create a Clear Plan**: Outline what, why, and expected impact
+2. **Decompose for Swarm**: Break into independent sub-tasks for parallel execution
+3. **Present Trade-offs**: Show options with pros/cons when choices exist
+4. **Wait for Confirmation**: Don't start implementation until you approve
+
+## Tech Debt & Cleanup
+
+**Remove tech debt when we can; avoid leaving clutter.**
+
+- When **removing or changing a feature**, also remove or update anything that only existed for it: unused env vars, config, comments, dead code, optional dependencies.
+- Prefer **less surface area**: drop unused config from CronJobs/manifests, trim .env.example and docs so they match reality.
+- Don’t leave “we might need this later” wiring in place unless there’s a concrete near-term use; we can add it back when needed.
+
+## Code Review & Self-Review
+
+**I always give my code a once-over before presenting it.**
+
+Balance speed with quality:
+- Self-review for obvious issues (typos, logic errors)
+- Run tests locally if possible
+- Check Docker builds successfully
+- Iterate quickly - don't rebuild the world for small changes
+
+### GitHub Workflow
+
+1. After we're happy with code iterations:
+   - Create new branch
+   - Commit with clear messages
+   - Open PR via `gh` CLI
+   - PR kicks off CI/CD (Docker builds, tests)
+
+2. Use templates:
+   - Issue template: `templates/issue.md`
+   - PR template: `templates/pr.md`
+
+3. I don't need to create issues unless you ask - PRs can stand alone
+
+## Infrastructure & Deployment
+
+### Rancher & Fleet (GitOps)
+
+**Never `kubectl apply` changes directly.**
+
+We use Rancher with Fleet for GitOps deployment:
+- **rancher-miners** and **rancher-admin** repos control our two K8s nodes
+- Fleet watches these repos and automatically applies changes
+- Just commit to master/main and Fleet picks it up
+- This applies to all Rancher-managed infrastructure
+
+### Local Development
+
+- Use `docker-compose up --build` for quick local testing
+- .env files for local secrets (never committed)
+- Different images/binaries for different major services (see `subnet-signal` structure)
+
+## Continuous Thought Streaming
+
+**Always show my work:**
+
+1. **Explain reasoning** before using tools or writing code
+2. **Share calculations** for emissions, rewards, or financial logic
+3. **Be transparent** about uncertainty or assumptions
+4. **No silent pauses** - if I'm thinking, I'm explaining
+
+## Emergency Protocol
+
+**Critical issues (security, data loss, exploits):**
+
+1. **Immediately flag and stop** - don't continue with current task
+2. **Alert you clearly** with severity and impact
+3. **Do NOT commit fixes** that might need coordinated disclosure
+4. **Document the issue** for investigation
+
+Given we run Bittensor Subnet 42, security is paramount. Always escalate suspected cheating or exploits.
+
+## Tech Stack Standards
+
+Our default technology choices:
+
+1. **Backends**: Go (Golang) - every function returns error, see `go-idioms.mdc`
+2. **Frontends**: Next.js (React) - SSR/SSG capabilities
+3. **Testing**: Ginkgo/Gomega for Go, general coverage not exhaustive
+4. **CI/CD & Docker**: 
+   - All projects include Dockerfiles
+   - CI/CD builds images on tag creation
+   - Images push to our registry
+   - Deploy via Fleet/Kubernetes
+
+Default to this stack unless there's a compelling reason to diverge.

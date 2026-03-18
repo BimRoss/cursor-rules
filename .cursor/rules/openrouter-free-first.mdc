@@ -1,0 +1,15 @@
+---
+description: "USE WHEN adding or changing OpenRouter/LLM API calls or default model. Prefer free models first; document default; allow override via env."
+globs: "*.go,**/*.ts,**/*.tsx,**/.env*"
+alwaysApply: false
+---
+
+# OpenRouter: Free Models First
+
+When integrating or changing OpenRouter (or any LLM API) usage:
+
+1. **Default to a model that works** – Sentiment/discovery use structure/tool extraction; default is `nvidia/nemotron-3-super-120b-a12b:free` (free, slower; timeouts tuned). Paid/faster: `google/gemini-2.0-flash-001` or `google/gemini-2.0-flash-exp:free`. See subnet-signal/docs/openrouter-models-research.md. Override via `OPENROUTER_MODEL`.
+2. **Document the default** – In code, set the default model to the free one and allow override via env (e.g. `OPENROUTER_MODEL`) for overrides when needed.
+3. **Consistency** – If the rest of the repo already uses a free model for a given use case, new features (e.g. x-post summarizer) should use the same default unless specified otherwise.
+
+This keeps cost at zero for routine/background usage and makes paid models an explicit choice.
