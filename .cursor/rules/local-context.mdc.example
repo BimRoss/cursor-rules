@@ -1,0 +1,12 @@
+---
+description: "Private company context. Copy to local-context.mdc (gitignored) for metrics, infra names, and roadmap specifics."
+alwaysApply: true
+---
+
+# Local context (not in git)
+
+Replace this file with your real notes, e.g.:
+
+- Revenue lines, emissions %, infra vendors
+- Private GitOps repo names, internal service names
+- Roadmap bullets you don’t want public

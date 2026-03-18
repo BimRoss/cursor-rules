@@ -1,49 +1,34 @@
 ---
-description: "Product & Technical Roadmap"
+description: "Product & technical roadmap (generic). Put specifics in local-context.mdc."
 globs: "*"
 alwaysApply: false
 ---
 
-# Roadmap & Future Plans
+# Roadmap & future plans
 
-## Current State
+## Current state (generic)
 
-- Running Bittensor Subnet 42 with ~18% mining emissions
-- Infrastructure on Azure DCsv3 with SGX support
-- GitOps deployment via Rancher Fleet (rancher-miners, rancher-admin)
-- No formal observability/monitoring yet (manual Rancher checking)
+- Subnet / chain-adjacent infra with TEE or attestation where relevant
+- GitOps-style K8s (e.g. Fleet) preferred over ad-hoc `kubectl apply`
+- Observability may be manual until you invest in metrics/logging
 
-## Active Priorities
+## Active priorities
 
-1. **Revenue** - Increase mining/validation efficiency
-2. **Cost** - Optimize infrastructure spend
-3. **Security** - Prevent cheating, maintain TEE integrity
+1. **Revenue** — validation / mining / product efficiency
+2. **Cost** — infra spend
+3. **Security** — cheating, key handling, attestation
 
-## Future Considerations
+## Future
 
-### Observability (Not Implemented Yet)
+- Prometheus / Grafana, centralized logging, alerting
+- Scale: multi-region, orchestration, more products
 
-When we're ready:
-- Prometheus + Grafana for metrics
-- Centralized logging (Loki or similar)
-- Alerting on critical failures
-- Dashboard for subnet health
+## Technical debt
 
-### Scale
+- Test coverage on legacy code
+- Consistent error handling
+- Stronger attestation validation where applicable
 
-- Multi-region deployments?
-- Automated miner orchestration?
-- Additional subnets?
+## When to update
 
-## Technical Debt
-
-Things to revisit when time permits:
-- Add comprehensive test coverage to legacy components
-- Standardize error handling across all repos
-- Improve TEE attestation validation
-
-## When to Update This File
-
-- New major features planned
-- Architecture changes
-- Shifts in business priorities
+- Major features, architecture shifts, or priority changes — including in `local-context.mdc` if private

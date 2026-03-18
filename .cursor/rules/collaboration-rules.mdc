@@ -87,16 +87,15 @@ Balance speed with quality:
 **Never `kubectl apply` changes directly.**
 
 We use Rancher with Fleet for GitOps deployment:
-- **rancher-miners** and **rancher-admin** repos control our two K8s nodes
-- Fleet watches these repos and automatically applies changes
-- Just commit to master/main and Fleet picks it up
-- This applies to all Rancher-managed infrastructure
+- Private GitOps repos hold cluster manifests; Fleet watches and applies
+- Commit to the tracked branch (e.g. main/master) and Fleet picks it up
+- Repo names live in `local-context.mdc` if you want them in-agent
 
 ### Local Development
 
 - Use `docker-compose up --build` for quick local testing
 - .env files for local secrets (never committed)
-- Different images/binaries for different major services (see `subnet-signal` structure)
+- Different images/binaries per major service where it helps
 
 ## Continuous Thought Streaming
 
@@ -116,7 +115,7 @@ We use Rancher with Fleet for GitOps deployment:
 3. **Do NOT commit fixes** that might need coordinated disclosure
 4. **Document the issue** for investigation
 
-Given we run Bittensor Subnet 42, security is paramount. Always escalate suspected cheating or exploits.
+On-chain / incentive systems: treat security as paramount. Escalate suspected cheating or exploits.
 
 ## Tech Stack Standards
 

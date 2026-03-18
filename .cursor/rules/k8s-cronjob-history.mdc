@@ -1,5 +1,5 @@
 ---
-description: "USE WHEN creating or editing Kubernetes CronJobs (e.g. in rancher-admin). Keep minimal job history."
+description: "USE WHEN creating or editing Kubernetes CronJobs in GitOps manifests. Keep minimal job history."
 globs: "**/*cronjob*.yaml,**/*CronJob*.yaml,admin/**/*.yaml"
 alwaysApply: false
 ---

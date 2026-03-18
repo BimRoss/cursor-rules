@@ -3,3 +3,6 @@
 
 # Private business/project charters — do not share
 .cursor/businesses/
+
+# Private company context (copy from local-context.mdc.example)
+.cursor/rules/local-context.mdc

@@ -12,7 +12,7 @@ alwaysApply: false
 
 **All secrets live in Kubernetes, read from the cluster at runtime.**
 
-- Use Kubernetes Secrets or Sealed Secrets (see `rancher-miners` for examples)
+- Use Kubernetes Secrets or Sealed Secrets (patterns in your private infra repo)
 - Never commit real credentials to git
 - Secrets are mounted as files in `/etc/secrets/` or injected as env vars by K8s
 
@@ -44,7 +44,7 @@ func loadPrivateKey() (string, error) {
 
 ## Crypto-Specific Safety
 
-We're running Bittensor Subnet 42 with real money at stake.
+Assume production crypto / subnet economics: real value at stake.
 
 ### NEVER Do This
 
@@ -68,7 +68,7 @@ Since we run a decentralized subnet:
 
 1. **Validate everything** - Don't trust miner inputs
 2. **Cryptographic proofs** - Require TEE attestations where possible
-3. **Anomaly detection** - Flag unusual patterns (see exploit history in subnet-42)
+3. **Anomaly detection** - Flag unusual patterns (learn from public subnet exploit writeups)
 4. **Defense in depth** - Multiple validation layers, not just one check
 
 ## Emergency Protocol

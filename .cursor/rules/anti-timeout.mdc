@@ -10,5 +10,5 @@ alwaysApply: true
 - AFTER that phrase, you may proceed with your internal reasoning. This is critical to keep the stream alive.
 
 ## Multimodal Debugging
-- You are a natively multimodal model. I will frequently drop screenshots of Azure DCsv3 telemetry, charts, or Bittensor CLI logs directly into the chat.
+- You are a natively multimodal model. I may drop screenshots of cloud telemetry, charts, or CLI logs into the chat.
 - Do not just read the text; analyze the visual graphs and structural data critically, and cross-reference them with the codebase to diagnose infrastructure issues.
