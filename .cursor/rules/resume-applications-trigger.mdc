@@ -10,6 +10,7 @@ When the user signals they want to work on **resumes**, **CVs**, or **job applic
 1. **That repo is primary context** — paths and edits relative to its root.
 2. **Follow that repo’s** `.cursor/rules/` and skills (e.g. resume sync, templates, master.json workflows).
 3. **Use its resume-builder or equivalent skill** if present under that repo’s `.cursor/skills/`.
+4. **Joanne job-search ops** (when relevant): `application-follow-up.mdc` (one follow-up + template), `linkedin-job-search-channel.mdc` (profile/keywords/alerts/outreach). To turn new career content into rules, use **`joanne-rule-factory.mdc`** in that repo’s `.cursor/rules/`.
 
 Typical signals: “resume project”, “job applications repo”, “tailor this resume”, “application for {company}”.
 
