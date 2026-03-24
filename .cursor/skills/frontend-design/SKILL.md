@@ -1,12 +1,26 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
+description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Covers visual direction plus sensible delivery for Next.js/React (SSR-first content, client islands). Generates creative, polished code and UI design that avoids generic AI aesthetics.
 license: Complete terms in LICENSE.txt
 ---
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
 The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+
+## Frameworks & first paint (Next.js / React)
+
+**Visual craft and delivery architecture are both part of a strong frontend.** When building on **Next.js App Router** (or similar), do not default to a single giant `"use client"` page that loads all meaningful data in `useEffect`. That pattern ships a mostly empty first HTML payload: bad for SEO, social previews, performance, and **agent/crawler-style consumers** that do not execute JavaScript.
+
+**Prefer:**
+
+- **`page.tsx` (or layout) as an async Server Component** that fetches primary data (copy, lists, article body, dashboard rows) and passes it into client components as props.
+- **Client components for interactivity only**: charts, modals, drag-and-drop, heavy local state, browser APIs — **islands**, not the entire route.
+- **`metadata` / structured content** in server-rendered HTML for anything you want discoverable or quotable.
+
+**Avoid as the default for content-heavy apps:** one client-only route where every API call runs after mount. If you must start client-heavy, note the tradeoff and leave a clear seam (e.g. `initialData` prop) for later server prefetch.
+
+This does not replace distinctive UI; it **pairs** a memorable client shell with real content in the first response. Match server `fetch` base URLs to your deployment (absolute URL or env when the server cannot use relative `/api/...` reliably).
 
 ## Design Thinking
 
