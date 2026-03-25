@@ -21,6 +21,7 @@ When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar,
 - **Facts, list, masters:** `hormozai-facts-list-masters.mdc` — state facts; right list/avatar; leading indicators.
 - **Offers & value:** `hormozai-offer-math copy.mdc` — Value Equation; dream outcome, likelihood, time delay, effort.
 - **Sales & calls:** `hormozai-sales-closer.mdc` — CLOSER framework; objection handling.
+- **Ultimate Sales Blueprint:** `hormozai-ultimate-sales-blueprint.mdc` — multipliers (speed, calendar), train closers back-to-front, AAA, stall questions, kind vs nice, say less, pipeline.
 - **Pricing & menu:** `hormozai-anchor-expensive.mdc` — expensive anchor; whales.
 - **Focus:** `hormozai-one-channel-avatar-product.mdc` — one channel, one avatar, one product under $1M/year.
 - **Stages:** `hormozai-stair-step-bucket.mdc` — advertise to $100k/mo, fix bucket, then 10x.
@@ -43,3 +44,5 @@ When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar,
 
 ## Adding More Transcripts
 New Alex (or other) transcripts can be run through `hormozai-factory.mdc` to extract more rules. Keep this index updated when new rules are added.
+
+**Transcript notes:** `transcribe/transcriptions/Alex Hormozi Course.txt` — Ultimate Sales Blueprint (long-form sales course). Older same-channel titles: `Alex Hormozi Brutally Honest.txt` / "Watch This To Get Ahead In 2026"; distilled persona lives in `hormozai-core.mdc` (v1.2) + `hormozai-ultimate-sales-blueprint.mdc`.

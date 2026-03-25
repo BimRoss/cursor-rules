@@ -1,5 +1,5 @@
 ---
-description: Apply when user wants to transcribe YouTube via a dedicated transcribe project (Docker).
+description: Apply when user wants to transcribe YouTube via a dedicated transcribe project (Docker). Also read .cursor/skills/transcribe-youtube/SKILL.md for full procedure.
 alwaysApply: false
 ---
 
@@ -7,29 +7,41 @@ alwaysApply: false
 
 When the user asks to **transcribe** a YouTube video (URL + optional name), use their **transcribe** project: Docker Compose, output to `transcriptions/{NAME}.txt`.
 
+**Skill:** For the full checklist (what the tool does, `-e` overrides, failures), use **`.cursor/skills/transcribe-youtube/SKILL.md`** in the cursor-rules repo.
+
+## What the tool actually does
+
+- Python `run.py` + **`youtube_transcript_api`**: pulls **existing YouTube captions** (not audio → Whisper). If a video has no captions, the run fails.
+- **`NAME`** becomes the basename: `transcriptions/{sanitized NAME}.txt`.
+
 ## Paths
 
 - Use the **transcribe project root** as cwd (multi-root workspace folder, or path the user configures—**never hardcode a home directory**).
 
-## Commands
+## Commands (prefer `-e` for URL + name)
 
-- One-shot with URL and name:
-
-```bash
-cd <transcribe-project-root>
-YOUTUBE_VIDEO_URL='<url>' NAME='<name>' docker compose run transcribe
-```
-
-- From `.env` only:
+Compose uses `env_file: .env`. A populated `.env` can **override** shell exports unless variables are passed **into the container** with `-e`. For one-off URL + title, always use:
 
 ```bash
 cd <transcribe-project-root>
-docker compose run transcribe
+docker compose run --rm \
+  -e YOUTUBE_VIDEO_URL='https://www.youtube.com/watch?v=VIDEO_ID' \
+  -e NAME='Output File Title' \
+  transcribe
 ```
 
-- Env vars on the command line override `.env`.
+- **`--rm`:** delete the one-shot container after exit.
+
+**From `.env` only** (set `YOUTUBE_VIDEO_URL` and `NAME` in `.env`):
+
+```bash
+cd <transcribe-project-root>
+docker compose run --rm transcribe
+```
 
 ## Agent steps
 
-1. Resolve URL/name from the message or `.env` / `.env.example`.
-2. Run from transcribe root; confirm `transcriptions/{NAME}.txt` (or report errors).
+1. Resolve URL and `NAME` from the user message (or ask for a display title if only URL is given).
+2. `cd` to transcribe root; run with **`-e`** for both vars unless relying solely on `.env`.
+3. Confirm success line: `Wrote .../transcriptions/{NAME}.txt` and that the host file exists.
+4. If the wrong filename appears, re-run with explicit `-e YOUTUBE_VIDEO_URL=...` and `-e NAME=...`.
