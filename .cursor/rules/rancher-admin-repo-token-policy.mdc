@@ -1,0 +1,68 @@
+---
+description: "Rancher Admin Repo Token Enforcement for CI/CD release workflows."
+globs: ".github/workflows/*.yml,.github/workflows/*.yaml,**/.github/workflows/*.yml,**/.github/workflows/*.yaml"
+alwaysApply: false
+---
+
+# Rancher Admin Secret Enforcement Rule
+
+Apply this rule when a repo has CI/CD that:
+- builds Docker images on tag releases (`v*`) from `main` or `master`
+- updates manifests in `bimross/rancher-admin`
+- pushes those manifest updates back to `bimross/rancher-admin`
+
+## Mandatory Secret
+
+If the workflow reads or writes `bimross/rancher-admin`, the source repo MUST define this GitHub Actions repository secret:
+
+- `RANCHER_ADMIN_REPO_TOKEN`
+
+This secret must have access to clone and push to `bimross/rancher-admin`.
+
+## Required Workflow Pattern
+
+For the rancher-admin checkout step, use explicit token wiring:
+
+```yaml
+- name: Checkout rancher-admin
+  uses: actions/checkout@v4
+  with:
+    repository: bimross/rancher-admin
+    token: ${{ secrets.RANCHER_ADMIN_REPO_TOKEN }}
+```
+
+Do not use fallback token logic for this path, including:
+- `token: ${{ secrets.RANCHER_ADMIN_REPO_TOKEN || github.token }}`
+- `token: ${{ github.token }}`
+
+## Company CI/CD Policy (bimross)
+
+When release automation is configured, ensure all of the following:
+- Release trigger includes tag pushes like `v*` tied to `main`/`master` flow.
+- Tagged releases build and push versioned images.
+- Docker image repositories are under `geeemoney/*`.
+- Release job updates image tags in `bimross/rancher-admin` manifests.
+
+## Missing Secret Remediation
+
+If `RANCHER_ADMIN_REPO_TOKEN` is not defined in the repo:
+
+1. Stop release workflow changes that depend on rancher-admin push access.
+2. Add the repo secret in GitHub: `Settings -> Secrets and variables -> Actions -> New repository secret`.
+3. Secret name must be exactly `RANCHER_ADMIN_REPO_TOKEN`.
+4. Set value to a token that can push to `bimross/rancher-admin`.
+5. Resume workflow implementation only after the secret exists.
+
+CLI option (if `gh` is authenticated):
+
+```bash
+gh secret set RANCHER_ADMIN_REPO_TOKEN --repo bimross/<source-repo>
+```
+
+## Validation Checklist
+
+Before considering workflow work complete, verify:
+- `RANCHER_ADMIN_REPO_TOKEN` is referenced in checkout/push path.
+- No fallback to `github.token` for rancher-admin write operations.
+- Source repo has `RANCHER_ADMIN_REPO_TOKEN` in Actions secrets.
+- Tag release path writes versioned `geeemoney/*` images into `bimross/rancher-admin`.
