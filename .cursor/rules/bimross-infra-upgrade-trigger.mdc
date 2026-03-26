@@ -1,0 +1,39 @@
+---
+description: Apply when user says "lets upgrade our bimross infrastructure" (or close variant) to resume Safe Mode infra work with exact prior context.
+alwaysApply: false
+---
+
+# Bimross infrastructure upgrade resume rule
+
+When the user says **"lets upgrade our bimross infrastructure"** (or close variants like "upgrade bimross infra"), resume from the existing Safe Mode checkpoint and do not restart discovery from scratch.
+
+## Source of truth context to load first
+
+Read these docs in `rancher-admin` in this exact order:
+
+1. `admin/apps/subnet-signal/production-safe-inventory.md`
+2. `admin/apps/subnet-signal/admin-node-corruption-runbook.md`
+3. `admin/apps/subnet-signal/backup-verification-readonly.md`
+4. `admin/apps/subnet-signal/tabletop-dr-drill-admin-corruption.md`
+5. `admin/apps/subnet-signal/maintenance-window-backlog.md`
+
+## Resume behavior
+
+1. Start with a **read-only drift check** against current cluster (`KUBECONFIG=/Users/grant/.kube/config/grant-admin.yaml`) and compare to the inventory/backup docs.
+2. Summarize what changed since last checkpoint (nodes, workloads, backups, warnings, storage, policies).
+3. Propose next action from backlog in strict priority order:
+   - `P0-1` off-node etcd replication
+   - `P0-2` Azure VM backup coverage
+   - `P0-3` DR preflight automation
+4. Execute only **one maintenance-window item at a time** with:
+   - explicit blast radius
+   - rollback steps
+   - validation checks
+5. Update or add docs in the same folder so state is durable between sessions.
+
+## Safety constraints
+
+- Never treat old assumptions as current truth; always re-verify with live read-only checks first.
+- Never commit kubeconfig files, raw secrets, cookies, or auth exports.
+- For production-changing steps, require explicit user approval before execution.
+- Prefer automation scripts and checklists that reduce operator cognitive load during incidents.
