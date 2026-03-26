@@ -1,7 +1,7 @@
 ---
 description: "Rancher Admin Repo Token Enforcement for CI/CD release workflows."
 globs: ".github/workflows/*.yml,.github/workflows/*.yaml,**/.github/workflows/*.yml,**/.github/workflows/*.yaml"
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Rancher Admin Secret Enforcement Rule
@@ -10,6 +10,8 @@ Apply this rule when a repo has CI/CD that:
 - builds Docker images on tag releases (`v*`) from `main` or `master`
 - updates manifests in `bimross/rancher-admin`
 - pushes those manifest updates back to `bimross/rancher-admin`
+
+If a repo is a Go/client library only (no Docker image release and no rancher-admin manifest writes), do not require `RANCHER_ADMIN_REPO_TOKEN` for release readiness.
 
 ## Mandatory Secret
 
@@ -43,6 +45,16 @@ When release automation is configured, ensure all of the following:
 - Docker image repositories are under `geeemoney/*`.
 - Release job updates image tags in `bimross/rancher-admin` manifests.
 
+### Canonical Forensic Baseline
+
+When evaluating "is CI/CD ready for release?" compare against these canonical workflows first:
+- `twitter-worker/.github/workflows/twitter-worker-images.yml`
+- `twitter-indexer/.github/workflows/twitter-indexer-images.yml`
+- `cookie-monster/.github/workflows/cookie-monster-images.yml`
+- `subnet-signal/.github/workflows/subnet-signal-images.yml`
+
+Report mismatches explicitly (missing tag trigger, missing `gitops-release`, wrong image regex/path, missing/incorrect token wiring).
+
 ## Missing Secret Remediation
 
 If `RANCHER_ADMIN_REPO_TOKEN` is not defined in the repo:
@@ -63,6 +75,10 @@ gh secret set RANCHER_ADMIN_REPO_TOKEN --repo bimross/<source-repo>
 
 Before considering workflow work complete, verify:
 - `RANCHER_ADMIN_REPO_TOKEN` is referenced in checkout/push path.
-- No fallback to `github.token` for rancher-admin write operations.
+- No fallback to `github.token` for rancher-admin write operations in new or updated workflows.
 - Source repo has `RANCHER_ADMIN_REPO_TOKEN` in Actions secrets.
 - Tag release path writes versioned `geeemoney/*` images into `bimross/rancher-admin`.
+
+For library-only repos, verify instead:
+- Tag release path exists (`push.tags: v*`) so release tags run CI validation.
+- No false dependency on rancher-admin token if GitOps writes are absent.
