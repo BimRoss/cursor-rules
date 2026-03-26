@@ -1,0 +1,55 @@
+---
+description: "Git mmap timeout workaround for local Documents/iCloud repositories."
+globs: "*"
+alwaysApply: true
+---
+
+# Git mmap timeout workaround
+
+When git operations fail with errors like:
+- `fatal: mmap failed: Operation timed out`
+- `fatal: unpack-objects failed`
+- `remote unpack failed: index-pack failed`
+- `fatal: early EOF`
+
+treat this as a local filesystem/packing reliability issue (common on macOS `Documents`/iCloud-managed paths).
+
+## Required behavior
+
+- Do not loop on plain `git fetch`, `git pull`, or `git push` after mmap timeout errors.
+- Retry push/fetch/pull with conservative pack settings first.
+- Prefer repo-local git config (not global) for persistent mitigation.
+
+## One-off retry commands
+
+Use these command patterns when a repo is already failing:
+
+```bash
+git -c pack.window=0 -c pack.depth=0 -c pack.threads=1 push origin <branch>
+```
+
+```bash
+git -c pack.window=0 -c pack.depth=0 -c pack.threads=1 push --force origin <branch>
+```
+
+## Persistent per-repo mitigation
+
+If retries succeed, set local repo config:
+
+```bash
+git config --local pack.window 0
+git config --local pack.depth 0
+git config --local pack.threads 1
+```
+
+Verify:
+
+```bash
+git config --local --get-regexp '^pack\.'
+```
+
+## Safety constraints
+
+- Never edit global git config as part of this workaround.
+- Keep mitigation scoped to the affected repo only.
+- After successful push, verify sync with `git status --short --branch`.
