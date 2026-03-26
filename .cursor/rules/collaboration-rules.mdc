@@ -44,7 +44,7 @@ alwaysApply: true
 When planning (especially in Ask/Plan Mode):
 
 1. **Create a Clear Plan**: Outline what, why, and expected impact
-2. **Decompose for Swarm**: Break into independent sub-tasks for parallel execution
+2. **Decompose for Swarm**: Break into independent sub-tasks for parallel execution with disjoint file ownership
 3. **Present Trade-offs**: Show options with pros/cons when choices exist
 4. **Wait for Confirmation**: Don't start implementation until you approve
 

@@ -1,0 +1,17 @@
+---
+description: Prevent parallel agents from clobbering each other
+alwaysApply: true
+---
+
+# Parallel Agent Safety
+
+When multiple agents or subagents may work in the same repo:
+
+- Split work by disjoint file ownership whenever possible. Do not assign two agents to the same file unless the user explicitly wants merge help.
+- Before editing, inspect the target file's current git state. If it already has changes you did not make in this conversation, treat it as owned by someone else until you re-read and merge carefully.
+- Re-read each file immediately before writing. Never apply a patch from stale context when another agent may have edited the file.
+- If a shared file must be touched, merge surgically and preserve both behaviors unless they truly conflict.
+- After editing, review the diff for signs of clobbering: dropped imports, deleted props, removed handlers, reverted styles, missing exports, or lost copy.
+- If you notice unexpected concurrent edits in a file you are touching, stop immediately and ask the user how to proceed.
+- Prefer sequential execution over parallel agents for shared layout, config, schema, routing, or global state files.
+- When launching subagents, explicitly assign each one a file or directory boundary and tell them not to edit outside it.
