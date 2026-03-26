@@ -1,0 +1,36 @@
+---
+description: "Enforce dual sync behavior for runtime + rancher-admin GitOps"
+globs: "*"
+alwaysApply: true
+---
+
+# Dual Sync: Runtime + GitOps
+
+When automating deploy/config sync in any repo, support **both** paths by default:
+
+1. **Runtime sync path** (direct cluster update, e.g. `kubectl` secret sync)
+2. **GitOps path** (update tracked manifests in GitOps repo like `rancher-admin`, then optional commit/push/PR)
+
+## Required Behavior
+
+- Never assume a CI check named `(push)` means "pushed to GitOps repo"; verify actual git push steps.
+- Treat runtime sync and GitOps sync as separate targets with explicit toggles:
+  - `SYNC_TO_CLUSTER` (default `true`)
+  - `SYNC_TO_<GITOPS_REPO>_GITOPS` (default `false`)
+- Keep git automation opt-in:
+  - `AUTO_COMMIT=false`
+  - `AUTO_PUSH=false`
+- If GitOps sync is enabled, require repo path + target file path and fail loudly when missing.
+- Always update docs and env templates when adding deployment/sync behavior.
+
+## Safety Requirements
+
+- If generating GitOps secret manifests, add a clear warning when plaintext `stringData`/runtime secrets are written.
+- Never commit `.env`, cookie/session exports, kubeconfigs, or other raw secret files.
+- Do not remove existing runtime sync unless user explicitly asks to replace it with pure GitOps.
+
+## Acceptance Check Before Done
+
+- Runtime path still works independently.
+- GitOps path works independently.
+- Both can run in the same invocation without conflict.
