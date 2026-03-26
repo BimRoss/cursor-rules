@@ -1,0 +1,46 @@
+---
+description: "Cookie Monster — Docker Hub image CI, semver tags, and GitOps release to rancher-admin (must stay in sync with workflow file)"
+globs:
+  - "**/cookie-monster/**"
+alwaysApply: false
+---
+
+# Cookie Monster: CI/CD and GitOps (image vs secrets)
+
+This repo ships a **Chrome extension**, a **kubectl sync script** (`sync-twitter-worker-secrets.sh`), and a **`cookie-monster-health` Docker image** (Go binary in `health/` built by `Dockerfile.health`).
+
+## Non‑negotiable: mirror `twitter-worker` / `twitter-indexer` release pattern
+
+The GitHub Actions workflow **`BimRoss/cookie-monster`** → **`.github/workflows/cookie-monster-images.yml`** must keep **feature parity** with those repos:
+
+1. **Job `health`** — build `geeemoney/cookie-monster-health` with `docker/build-push-action`, semver tags on `v*`, push only on tag (not on every `master` push).
+2. **Job `gitops-release`** — runs **only** when `github.ref` is `refs/tags/v*` (`if: startsWith(github.ref, 'refs/tags/v')`). It checks out **`bimross/rancher-admin`** branch `master`, bumps **every** `geeemoney/cookie-monster-health:` tag in **`admin/apps/subnet-signal/cookie-monster-health.yaml`** to the semver from the tag (strip leading `v`), commits, and pushes to **`master`**.
+
+Do **not** drop `gitops-release` when editing CI; a push to `master` alone never updates Fleet manifests—only a **version tag** does.
+
+## Secrets and tokens
+
+- **Docker Hub**: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN` (push on tag).
+- **rancher-admin write access**: `RANCHER_ADMIN_REPO_TOKEN` (fine‑grained PAT or equivalent with push to `bimross/rancher-admin`). Without it, the checkout may work but **push will fail** unless the default token has repo access.
+
+## GitOps manifest contract
+
+- **File**: `rancher-admin/admin/apps/subnet-signal/cookie-monster-health.yaml`
+- **Image line**: must remain matchable by the workflow regex `(geeemoney/cookie-monster-health:)[^\s\"']+` so automated bumps do not miss aliases or renames.
+- **Workload**: CronJob collects `*_twitter_cookies.json` keys from `twitter-worker-{1,2,3}-secrets` into a shared emptyDir, then runs the health checker—**no duplicate cookie storage**.
+
+## Separate path: runtime / secrets GitOps (local script)
+
+`sync-twitter-worker-secrets.sh` can optionally write **`twitter-worker-runtime-secrets.yaml`** into a **local** `rancher-admin` checkout (`SYNC_TO_RANCHER_ADMIN_GITOPS`, etc.). That is **cookie/session material**, not the health image. **Do not conflate** the two:
+
+| Mechanism | What it updates | When |
+|-----------|-----------------|------|
+| **Actions `gitops-release`** | Image tag in `cookie-monster-health.yaml` | Push `v*` tag |
+| **sync script + GitOps flags** | Sealed/plain secret manifests for workers | Operator runs Docker/sync locally or in CI elsewhere |
+
+When adding features, preserve both paths unless the product intentionally removes one.
+
+## Editing checklist
+
+- After changing **image name**, **registry**, or **rancher-admin path**, update **both** the workflow Python path/replace pattern **and** this rule.
+- New releases: merge to `master`, then **`git tag vX.Y.Z && git push origin vX.Y.Z`** so Docker push and **gitops-release** both run.
