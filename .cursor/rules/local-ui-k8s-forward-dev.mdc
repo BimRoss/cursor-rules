@@ -1,0 +1,27 @@
+---
+description: Prefer local web UI (hot reload) with prod backends via kubectl port-forward in Docker Compose.
+globs: "*"
+alwaysApply: true
+---
+
+# Local UI + Kubernetes port-forward (preferred dev pattern)
+
+When a stack has a web UI and remote services (e.g. production in Kubernetes), **prefer** a Docker Compose pattern with two clear profiles:
+
+1. **`local`** — run the full stack locally (backend, Redis, UI, agents, etc.) for end-to-end local development.
+2. **`ui`** — run **only the UI** (dev server / hot reload) in the compose graph, with everything else reached via **Kubernetes `kubectl port-forward`** (or equivalent) sidecars so the browser talks to real prod-like APIs and data.
+
+## Why
+
+- Fast frontend iteration without rebuilding or redeploying the whole cluster.
+- Realistic integration against live backends when you need it.
+- Avoids naming the profile `prod` (which confuses “running prod” vs “pointing at prod”). Prefer short names like `ui` over verbose ones.
+
+## Canonical reference
+
+**subnet-signal** implements this:
+
+- `docker compose --profile local up --build` — full local stack.
+- `docker compose --profile ui up --build` — `frontend-ui` + kubectl forwards to cluster services (e.g. backend, Redis, Grafana, Prometheus).
+
+When adding similar setups elsewhere, mirror that naming (`local` + `ui`) and document host ports in `.env.example` / README.
