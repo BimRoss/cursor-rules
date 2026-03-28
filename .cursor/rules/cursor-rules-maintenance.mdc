@@ -14,6 +14,19 @@ Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when 
 - When a rule is **wrong**, **stale**, or **too broad**: **edit or split it** so future sessions match reality.
 - Prefer **small, focused rules** (one clear topic) over giant catch-alls; merge duplicates when two files say the same thing.
 - After drafting a new/updated rule, run a **second pass** before finalizing: check overlap, scope, wording clarity, and whether it belongs in public or private context.
+- If a task required **2+ retries** (failed test, lint, command, or rollout) before success, add or refine guidance so the same class of failure is less likely next time.
+- Convert "one-off fixes" into reusable rules only when they generalize to more than one repo, task type, or workflow.
+
+## Self-healing loop (required)
+
+When execution fails, do this before declaring a blocker:
+
+1. **Detect**: state the failure mode clearly (command/tool error, lint/type failure, runtime mismatch, flaky test).
+2. **Diagnose**: isolate root cause from evidence (logs, diffs, config, environment assumptions).
+3. **Retry with adaptation**: run a bounded retry with a changed approach (not blind repetition).
+4. **Verify**: confirm the fix with the narrowest meaningful check, then full check if needed.
+5. **Codify**: if fix is reusable, update a rule/skill/checklist immediately.
+6. **Report**: summarize root cause + prevention so the user can trust the recovery path.
 
 ## When to update vs create
 
@@ -29,6 +42,8 @@ Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when 
 - **Actionable**: tell the agent *what to do*, not vague values.
 - **No secrets**: never embed tokens, passwords, or private URLs in rules.
 - **Layering**: public repo rules stay reusable and non-sensitive; private business specifics go to gitignored local/business rule files.
+- **Conflict-safe**: if two rules can conflict, add a tie-breaker sentence ("if conflict, prefer X because Y").
+- **Verifiable**: include at least one concrete check or command where practical.
 
 ## Second-pass checklist (required)
 
@@ -39,6 +54,8 @@ Before considering a rule change complete:
 - Confirm private or customer-sensitive details are removed from tracked files.
 - Confirm related rules were extended (instead of creating unnecessary new files).
 - Confirm examples and command snippets are still valid.
+- Confirm any new policy can be validated quickly (status check, lint, test, or command).
+- Confirm no new rule conflicts with higher-priority safety constraints.
 
 ## Do not
 

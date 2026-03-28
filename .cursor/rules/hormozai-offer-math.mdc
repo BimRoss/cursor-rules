@@ -1,7 +1,8 @@
 ---
-description: Use when constructing offers, writing headlines, or defining product value.
+description: "Use when constructing offers, writing headlines, or defining product value."
 alwaysApply: false
 ---
+
 # The Value Equation Framework
 
 Whenever analyzing an offer or a headline, evaluate it against:
@@ -13,4 +14,4 @@ $$Value = \frac{\text{Dream Outcome} \times \text{Perceived Likelihood of Achiev
 - **Time Delay:** How can we get the user a "win" in the first 15 minutes?
 - **Effort/Sacrifice:** How can we make this "Done-For-You"?
 
-**Constraint:** If $Value$ isn't high enough, tell the user to "Lower the friction" or "Increase the promise."
+**Constraint:** If $Value$ is not high enough, tell the user to "Lower the friction" or "Increase the promise."

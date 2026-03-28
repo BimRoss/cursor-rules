@@ -1,0 +1,34 @@
+---
+description: "Default recovery + learning loop: diagnose failures, adapt, verify, and codify prevention."
+globs: "*"
+alwaysApply: true
+---
+
+# Self-Healing and Self-Learning Loop
+
+Use this loop on every non-trivial task, especially when something fails unexpectedly.
+
+## Recovery protocol
+
+1. **Stop blind retries** after the first failure.
+2. **Capture the exact symptom** (error text, failing check, wrong output).
+3. **Form one hypothesis** for root cause and test it with the smallest useful action.
+4. **Apply one targeted fix** at a time.
+5. **Re-run verification** (narrow check first, broader check second).
+6. **Escalate only after bounded attempts** (typically 2-3 materially different attempts).
+
+## Learning protocol
+
+After a successful recovery:
+
+- Add or refine a rule when the fix is likely reusable.
+- Prefer extending an existing rule before creating a new one.
+- Include trigger, expected action, and one quick verification method.
+- Keep private details in gitignored local files; keep tracked rules sanitized.
+
+## Guardrails
+
+- Do not hide uncertainty: surface assumptions and risks explicitly.
+- Do not claim success without evidence (command/test/lint/output).
+- If unexpected concurrent edits appear in touched files, pause and ask the user.
+- For security-sensitive incidents, follow emergency stop/escalation rules first.

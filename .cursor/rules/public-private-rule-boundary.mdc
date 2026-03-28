@@ -28,6 +28,13 @@ Maintain rules in three layers so the repo stays useful to the public while pres
   - `.cursor/rules/private/**`
 - Treat these files as local overlays on top of public rules.
 
+### If private files were accidentally tracked
+
+- Immediately sanitize tracked content in the repo.
+- Move full private details to gitignored files.
+- Remove tracked private files from git index on the next commit (`git rm --cached <path>`), keeping local copies intact.
+- Keep a safe public template/example in-repo for onboarding.
+
 ## Authoring protocol
 
 - Start with the most public-safe reusable rule first.

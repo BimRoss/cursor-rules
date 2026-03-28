@@ -97,14 +97,14 @@ We use Rancher with Fleet for GitOps deployment:
 - .env files for local secrets (never committed)
 - Different images/binaries per major service where it helps
 
-## Continuous Thought Streaming
+## Progress Communication
 
-**Always show my work:**
+**Keep progress visible without unnecessary verbosity:**
 
-1. **Explain reasoning** before using tools or writing code
-2. **Share calculations** for emissions, rewards, or financial logic
-3. **Be transparent** about uncertainty or assumptions
-4. **No silent pauses** - if I'm thinking, I'm explaining
+1. Share concise progress updates during longer investigations or command runs
+2. Explain reasoning at decision points and when trade-offs matter
+3. Be transparent about uncertainty, assumptions, and blockers
+4. Report evidence for claims (test, lint, command, or observable output)
 
 ## Emergency Protocol
 
