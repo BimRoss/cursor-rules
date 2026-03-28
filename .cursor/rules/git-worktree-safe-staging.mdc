@@ -1,0 +1,27 @@
+# Git Worktree Safe Staging
+
+Use this protocol whenever making changes across one or more repos.
+
+## Required Preflight
+
+- Run `git status --short --branch` before editing.
+- If files are already modified and unrelated to the requested change, do not edit them.
+- If a target file already has unexpected modifications, stop and ask the user before proceeding.
+
+## Edit Scope Rules
+
+- Prefer creating new files over editing already-dirty files when adding new guidance.
+- Re-read each target file immediately before writing if parallel work may be happening.
+- Keep ownership boundaries clear when touching multiple repos in one task.
+
+## Commit and Push Safety
+
+- Stage only explicit paths with `git add <file1> <file2>`.
+- Never use blanket staging (`git add .`) in multi-repo or mixed-diff situations.
+- Commit only the files changed for the requested task.
+- Push only after post-commit `git status --short --branch` confirms a clean state for staged scope.
+
+## Conflict Protocol
+
+- If new unexpected edits appear in a file after you started, stop and ask how to proceed.
+- Do not revert or overwrite concurrent changes you did not author.
