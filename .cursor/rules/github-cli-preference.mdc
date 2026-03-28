@@ -1,0 +1,33 @@
+---
+description: "Prefer GitHub CLI (gh) for GitHub operations when available."
+globs: "*"
+alwaysApply: true
+---
+
+# GitHub CLI (`gh`) preference
+
+When work touches **GitHub** (repos, PRs, issues, releases, Actions, org/repo settings, API calls to `api.github.com`), **prefer the GitHub CLI** over ad-hoc curl, manual dashboard steps, or guessing REST paths—**when `gh` is available and authenticated**.
+
+## Default to `gh` for
+
+- **Repo metadata and edits**: `gh repo view`, `gh repo edit` (description, visibility, topics), clone with `gh repo clone`
+- **Pull requests & issues**: `gh pr create`, `gh pr view`, `gh pr merge`, `gh issue list`, `gh issue create`
+- **CI/CD**: `gh run list`, `gh run view`, `gh workflow run`, re-run failed jobs
+- **Releases & tags**: `gh release create`, `gh release list`
+- **Secrets & variables** (where appropriate): `gh secret set`, `gh variable set`
+- **Low-level API**: `gh api` / `gh api graphql` instead of hand-built curl (handles auth and pagination patterns)
+
+## Stay on plain `git` for
+
+Local repository mechanics: `commit`, `rebase`, `merge`, `branch`, `status`, `diff`, `log`—unless the task is specifically “create this on GitHub” (then `gh` often complements `git push`).
+
+## Safety and UX notes
+
+- **Visibility and other destructive flags** may require explicit acceptance (e.g. `--accept-visibility-change-consequences`); do not strip safety flags to “make it work.”
+- If `gh` is missing or not logged in, say so and use documented alternatives (`git` + browser, or `gh auth login` guidance)—do not assume `gh` in CI unless the environment provides it.
+
+## Verify auth when unsure
+
+```bash
+gh auth status
+```

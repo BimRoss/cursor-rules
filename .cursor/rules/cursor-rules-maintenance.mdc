@@ -1,0 +1,36 @@
+---
+description: "Continuously improve Cursor rules: extend, update, or add rules as patterns emerge."
+globs: "*"
+alwaysApply: true
+---
+
+# Cursor rules: keep them alive
+
+Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when present) as **living documentation**, not one-time setup.
+
+## Default behavior
+
+- When you discover a **repeated mistake**, **stable convention**, **repo-specific gotcha**, or **user preference** that should stick: **capture it in a rule** (new file or extend an existing one) instead of relying on chat memory.
+- When a rule is **wrong**, **stale**, or **too broad**: **edit or split it** so future sessions match reality.
+- Prefer **small, focused rules** (one clear topic) over giant catch-alls; merge duplicates when two files say the same thing.
+
+## When to update vs create
+
+| Situation | Action |
+|----------|--------|
+| Fits an existing rule’s topic | **Extend** that rule with a short section or bullet |
+| New domain / trigger phrase / repo | **New rule** with a clear `description` and appropriate `globs` / `alwaysApply` |
+| Rule overlaps or conflicts | **Consolidate** or clarify boundaries in the frontmatter / intro |
+
+## Quality bar
+
+- **Frontmatter**: meaningful `description`; `globs` / `alwaysApply` set on purpose.
+- **Actionable**: tell the agent *what to do*, not vague values.
+- **No secrets**: never embed tokens, passwords, or private URLs in rules.
+
+## Do not
+
+- Spam new rules for one-off trivia; use judgment.
+- Delete or gut a rule without replacing the guidance somewhere sensible.
+
+After substantive rule changes, **commit in `cursor-rules`** (or the repo that owns the rules) so the team and other agents inherit them.
