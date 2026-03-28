@@ -2,7 +2,7 @@
 description: "Rancher Admin Repo Token Enforcement for CI/CD release workflows."
 globs: ".github/workflows/*.yml,.github/workflows/*.yaml,**/.github/workflows/*.yml,**/.github/workflows/*.yaml"
 alwaysApply: true
-reviewBy: "2026-06-30"
+reviewBy: "2026-05-31"
 ---
 
 # Rancher Admin Secret Enforcement Rule

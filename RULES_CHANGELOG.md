@@ -32,6 +32,12 @@ Use this template for each entry:
 - Expected impact: clean audit output with explicit lifecycle review dates on mandatory rules.
 - Verification: `./scripts/audit-rules.sh` shows zero warnings for tracked always-apply rules.
 
+## 2026-03-27 - Risk-tiered review cadence
+- Trigger: one shared `reviewBy` date was too coarse for mixed-risk rules.
+- Change: staggered `reviewBy` dates by risk (`2026-05-31` for operational/safety rules, `2026-06-30` for governance defaults, `2026-09-30` for stable persona guidance).
+- Expected impact: faster refresh on high-risk guidance without creating unnecessary churn on stable rules.
+- Verification: `reviewBy` values align with rule criticality and audit remains warning-free.
+
 ## 2026-03-27 - Complex topics require web research
 - Trigger: explicit request to reduce stale assumptions on remotely complex topics.
 - Change: added always-apply rule `web-research-for-complex-topics.mdc` requiring web research before final guidance on non-trivial, high-impact, or fast-moving topics.
