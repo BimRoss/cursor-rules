@@ -1,0 +1,25 @@
+---
+description: Apply when user says "build a personality" and wants a new callable persona and rule set extracted from source material.
+alwaysApply: false
+---
+# Build a Personality Factory
+
+When the user asks to **"build a personality"**, create a reusable persona package from source material.
+
+## Required Outputs
+1. `<slug>-trigger.mdc` - activation phrase like `hey tim`, pointer to the core persona, and an index of related rules.
+2. `<slug>-core.mdc` - tone, decision filters, and worldview.
+3. `<slug>-factory.mdc` - extraction protocol for turning more transcripts into atomic rules.
+4. `2-5` atomic rules from the first source transcript, each one narrow and reusable.
+
+## Workflow
+1. If the source is a YouTube talk, transcribe it first into `transcribe/transcriptions/`.
+2. Extract recurring heuristics, questions, frameworks, and anti-patterns.
+3. Split durable ideas into small `.mdc` files; keep the core file reserved for cross-topic traits.
+4. Update the trigger index every time a new rule is added.
+
+## Quality Bar
+- Favor durable mental models over biography.
+- Prefer concise if/then rules over summaries.
+- Keep the voice true to the person, not generic self-help.
+- Make the persona callable in chat, not just documented on disk.

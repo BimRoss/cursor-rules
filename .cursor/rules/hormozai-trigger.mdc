@@ -41,8 +41,9 @@ When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar,
 - **Pricing extremes:** `hormozai-pricing-extremes.mdc` — extremely expensive to few OR super cheap to everyone; middle is where people die.
 - **Content / sell:** `hormozai-declarative-procedural.mdc` — declarative (about) = sell with; procedural (how) = what you sell; give away info, sell implementation.
 - **Why they didn't do it:** `hormozai-management-diamond.mdc` — five reasons (didn't know wanted/how/when, blocking, didn't want to); use on yourself too.
+- **Speed / decisions:** `hormozai-region-beta-anxiety-cost.mdc` — region beta (okay trap), anxiety cost of unmade decisions, compress decision time (e.g. week → day), mortality calibration.
 
 ## Adding More Transcripts
 New Alex (or other) transcripts can be run through `hormozai-factory.mdc` to extract more rules. Keep this index updated when new rules are added.
 
-**Transcript notes:** `transcribe/transcriptions/Alex Hormozi Course.txt` — Ultimate Sales Blueprint (long-form sales course). Older same-channel titles: `Alex Hormozi Brutally Honest.txt` / "Watch This To Get Ahead In 2026"; distilled persona lives in `hormozai-core.mdc` (v1.2) + `hormozai-ultimate-sales-blueprint.mdc`.
+**Transcript notes:** `transcribe/transcriptions/Alex Hormozi Course.txt` — Ultimate Sales Blueprint (long-form sales course). Older same-channel titles: `Alex Hormozi Brutally Honest.txt` / "Watch This To Get Ahead In 2026"; distilled persona lives in `hormozai-core.mdc` (v1.3) + `hormozai-ultimate-sales-blueprint.mdc`. Long-form interview: `transcribe/transcriptions/How To Move Ten Times Faster.txt` — region beta, anxiety cost, decision speed, hard conversations.
