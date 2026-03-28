@@ -6,5 +6,7 @@
 
 # Private company context (copy from local-context.mdc.example)
 .cursor/rules/local-context.mdc
+.cursor/rules/private/
+.cursor/rules/*-private.mdc
 
 .env*

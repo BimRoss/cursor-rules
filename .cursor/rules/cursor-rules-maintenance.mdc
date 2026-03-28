@@ -13,6 +13,7 @@ Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when 
 - When you discover a **repeated mistake**, **stable convention**, **repo-specific gotcha**, or **user preference** that should stick: **capture it in a rule** (new file or extend an existing one) instead of relying on chat memory.
 - When a rule is **wrong**, **stale**, or **too broad**: **edit or split it** so future sessions match reality.
 - Prefer **small, focused rules** (one clear topic) over giant catch-alls; merge duplicates when two files say the same thing.
+- After drafting a new/updated rule, run a **second pass** before finalizing: check overlap, scope, wording clarity, and whether it belongs in public or private context.
 
 ## When to update vs create
 
@@ -27,6 +28,17 @@ Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when 
 - **Frontmatter**: meaningful `description`; `globs` / `alwaysApply` set on purpose.
 - **Actionable**: tell the agent *what to do*, not vague values.
 - **No secrets**: never embed tokens, passwords, or private URLs in rules.
+- **Layering**: public repo rules stay reusable and non-sensitive; private business specifics go to gitignored local/business rule files.
+
+## Second-pass checklist (required)
+
+Before considering a rule change complete:
+
+- Confirm there is no duplicate rule saying the same thing with different wording.
+- Confirm the rule names a clear trigger and expected action.
+- Confirm private or customer-sensitive details are removed from tracked files.
+- Confirm related rules were extended (instead of creating unnecessary new files).
+- Confirm examples and command snippets are still valid.
 
 ## Do not
 

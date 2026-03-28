@@ -1,0 +1,36 @@
+---
+description: "Rule authoring boundary for public-safe guidance vs private business context."
+globs: "*"
+alwaysApply: true
+---
+
+# Public vs Private rule boundary
+
+Maintain rules in three layers so the repo stays useful to the public while preserving private operator context.
+
+## Layer 1: Public baseline (tracked)
+
+- Keep shared engineering behavior in tracked `.cursor/rules/*.mdc` files.
+- Write guidance so an external engineer can use it without internal company access.
+- Prefer generic naming for private systems unless the reference is already intentionally public.
+
+## Layer 2: Bimross conventions (tracked, sanitized)
+
+- Bimross workflow patterns are allowed in tracked rules when they are operationally useful and non-secret.
+- Never include credentials, private URLs, account IDs, or sensitive customer data.
+- If a Bimross rule needs sensitive context, split it: keep the reusable policy tracked, move sensitive details to private files.
+
+## Layer 3: Us/private business context (gitignored)
+
+- Put private business strategy, org details, customer specifics, and internal playbooks under gitignored paths:
+  - `.cursor/rules/local-context.mdc`
+  - `.cursor/businesses/**`
+  - `.cursor/rules/private/**`
+- Treat these files as local overlays on top of public rules.
+
+## Authoring protocol
+
+- Start with the most public-safe reusable rule first.
+- Add private overlays only when needed for execution quality.
+- Before commit, run a private-data scrub pass and move sensitive lines out of tracked files.
+- When in doubt, default to private and then promote a sanitized version into tracked rules.
