@@ -43,3 +43,9 @@ Use this template for each entry:
 - Change: added always-apply rule `web-research-for-complex-topics.mdc` requiring web research before final guidance on non-trivial, high-impact, or fast-moving topics.
 - Expected impact: higher decision accuracy, fewer outdated recommendations, and better risk handling on architecture/security/ops choices.
 - Verification: on complex tasks, agent behavior includes web lookup before final recommendations; rule is tracked with `reviewBy`.
+
+## 2026-03-27 - Complex-topic source citation pass
+- Trigger: follow-up request to tighten enforcement after initial web-research rule landed.
+- Change: extended `web-research-for-complex-topics.mdc` with a response contract requiring source links for complex-topic recommendations and explicit conflict handling.
+- Expected impact: stronger traceability and easier verification of claims in advisor-style outputs.
+- Verification: complex-topic final responses include source links and note source conflicts when present.

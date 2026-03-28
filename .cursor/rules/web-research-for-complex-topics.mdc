@@ -17,6 +17,12 @@ When a user request is even remotely complex, ambiguous, rapidly changing, or hi
 - Cross-check at least two relevant sources when claims could materially affect reliability, security, cost, or delivery speed.
 - If web access fails or sources conflict, explicitly state uncertainty and proceed with a bounded best-effort recommendation.
 
+## Response contract
+
+- For complex topics, include source links in the final response whenever external facts influenced the recommendation.
+- Prefer official documentation links first; include date/version context when relevant.
+- If sources disagree, call out the conflict explicitly and state which source is being prioritized and why.
+
 ## Scope examples
 
 - **Use web research**: APIs and SDK behavior, cloud/Kubernetes behavior, CI/CD semantics, security guidance, pricing/limits, model/version decisions, and fast-moving ecosystem changes.
