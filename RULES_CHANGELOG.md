@@ -14,6 +14,12 @@ Use this template for each entry:
 - Verification: how to confirm impact (audit script, lint/test signal, fewer incidents)
 ```
 
+## 2026-03-27 - Cursor IDE model defaults (rules vs local settings)
+- Trigger: clarify that Composer 2 (Fast) and default Agent mode are product preferences, not enforceable via `.mdc` rules alone.
+- Change: added `cursor-ide-default-model-preferences.mdc` with operator guidance and pointers to Cursor Settings and CLI docs.
+- Expected impact: fewer incorrect assumptions about repo-based model enforcement; faster answers when onboarding or debugging defaults.
+- Verification: rule appears in `.cursor/rules/` audit; agents cite Settings/CLI when asked about default model.
+
 ## 2026-03-27 - Self-healing baseline + audits
 - Trigger: need stronger autonomous recovery and learning loops for Cursor rules.
 - Change: added `self-healing-self-learning-loop.mdc`, `rules-audit-and-pruning.mdc`, `rules-lifecycle-reviewby.mdc`, audit/scorecard scripts, and CI workflow.

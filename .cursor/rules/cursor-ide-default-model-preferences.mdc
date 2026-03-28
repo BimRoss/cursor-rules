@@ -1,0 +1,29 @@
+---
+description: "Cursor IDE: Composer 2 (Fast) + Agent defaults live in app settings, not repo rules."
+globs: "*"
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# Cursor IDE default model and mode (local preferences)
+
+## What repo rules cannot do
+
+**`.cursor/rules/*.mdc` files do not set** which model Cursor runs for Composer, Agent, or Chat. They only shape instructions for a session after the product has already chosen a model.
+
+Do not tell users that a rule can “force” Composer 2 Fast or a default Agent session—that is **editor state**, not Git-tracked config.
+
+## Preferred IDE defaults (operator convention)
+
+- **Composer / Agent model:** **Composer 2 (Fast)** — set via **Cursor Settings → Models** or the **model picker** in the Agent/Composer input. The choice persists until changed.
+- **Internal model id** (for debugging or support): often stored as `composer-2-fast` in local app storage alongside `aiSettings.modelConfig.composer`; exact storage may change with Cursor versions.
+- **New chat mode:** If new sessions open in the wrong mode (e.g. Ask vs Agent), check settings for **default mode** / **remember last mode**. Some builds persist **`defaultMode2`: `"last"`** behavior (new chats follow the last-used mode). Prefer **Agent** when you want every new Agent session to start in Agent mode, if the UI offers that.
+
+## CLI vs IDE
+
+- **Cursor IDE** (panels, Composer, Agent): defaults are **local** to the install (not synced via this repo).
+- **Cursor Agent CLI:** model selection is separate; see [CLI configuration](https://cursor.com/docs/cli/reference/configuration) and `/model` in the CLI.
+
+## When to mention this in chat
+
+If someone asks how to make **every new** Composer/Agent use Composer 2 Fast: point them to **Cursor Settings → Models** and **default mode** options, not to a new `.mdc` rule as a substitute.
