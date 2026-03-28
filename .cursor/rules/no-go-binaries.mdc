@@ -1,6 +1,7 @@
 ---
 description: "Never add or commit Go binaries or local build artifacts in any project. They are build outputs and belong in .gitignore."
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 # No Go Binaries in Git

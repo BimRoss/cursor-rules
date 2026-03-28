@@ -2,6 +2,7 @@
 description: "Git mmap timeout workaround for local Documents/iCloud repositories."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 # Git mmap timeout workaround

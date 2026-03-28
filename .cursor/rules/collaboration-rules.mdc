@@ -2,6 +2,7 @@
 description: "Collaboration & Swarm Rules"
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Collaboration Rules

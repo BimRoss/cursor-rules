@@ -1,67 +1,68 @@
 # Cursor Rules
 
-Ship faster with [Cursor](https://cursor.com), without letting your AI assistant drift into chaos.
+Build faster with Cursor without letting your AI assistant go off the rails.
 
-This repo is a battle-tested set of Cursor **rules** (`.cursor/rules/`) and **skills** (`.cursor/skills/`) for real software teams: backend, frontend, DevOps, security, MCP tooling, and daily execution quality.
+`cursor-rules` is a production-ready operating system for AI-assisted engineering: clear rules, reusable skills, and workflows that keep output fast, safe, and shippable.
 
-If you want better output from Cursor, the game is simple: better instructions, better defaults, better guardrails.
+## Why This Repo Exists
 
-## Why This Exists
+Most teams do not have an AI problem. They have a consistency problem.
 
-Most AI coding setups fail for one reason: no operating system for the assistant.
-
-These rules fix that by making behavior explicit:
-- clear safety constraints
-- repo-specific workflows
-- reliable command and verification habits
-- reusable skills for recurring tasks
+When your prompts, guardrails, and execution defaults are weak, quality collapses. This repo fixes that with explicit standards for code quality, safety, verification, and repo-specific behavior.
 
 ## What You Get
 
-- Practical Cursor rules for engineering execution (not theory)
-- Skills for repeatable workflows (MCP, frontend design, transcription, and more)
+- Battle-tested Cursor rules in `.cursor/rules/`
+- Reusable execution skills in `.cursor/skills/`
 - Public-safe baseline plus private overlays for sensitive context
-- Utilities to audit rule quality and prevent drift
+- Rule audit scripts to prevent drift over time
 
-## Quick Start (2 Minutes)
+## Quick Start
 
 ```bash
 git clone https://github.com/BimRoss/cursor-rules.git
 cd cursor-rules
 ```
 
-Then copy or symlink `.cursor/` into your target project and customize from there.
+Copy or symlink `.cursor/` into any project, then customize for your stack.
 
-## Private Context (Do This Early)
-
-Keep sensitive or personal context out of Git history:
+## Set Private Context Early
 
 ```bash
 cp local-context.mdc.example .cursor/rules/local-context.mdc
 ```
 
-`local-context.mdc` is gitignored. Put wake phrases, private repo info, personal operating preferences, and internal business context there.
+`local-context.mdc` is gitignored by design. Keep private repos, operator context, and personal preferences there.
 
-## Rule Hygiene
-
-Run this regularly to catch rule quality issues:
+## Keep The System Healthy
 
 ```bash
 ./scripts/audit-rules.sh
 ./scripts/rules-scorecard.sh
 ```
 
-For historical context, see `RULES_CHANGELOG.md`.
+For historical changes, see `RULES_CHANGELOG.md`.
 
 ## Who This Is For
 
-- Developers using Cursor daily
-- Teams that want consistent AI behavior across repos
-- Builders who care about speed and correctness
+- Cursor power users shipping daily
+- Engineering teams that want predictable AI behavior
+- Founders and operators who care about speed and correctness
 
-## If This Helps You
+## Related BimRoss Projects
 
-Star the repo so more builders can find a production-ready Cursor rules baseline.
+- [subnet-signal](https://github.com/BimRoss/subnet-signal)
+- [thread-pilot](https://github.com/BimRoss/thread-pilot)
+- [twitter-scraper](https://github.com/BimRoss/twitter-scraper)
+- [cookie-monster](https://github.com/BimRoss/cookie-monster)
+
+## Keywords
+
+Cursor rules, AI coding agent guardrails, prompt engineering workflow, developer productivity, AI pair programming standards.
+
+## Support The Project
+
+If this repo makes your team faster, star it so more builders can find it.
 
 ## License
 

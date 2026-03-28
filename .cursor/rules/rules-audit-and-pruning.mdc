@@ -2,6 +2,7 @@
 description: "Rule quality audits: detect overlap, stale guidance, and enforce pruning."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Rules Audit and Pruning

@@ -2,6 +2,7 @@
 description: "Prefer GitHub CLI (gh) for GitHub operations when available."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 # GitHub CLI (`gh`) preference

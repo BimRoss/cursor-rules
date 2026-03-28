@@ -2,6 +2,7 @@
 description: "Enforce dual sync behavior for runtime + rancher-admin GitOps"
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 # Dual Sync: Runtime + GitOps

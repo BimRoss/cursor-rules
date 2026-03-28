@@ -2,6 +2,7 @@
 description: "Anti-Timeout & Vision Protocol"
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 ## Anti-Timeout Protocol

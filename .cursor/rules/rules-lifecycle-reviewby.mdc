@@ -1,0 +1,27 @@
+---
+description: "Rule lifecycle metadata and review cadence using reviewBy dates."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-06-30"
+---
+
+# Rules Lifecycle and reviewBy
+
+Use `reviewBy` frontmatter metadata for rules that can become stale as tooling or workflows change.
+
+## Convention
+
+- Preferred format: `reviewBy: YYYY-MM-DD`
+- Use `reviewBy` for rules tied to tools, paths, CI workflows, or temporary operating assumptions.
+- During rule edits, renew `reviewBy` when guidance remains valid; otherwise prune or rewrite.
+
+## Decision policy at review time
+
+- **Still valid and useful**: keep and bump `reviewBy`.
+- **Partially valid**: narrow scope and tighten trigger/action language.
+- **Obsolete**: remove or archive after migrating any reusable insight into a canonical rule.
+
+## Scope guidance
+
+- Do not add `reviewBy` to timeless foundational rules unless they have known drift risk.
+- Prioritize `reviewBy` for environment-specific or repo-specific operational guidance.

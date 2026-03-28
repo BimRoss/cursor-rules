@@ -1,6 +1,7 @@
 ---
 description: Prevent parallel agents from clobbering each other
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Parallel Agent Safety

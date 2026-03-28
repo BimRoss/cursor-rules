@@ -2,6 +2,7 @@
 description: "Continuously improve Cursor rules: extend, update, or add rules as patterns emerge."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Cursor rules: keep them alive

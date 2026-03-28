@@ -16,3 +16,6 @@ jobs:
 
       - name: Run rules audit
         run: ./scripts/audit-rules.sh
+
+      - name: Print rules scorecard
+        run: ./scripts/rules-scorecard.sh

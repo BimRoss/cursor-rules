@@ -1,6 +1,7 @@
 ---
 description: "Never add or commit macOS .DS_Store files. Use repo .gitignore + optional global git ignore."
 alwaysApply: true
+reviewBy: "2026-05-31"
 ---
 
 # No .DS_Store in Git

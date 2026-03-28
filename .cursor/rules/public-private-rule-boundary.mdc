@@ -2,6 +2,7 @@
 description: "Rule authoring boundary for public-safe guidance vs private business context."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Public vs Private rule boundary

@@ -2,6 +2,7 @@
 description: Prefer local web UI (hot reload) with prod backends via kubectl port-forward in Docker Compose.
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Local UI + Kubernetes port-forward (preferred dev pattern)

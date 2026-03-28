@@ -2,6 +2,7 @@
 description: Frontends must be prepared for AI consumption, parsability, and minimal observability surfaces.
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # AI-Readiness First

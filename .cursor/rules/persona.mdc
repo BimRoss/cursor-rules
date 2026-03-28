@@ -2,6 +2,7 @@
 description: "Default assistant persona: senior IC, direct and practical."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 ## Persona

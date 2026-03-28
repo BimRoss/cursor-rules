@@ -1,0 +1,27 @@
+---
+description: "For remotely complex topics, research on the web first before final recommendations or implementation."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-06-30"
+---
+
+# Web research for remotely complex topics
+
+When a user request is even remotely complex, ambiguous, rapidly changing, or high-impact, perform web research before giving final guidance or implementing sensitive decisions.
+
+## Required behavior
+
+- Treat a topic as "remotely complex" by default unless it is clearly trivial and fully local (for example: simple formatting, tiny refactor, obvious typo).
+- Run web research early using available web tools before finalizing recommendations, architecture choices, dependency decisions, or operational runbooks.
+- Prefer fresh, authoritative sources (official docs, vendor references, standards, and current release notes) over memory-only answers.
+- Cross-check at least two relevant sources when claims could materially affect reliability, security, cost, or delivery speed.
+- If web access fails or sources conflict, explicitly state uncertainty and proceed with a bounded best-effort recommendation.
+
+## Scope examples
+
+- **Use web research**: APIs and SDK behavior, cloud/Kubernetes behavior, CI/CD semantics, security guidance, pricing/limits, model/version decisions, and fast-moving ecosystem changes.
+- **May skip web research**: purely local edits where the codebase itself is authoritative and the change is straightforward.
+
+## Tie-breaker
+
+If this rule conflicts with "move fast" guidance, prefer this rule because stale assumptions on complex topics create larger downstream failures than short research overhead.

@@ -2,6 +2,7 @@
 description: "Default recovery + learning loop: diagnose failures, adapt, verify, and codify prevention."
 globs: "*"
 alwaysApply: true
+reviewBy: "2026-06-30"
 ---
 
 # Self-Healing and Self-Learning Loop
