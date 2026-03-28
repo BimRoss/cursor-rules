@@ -55,3 +55,9 @@ Use this template for each entry:
 - Change: added always-apply rule `shocking-concurrent-edits-stop.mdc` to require immediate stop/re-read/user-confirm flow on surprising concurrent file changes.
 - Expected impact: fewer accidental clobbers and safer collaboration when multiple agents touch adjacent areas.
 - Verification: when unexpected edits are detected, agent pauses and asks user before continuing.
+
+## 2026-03-27 - Restore worktree safety rule frontmatter
+- Trigger: audit failure after concurrent agent commit introduced a rule without required frontmatter metadata.
+- Change: added frontmatter (`description`, `globs`, `alwaysApply`, `reviewBy`) to `git-worktree-safe-staging.mdc`.
+- Expected impact: rule audits stay green and the staging safety rule is enforced consistently as always-apply guidance.
+- Verification: `./scripts/audit-rules.sh` passes with zero failures.

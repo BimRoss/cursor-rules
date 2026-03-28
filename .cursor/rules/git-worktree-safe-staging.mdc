@@ -1,3 +1,10 @@
+---
+description: "Safe git staging and commit protocol in mixed or concurrent worktrees."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-05-31"
+---
+
 # Git Worktree Safe Staging
 
 Use this protocol whenever making changes across one or more repos.
