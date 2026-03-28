@@ -49,3 +49,9 @@ Use this template for each entry:
 - Change: extended `web-research-for-complex-topics.mdc` with a response contract requiring source links for complex-topic recommendations and explicit conflict handling.
 - Expected impact: stronger traceability and easier verification of claims in advisor-style outputs.
 - Verification: complex-topic final responses include source links and note source conflicts when present.
+
+## 2026-03-27 - Shocking concurrent edits stop rule
+- Trigger: active multi-agent workspace requires explicit hard stop behavior when unexpected edits appear.
+- Change: added always-apply rule `shocking-concurrent-edits-stop.mdc` to require immediate stop/re-read/user-confirm flow on surprising concurrent file changes.
+- Expected impact: fewer accidental clobbers and safer collaboration when multiple agents touch adjacent areas.
+- Verification: when unexpected edits are detected, agent pauses and asks user before continuing.

@@ -1,0 +1,27 @@
+---
+description: "Emergency stop protocol for shocking or unexpected concurrent workspace edits."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-05-31"
+---
+
+# Shocking concurrent edits: stop protocol
+
+When working in a multi-agent workspace, treat surprising file changes as a safety event.
+
+## Trigger
+
+- A file changes unexpectedly while you are editing it.
+- You detect broad or surprising diffs that do not match your recent commands.
+- Another agent appears to have touched the same file or tightly coupled config during your task window.
+
+## Required actions
+
+- Stop writing immediately in the affected file(s).
+- Re-read the latest file state and compare against your intended change before any further edit.
+- Ask the user how to proceed if ownership is unclear or behavior could be clobbered.
+- Resume only after the user confirms direction or file ownership boundaries are re-established.
+
+## Tie-breaker
+
+If this rule conflicts with speed or automation goals, prefer this rule. Preventing clobber/regression in shared workspaces takes priority.
