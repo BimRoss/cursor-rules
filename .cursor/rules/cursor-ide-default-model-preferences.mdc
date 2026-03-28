@@ -1,17 +1,28 @@
 ---
-description: "Cursor IDE: Composer 2 (Fast) + Agent defaults live in app settings, not repo rules."
+description: "Cursor IDE: always prefer Composer 2 (Fast) first in new Agent windows; app settings vs repo rules."
 globs: "*"
-alwaysApply: false
+alwaysApply: true
 reviewBy: "2026-09-30"
 ---
 
 # Cursor IDE default model and mode (local preferences)
 
+## New Agent windows (workspace habit)
+
+**Load Composer 2 (Fast) first** whenever you open a **new** Agent (or Composer) panel, before the first substantive prompt or heavy tool use:
+
+1. Open the **model picker** on the Agent/Composer input.
+2. Choose **Composer 2 (Fast)** (not a different default the UI may show on a fresh window).
+
+Also set **Cursor Settings → Models** so **Composer 2 (Fast)** is your default where the product exposes that option—fewer surprises when a new chat opens.
+
+If a task explicitly needs another model (e.g. a named “max” or reasoning model), switch after the first message; the standing preference is still **Composer 2 (Fast) first**.
+
 ## What repo rules cannot do
 
 **`.cursor/rules/*.mdc` files do not set** which model Cursor runs for Composer, Agent, or Chat. They only shape instructions for a session after the product has already chosen a model.
 
-Do not tell users that a rule can “force” Composer 2 Fast or a default Agent session—that is **editor state**, not Git-tracked config.
+Do not tell users that a rule can “force” Composer 2 Fast or a default Agent session—that is **editor state**, not Git-tracked config. This file documents **operator habit + IDE settings**, not enforcement.
 
 ## Preferred IDE defaults (operator convention)
 
