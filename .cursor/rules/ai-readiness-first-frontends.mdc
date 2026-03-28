@@ -17,6 +17,7 @@ For bimross, **AI-readiness is paramount**. Build frontends so agents, crawlers,
 - Expose public-safe health/ops surfaces in the **Subnet Signal style** when relevant: thin status strip, minimal chrome, embedded Grafana, and URLs that work cleanly for both browsers and agents.
 - Keep observability routes simple and durable: `/health`, `/api/health`, `/grafana`, predictable env names, and same-origin embeds when possible.
 - Design for extraction, not just appearance. If a model or scraper reads the raw DOM/JSON, it should still understand what the product does, what state it is in, and what actions matter.
+- When you change user-visible copy, routes, or positioning, also update **`/llms.txt`**, sitemap/robots, and other machine-facing mirrors in the same change—see **`frontend-content-sync-agent-surfaces.mdc`**.
 
 ## Anti-patterns
 

@@ -1,0 +1,48 @@
+---
+description: When changing frontend copy, routes, or positioning, also update llms.txt and other machine-facing surfaces so agents and crawlers stay aligned with the live UI.
+globs: "**/*.tsx,**/*.jsx,**/*.vue,**/app/**/*.ts,**/pages/**/*.ts,**/public/**/llms*.txt,**/public/**/*.txt,**/metadata.ts,**/opengraph-image.*,**/sitemap.ts,**/robots.ts,**/layout.tsx"
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# Frontend content change → sync agent / crawler surfaces
+
+This rule complements **AI-Readiness First** (`ai-readiness-first-frontends.mdc`). When you **change user-visible meaning**—copy, navigation, routes, product claims, pricing, hero positioning, or primary page structure—treat **machine-readable mirrors** as part of the same change, not an optional follow-up.
+
+## Trigger (when to apply)
+
+- Marketing or product copy, headlines, CTAs, or factual claims on public pages.
+- New, renamed, or removed routes; nav labels; sitemap-worthy URLs.
+- “About”, pricing, features, changelog, or docs pages that models might cite.
+- Shared constants that already feed both UI and JSON (keep them in sync).
+
+## Surfaces to check (repo-dependent)
+
+Update whatever exists in that project. Common items:
+
+| Surface | Purpose |
+|--------|---------|
+| **`/llms.txt`** (sometimes `llms-full.txt`) | Concise, citation-friendly summary for LLM retrieval; list canonical URLs and JSON endpoints. Filename is conventionally **`llms.txt`** (not `llm.txt`). |
+| **`robots.ts` / `robots.txt`** | Crawl rules; **sitemap URL** and **host** if the public origin or policy changes. |
+| **`sitemap.ts` / sitemap config** | New or removed public URLs agents should discover. |
+| **Root `metadata` / OG / Twitter cards** | Titles, descriptions, and images must match the story the UI tells. |
+| **JSON-LD (`application/ld+json`)** | Person, Organization, WebSite, Product—align with updated claims and links. |
+| **Stable JSON for agents** (e.g. `profile.json`, `projects.json`) | If the site exposes these, they must reflect the same facts as the HTML UI. |
+| **`humans.txt`** | Optional credits / contact; keep in sync if you maintain it. |
+| **Feeds** (`rss.xml`, Atom) | If present, update when editorial content or post lists change meaningfully. |
+
+## Execution expectations
+
+1. **Discover** what the repo already ships (search for `llms`, `profile.json`, `robots`, `sitemap`, `jsonLd`, `schema.org`).
+2. **Mirror facts** from the UI change into those files in the **same PR or commit series** when the drift would confuse operators, users, or retrieval tools.
+3. **Prefer one source of truth**: when practical, drive UI + `llms.txt` bullets + JSON endpoints from shared modules (e.g. a single `site` or content module) so copy does not diverge silently.
+4. **Do not** paste secrets, internal URLs, or non-public endpoints into `llms.txt` or public JSON—only **public-safe** facts and links.
+
+## Verification
+
+- After edits, hit or review **`/llms.txt`**, **`/sitemap.xml`**, and any **JSON agent endpoints** in dev or staging and confirm they match the updated pages.
+- If structured data is hand-written, validate JSON-LD shape against [schema.org](https://schema.org/) expectations for the types you use.
+
+## Tie-in
+
+If conflict arises between “ship UI fast” and “update agent surfaces,” **prefer completing the sync in the same change** for public marketing and product claims, because stale `llms.txt` or JSON misleads agents and undermines trust in the whole site.
