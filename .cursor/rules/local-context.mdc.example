@@ -18,4 +18,13 @@ Suggested sections (fill with your real details):
 | **Triggers** | Wake phrases + paths (e.g. resume repo, transcribe folder) |
 | **Tooling** | Absolute paths only here, not in public rules |
 
+For richer company or founder identity, create a long-form doc under `.cursor/businesses/` (for example `.cursor/businesses/bimross.md`) and reference it from `local-context.mdc`.
+
+Use `.cursor/businesses/**` for material like:
+
+- company thesis and ambition
+- operating principles and "what we don't do"
+- repo map / start-here links
+- founder or brand voice notes that should stay local
+
 The maintainer’s filled-in `local-context.mdc` is **not** in the repo—clone and create your own.

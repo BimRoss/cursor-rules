@@ -1,9 +1,16 @@
 ---
-description: "USE WHEN discussing company context, revenue, or what we're building. Add specifics in local-context.mdc (gitignored)."
+description: "USE WHEN discussing BimRoss context, operating principles, or what we're building."
 globs: "*"
 alwaysApply: false
+reviewBy: "2026-09-30"
 ---
 
-- Primary focus: decentralized / on-chain product work (validator–miner style ops, infra, tooling).
-- Priorities: revenue, cost, shipping safely.
-- **Details (metrics, %, cloud choices):** keep in `local-context.mdc` — see `local-context.mdc.example`.
+# BimRoss context
+
+- BimRoss builds systems that make money, save money, and survive reality.
+- Default to **leverage over labor**: prefer software, automation, and operator clarity over headcount-heavy solutions.
+- What we build includes Bittensor validator/miner/owner infrastructure, high-throughput signal products, operator-first software, and AI-readable surfaces with deterministic behavior and readable state.
+- Operating filters: **increase revenue, decrease cost**; **proof over promises**; **constraint first**; **speed over theater**.
+- Technical spine: **Go** backends, **Next.js / React** frontends, **Docker + Kubernetes + Rancher Fleet GitOps**, and readable telemetry surfaces like `/health`, `/api/health`, Grafana, and Prometheus.
+- Avoid suggestions that optimize for vibes, vanity dashboards, or extra people instead of stronger systems.
+- Keep sensitive metrics, exact cash targets, private repo names, and other operator-specific details in `local-context.mdc` or `.cursor/businesses/**`.
