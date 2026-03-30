@@ -1,0 +1,25 @@
+---
+description: "Local Bimross development assumes macOS on the operator machine; align commands, paths, and native deps accordingly."
+alwaysApply: true
+reviewBy: "2027-03-30"
+---
+
+# Bimross local development = macOS
+
+For **local, interactive work** on Bimross repos (laptop scripts, face tooling, ad-hoc CLI, path assumptions in examples), treat the environment as **macOS** unless the user explicitly says otherwise.
+
+## Default assumptions
+
+- **Shell**: zsh; home paths like `~/Documents`, `~/Downloads` are normal.
+- **CPU**: Apple Silicon (arm64) is typical; prefer arm64-native wheels and tooling when choosing binaries or install instructions.
+- **System packages**: Homebrew is the usual installer (e.g. `brew install ffmpeg`), not `apt`.
+
+## Separation from production
+
+- **CI, Docker images, and Kubernetes** often run **Linux**. Do not conflate “runs on my Mac” with “runs in the cluster/container.” When the task is deploy/runtime, follow the Linux/container contract for that artifact.
+
+## Agent behavior
+
+- Prefer macOS-appropriate examples and file locations for **local** steps.
+- Do not assume WSL, Linux desktop paths, or Windows-only workflows for Grant’s default local loop.
+- Never record hardware serial numbers, unique device IDs, or other sensitive identifiers from “About This Mac” or similar into tracked rules or commits.
