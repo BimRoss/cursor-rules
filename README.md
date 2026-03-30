@@ -1,21 +1,17 @@
 # Cursor Rules
 
-Build faster with Cursor without letting your AI assistant go off the rails.
+**BimRoss treats the company as code.** This repo is part of that stack: the shared brainstem where we capture how we think, ship, and recover—so intelligence compounds instead of evaporating in chat.
 
-`cursor-rules` is a production-ready operating system for AI-assisted engineering: clear rules, reusable skills, and workflows that keep output fast, safe, and shippable.
+We ingest signal from engineering, product, ops, and the field, then fold it into **rules** (defaults and guardrails) and **skills** (repeatable execution). The same loop updates frontends for humans *and* machines, CI/CD and GitOps habits, collaboration protocols, and the self-healing behaviors we want every agent and human to inherit. Nothing here is decoration; it is wiring.
 
-## Why This Repo Exists
-
-Most teams do not have an AI problem. They have a consistency problem.
-
-When your prompts, guardrails, and execution defaults are weak, quality collapses. This repo fixes that with explicit standards for code quality, safety, verification, and repo-specific behavior.
+You do not need our private overlays to get value. The public baseline is meant to be forkable. The private layer exists so operator context stays out of git—by design.
 
 ## What You Get
 
-- Battle-tested Cursor rules in `.cursor/rules/`
-- Reusable execution skills in `.cursor/skills/`
-- Public-safe baseline plus private overlays for sensitive context
-- Rule audit scripts to prevent drift over time
+- Cursor rules in `.cursor/rules/` — consistency, safety, and verification under pressure  
+- Skills in `.cursor/skills/` — frontend design, MCP servers, transcripts, and more  
+- A **public / private** split: reusable baseline on the branch; sensitive context in gitignored overlays  
+- Scripts to audit rules and catch drift (`scripts/audit-rules.sh`, `scripts/rules-scorecard.sh`)
 
 ## Quick Start
 
@@ -24,15 +20,15 @@ git clone https://github.com/BimRoss/cursor-rules.git
 cd cursor-rules
 ```
 
-Copy or symlink `.cursor/` into any project, then customize for your stack.
+Copy or symlink `.cursor/` into any project, then tailor it to your stack.
 
-## Set Private Context Early
+## Private Context (Optional)
 
 ```bash
 cp local-context.mdc.example .cursor/rules/local-context.mdc
 ```
 
-`local-context.mdc` is gitignored by design. Keep private repos, operator context, and personal preferences there.
+Keep repos, operator notes, and personal defaults in `local-context.mdc`—it stays local.
 
 ## Keep The System Healthy
 
@@ -41,28 +37,22 @@ cp local-context.mdc.example .cursor/rules/local-context.mdc
 ./scripts/rules-scorecard.sh
 ```
 
-For historical changes, see `RULES_CHANGELOG.md`.
+For history, see `RULES_CHANGELOG.md`.
 
 ## Who This Is For
 
-- Cursor power users shipping daily
-- Engineering teams that want predictable AI behavior
-- Founders and operators who care about speed and correctness
+Builders who want **leverage**: predictable AI behavior, fast recovery when something breaks, and standards that survive handoffs—whether you are a solo operator or a team.
 
 ## Related BimRoss Projects
 
-- [subnet-signal](https://github.com/BimRoss/subnet-signal)
-- [thread-pilot](https://github.com/BimRoss/thread-pilot)
-- [twitter-scraper](https://github.com/BimRoss/twitter-scraper)
+- [subnet-signal](https://github.com/BimRoss/subnet-signal)  
+- [thread-pilot](https://github.com/BimRoss/thread-pilot)  
+- [twitter-scraper](https://github.com/BimRoss/twitter-scraper)  
 - [cookie-monster](https://github.com/BimRoss/cookie-monster)
 
 ## Keywords
 
-Cursor rules, AI coding agent guardrails, prompt engineering workflow, developer productivity, AI pair programming standards.
-
-## Support The Project
-
-If this repo makes your team faster, star it so more builders can find it.
+Company as code, Cursor rules, AI agent guardrails, engineering leverage, operator-first automation.
 
 ## License
 
