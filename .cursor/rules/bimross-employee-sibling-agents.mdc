@@ -16,6 +16,10 @@ Multiple first-name **employees** (see **`personas/employees.txt`**) can run in 
 3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross` from **`slack-factory/manifests/*/app-manifest.json`**).
 4. **Spam guard:** Always say mentions are **optional** and **sparing**—not every message.
 
+## Canonical bot user IDs (GitOps)
+
+Runtime `U…` IDs for Ross / Tim / Alex live in **`employee-factory`** + **`rancher-admin`**—not in `slack-factory` manifests. When changing or debugging multi-agent / `<@U…>` behavior, follow **`employee-factory-slack-squad-ids.mdc`** and **`employee-factory/docs/slack-squad-ids.md`**.
+
 ## When adding a **new** employee
 
 1. Add `{new}-sibling-agents.mdc` describing all **existing** peers.
