@@ -98,11 +98,16 @@ jobs:
           import re
 
           version = os.environ["VERSION"]
-          path = Path("rancher-admin/admin/apps/employee-factory/alex-deployment.yaml")
-          content = path.read_text()
+          paths = [
+              Path("rancher-admin/admin/apps/employee-factory/alex-deployment.yaml"),
+              Path("rancher-admin/admin/apps/employee-factory/tim-deployment.yaml"),
+              Path("rancher-admin/admin/apps/employee-factory/ross-deployment.yaml"),
+          ]
           pattern = r"(geeemoney/cursor-rules:)[^\s\"']+"
-          updated = re.sub(pattern, lambda m: f"{m.group(1)}{version}", content)
-          path.write_text(updated)
+          for path in paths:
+              content = path.read_text()
+              updated = re.sub(pattern, lambda m: f"{m.group(1)}{version}", content)
+              path.write_text(updated)
           PY
 
       - name: Commit and push manifest updates
@@ -116,6 +121,6 @@ jobs:
           fi
           git config user.name "cursor-rules-ci"
           git config user.email "cursor-rules-ci@users.noreply.github.com"
-          git add admin/apps/employee-factory/alex-deployment.yaml
+          git add admin/apps/employee-factory/alex-deployment.yaml admin/apps/employee-factory/tim-deployment.yaml admin/apps/employee-factory/ross-deployment.yaml
           git commit -m "release(cursor-rules): bump cursor-rules bundle to ${VERSION}"
           git push origin master
