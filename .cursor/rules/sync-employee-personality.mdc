@@ -1,6 +1,7 @@
 ---
 description: "Mandatory: editing any <name>-*.mdc employee rule requires regenerating .cursor/personas/<name>-personality.md before commit."
 globs:
+  - .cursor/rules/bimross-company.mdc
   - .cursor/rules/alex-*.mdc
   - .cursor/rules/tim-*.mdc
   - .cursor/rules/ross-*.mdc
@@ -12,6 +13,8 @@ reviewBy: "2026-09-30"
 # Employee personality bundles (mandatory)
 
 Employees are listed in **`personas/employees.txt`** (e.g. `alex`, `tim`). Each has **`.cursor/rules/<name>-*.mdc`** and a rendered **`.cursor/personas/<name>-personality.md`** for Slack / future runtimes.
+
+**`bimross-company.mdc`** is prepended into **every** employee bundle (shared BimRoss identity). After editing it, run **`./scripts/sync-employee-personality.sh --all`**.
 
 After editing **any** `<name>-*.mdc` for that employee:
 
