@@ -25,7 +25,7 @@ reviewBy: "2026-09-30"
 ## Cogito + OpenAI-compatible providers (Subnet Signal, future Slack agents)
 
 - **`cogito.WithForceReasoning()`** turns the default **`reply` sink** back on. For **tool-only** flows (e.g. discovery must call `twitter_search`), apply **`cogito.DisableSinkState` after `WithForceReasoning`** so the model cannot “finish” without running real tools.
-- **`Fragment.ExtractStructure`** forces a **`json` tool call** with strict schema. Some hosts return **plain JSON in `assistant.content`** instead of `tool_calls` → keep a **compat path** that unmarshals the last assistant message when extraction errors with `no tool calls` / `no choices`. Reuse that pattern for **Alex / Tim / Ross** runtimes that share the same stack.
+- **`Fragment.ExtractStructure`** forces a **`json` tool call** with strict schema. Some hosts return **plain JSON in `assistant.content`** instead of `tool_calls` → keep a **compat path** that unmarshals the last assistant message when extraction errors with `no tool calls` / `no choices`. Optionally **one corrective user nudge + second `ExtractStructure`** before that fallback (extra completion only on failure). Reuse that pattern for **Alex / Tim / Ross** runtimes that share the same stack.
 
 ## What not to do
 
