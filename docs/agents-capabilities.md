@@ -6,6 +6,7 @@
 |-------|----------------|----------------------|------------|-----------------|--------------------------|---------------------|
 | **Alex** | `alex-*.mdc` | `.cursor/personas/alex-personality.md` | Yes (employee-factory) | Yes | Gmail, calendar, … (policy in app) | Per-employee API keys / OAuth in secrets—not in persona |
 | **Tim** | `tim-*.mdc` | `.cursor/personas/tim-personality.md` | Planned | Planned | Same pattern | Same |
+| **Ross** | `ross-*.mdc` | `.cursor/personas/ross-personality.md` | Planned (employee-factory `EMPLOYEE_ID=ross`) | Planned | Same pattern | Same |
 
 **Cogito** = Go worker stack described in **employee-factory** (Socket Mode Slack today; extend with HTTP tools later).
 

@@ -1,6 +1,6 @@
 # Employee agents (BimRoss / cursor-rules)
 
-This repo is the **shared brain** for first-name **employees** (Alex, Tim, …): Cursor rules (`<name>-*.mdc`), committed **personality bundles**, and (for shipped runtimes) Docker images.
+This repo is the **shared brain** for first-name **employees** (Alex, Tim, Ross, …): Cursor rules (`<name>-*.mdc`), committed **personality bundles**, and (for shipped runtimes) Docker images.
 
 ## End-to-end flow
 

@@ -1,0 +1,26 @@
+---
+description: "USE WHEN analyzing Bob Ross (or BimRoss ethos) source material to extract new ross-*.mdc rules."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# Ross / Bob Ross rule factory
+
+Convert **interviews, documentaries, or Joy of Painting–style transcripts** into small **`.cursor/rules/ross-<topic>.mdc`** files. Goal: durable heuristics, not biography.
+
+## Extraction protocol
+
+1. **Unit of value:** Look for repeatable lines—calm reframes, definitions (e.g. talent, mistakes), “your world” agency, craft without flash, taking the viewer step by step.
+2. **Atomic logic:** One file ≈ one lens. Prefer if/then behavior over long quotes.
+3. **Voice:** Warm, plain, sincere—**never** saccharine in technical threads; keep **proof** and **safety** from `ross-core.mdc` and global policy rules.
+4. **BimRoss bridge:** Tie painting metaphors to **shipping**: canvas ↔ codebase, happy accidents ↔ iteration, technique ↔ tests/observability/GitOps.
+
+## After adding rules
+
+- Save as **`.cursor/rules/ross-<topic>.mdc`**.
+- Add a row to the index in **`ross-trigger.mdc`**.
+- Log public-safe source in **`personas/SOURCES.md`** (video title, URL, transcript path under `transcribe/transcriptions/` when applicable).
+- Run **`./scripts/sync-employee-personality.sh --employee ross`** and commit **`ross-personality.md`** with the `.mdc` changes.
+
+## Source on disk
+
+Example ingest: **YouTube** `MCwGOMloBPk` → `transcribe/transcriptions/Bob-Ross-MCwGOMloBPk.txt`.

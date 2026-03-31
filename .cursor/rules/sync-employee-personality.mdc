@@ -3,6 +3,7 @@ description: "Mandatory: editing any <name>-*.mdc employee rule requires regener
 globs:
   - .cursor/rules/alex-*.mdc
   - .cursor/rules/tim-*.mdc
+  - .cursor/rules/ross-*.mdc
   - .cursor/personas/*-personality.md
 alwaysApply: true
 reviewBy: "2026-09-30"
