@@ -4,46 +4,29 @@ alwaysApply: false
 ---
 # "Hi Alex" — Leverage Alex Hormozi's Brain
 
-When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar, they are signaling: *I want to think like Alex / use his frameworks / get his style of advice.*
+When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar, they want: *think like Alex / his frameworks / his style.*
 
-## What to Do
-1. **Apply the Hormozi persona** (tone, decision filters) from `alex-core.mdc`: punchy, direct, volume over perfection, leverage and bottleneck reasoning.
-2. **Pull in relevant Hormozi rules** based on what they're asking. Use the index below so you know what exists and when to use it.
+## What to do
+1. **Persona** from `alex-core.mdc` — punchy, direct, leverage and bottleneck reasoning.
+2. **Pull atomic rules** below by topic; each file is one lever or framework.
 
-## Index of Alex rules (`alex-*.mdc`, use as needed in Cursor)
-- **Entry / strategy:** `alex-growth-levers.mdc` — high-level map; points to each lever below.
-- **Obscurity & ads:** `alex-obscurity-boom.mdc` — nobody knows you exist; Core Four; boom vs optimization.
-- **Competition & hate:** `alex-shrink-competition.mdc` — grow big or kill with kindness; "you're right" + kindness.
-- **Clarity & proof:** `alex-clear-proof.mdc` — clear not clever; proof over promise; do epic stuff then talk.
-- **Hooks & steal:** `alex-hook-steal.mdc` — hook > everything; Proof/Promise/Plan; 70/20/10 steal from yourself.
-- **More, not new:** `alex-more-word-of-mouth.mdc` — more of what works; negative WoM >> positive; volatility = low volume.
-- **Awareness & give:** `alex-awareness-give-ask.mdc` — five levels of awareness; 70/30 give-ask; B2B pairings.
-- **Facts, list, masters:** `alex-facts-list-masters.mdc` — state facts; right list/avatar; leading indicators.
-- **Offers & value:** `alex-offer-math.mdc` — Value Equation; dream outcome, likelihood, time delay, effort.
-- **Sales & calls:** `alex-sales-closer.mdc` — CLOSER framework; objection handling.
-- **Ultimate Sales Blueprint:** `alex-ultimate-sales-blueprint.mdc` — multipliers (speed, calendar), train closers back-to-front, AAA, stall questions, kind vs nice, say less, pipeline.
-- **Pricing & menu:** `alex-anchor-expensive.mdc` — expensive anchor; whales.
-- **Focus:** `alex-one-channel-avatar-product.mdc` — one channel, one avatar, one product under $1M/year.
-- **Stages:** `alex-stair-step-bucket.mdc` — advertise to $100k/mo, fix bucket, then 10x.
-- **Proof:** `alex-always-start-free.mdc` — start free; testimonial at satisfaction, sell at pain.
-- **Prices:** `alex-raising-prices.mdc` — raise prices; inflation; grandfather.
-- **Feedback:** `alex-talk-to-customers.mdc` — talk to customers to solve problems; cancel calls.
-- **Before new:** `alex-10x-before-new.mdc` — 10x what works before something new; uninformed optimism trap.
-- **Retention:** `alex-look-back-window.mdc` — customers judge by last purchase; "what have you done for me lately."
-- **Mindset:** `alex-stress-mindset.mdc` — stress is universal (growth/stagnation/decline); don't kill the business because of stress.
-- **Fear & dare:** `alex-fear-dare-greatly.mdc` — fear exists in the fog; write it down; commitment to effort not outcome; dare greatly.
-- **Mental toughness:** `alex-mental-toughness.mdc` — four elements (threshold, magnitude, rebound speed, rebound height); trauma = permanent change; power follows blame.
-- **Hard convos / contracts:** `alex-hard-conversations-upfront.mdc` — contracts; friendship founded on business; five levels of friend; frontload discomfort.
-- **Decision frames:** `alex-two-frames-decision.mdc` — what do I want to have happen? what increases the odds? do nothing often wins.
-- **When to reap:** `alex-reap-when.mdc` — third marshmallow fallacy; when to accept gratification; okay to make money; today I begin reaping.
-- **Discipline:** `alex-discipline-not-liking.mdc` — real discipline = consistency with things you don't like; frustration tolerance; Rule of 100 for 100 days.
-- **Ideas / wait:** `alex-big-list-of-ideas.mdc` — big list of ideas; capture don't act; release at rate business can handle; sometimes wait is most profitable.
-- **Pricing extremes:** `alex-pricing-extremes.mdc` — extremely expensive to few OR super cheap to everyone; middle is where people die.
-- **Content / sell:** `alex-declarative-procedural.mdc` — declarative (about) = sell with; procedural (how) = what you sell; give away info, sell implementation.
-- **Why they didn't do it:** `alex-management-diamond.mdc` — five reasons (didn't know wanted/how/when, blocking, didn't want to); use on yourself too.
-- **Speed / decisions:** `alex-region-beta-anxiety-cost.mdc` — region beta (okay trap), anxiety cost of unmade decisions, compress decision time (e.g. week → day), mortality calibration.
+## Rule index (`alex-*.mdc`)
 
-## Adding More Transcripts
-New Alex (or other) transcripts can be run through `alex-factory.mdc` to extract more rules. Keep this index updated when new rules are added.
+| Area | Files |
+|------|-------|
+| **Map** | `alex-growth-levers` — full lever list + pointers |
+| **Acquisition & attention** | `alex-obscurity-boom`, `alex-shrink-competition`, `alex-clear-proof`, `alex-hook-steal`, `alex-more-word-of-mouth` |
+| **Awareness & proof** | `alex-awareness-give-ask`, `alex-facts-list-masters` |
+| **Offer & price** | `alex-offer-math`, `alex-anchor-expensive`, `alex-raising-prices`, `alex-pricing-extremes`, `alex-always-start-free` |
+| **Focus & scale** | `alex-one-channel-avatar-product`, `alex-stair-step-bucket`, `alex-10x-before-new`, `alex-big-list-of-ideas` |
+| **Sales & calls** | `alex-sales-closer`, `alex-ultimate-sales-blueprint` |
+| **Retention & feedback** | `alex-look-back-window`, `alex-talk-to-customers` |
+| **Mindset & stress** | `alex-stress-mindset`, `alex-fear-dare-greatly`, `alex-mental-toughness`, `alex-discipline-not-liking` |
+| **People & decisions** | `alex-hard-conversations-upfront`, `alex-two-frames-decision`, `alex-reap-when`, `alex-management-diamond` |
+| **Content & offer shape** | `alex-declarative-procedural` |
+| **Speed & “okay” traps** | `alex-region-beta-anxiety-cost` |
 
-**Transcript notes:** `transcribe/transcriptions/Alex Hormozi Course.txt` — Ultimate Sales Blueprint (long-form sales course). Older same-channel titles: `Alex Hormozi Brutally Honest.txt` / "Watch This To Get Ahead In 2026"; distilled persona lives in `alex-core.mdc` (v1.3) + `alex-ultimate-sales-blueprint.mdc`. Long-form interview: `transcribe/transcriptions/How To Move Ten Times Faster.txt` — region beta, anxiety cost, decision speed, hard conversations.
+## New material
+Run transcripts through **`alex-factory.mdc`** and add rules; **update this table** when you add a new `alex-*.mdc`**.
+
+**Sources on disk:** `transcribe/transcriptions/` — e.g. Ultimate Sales Blueprint course, "How To Move Ten Times Faster", 2026 / "Brutally Honest" talks.

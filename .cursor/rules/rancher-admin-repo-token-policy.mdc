@@ -53,6 +53,7 @@ When evaluating "is CI/CD ready for release?" compare against these canonical wo
 - `twitter-indexer/.github/workflows/twitter-indexer-images.yml`
 - `cookie-monster/.github/workflows/cookie-monster-images.yml`
 - `subnet-signal/.github/workflows/subnet-signal-images.yml`
+- `cursor-rules/.github/workflows/cursor-rules-images.yml`
 
 Report mismatches explicitly (missing tag trigger, missing `gitops-release`, wrong image regex/path, missing/incorrect token wiring).
 

@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 # Growth Levers (Index)
 
-High-level map of where each lever lives. Use the specific rule for tactics. **When user says "hi alex"**, also consider `alex-trigger.mdc` for full index and persona.
+High-level map of where each lever lives. Use the specific rule for tactics. Full persona + index: **`alex-trigger.mdc`**, **`alex-core.mdc`**.
 
 ## Core growth (original transcript)
 1. **Nobody knows you exist** → First 4 hrs/day on obscurity. Core Four (outreach / content / ads)—pick one, go all in. Advertising = boom (order of magnitude), not optimization. → `alex-obscurity-boom.mdc`

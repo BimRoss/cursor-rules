@@ -3,6 +3,10 @@
 Persona markdown for Slack and other **employee** runtimes is built by
 `scripts/render-employee-persona.py`.
 
+## Committed bundle (Alex)
+
+For **Alex**, the production system prompt is also checked in as **`.cursor/personas/alex-personality.md`** (same render as below, `--compact` + `alex-slack.exclude`). Regenerate with **`./scripts/sync-alex-personality.sh`** after any `alex-*.mdc` edit; CI enforces freshness. Kubernetes loads this file from the **`geeemoney/cursor-rules`** image (see `sync-alex-personality.mdc`).
+
 ## Convention (no manifest required)
 
 - Put rules in **`.cursor/rules/`** using the employee first name as a **filename prefix**:

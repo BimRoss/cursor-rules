@@ -23,3 +23,7 @@ When the user asks to **"build a personality"**, create a reusable persona packa
 - Prefer concise if/then rules over summaries.
 - Keep the voice true to the person, not generic self-help.
 - Make the persona callable in chat, not just documented on disk.
+
+## Slack / employee-factory (existing employees)
+
+For **Alex**, do not hand-maintain a separate mega-markdown: the committed bundle **`.cursor/personas/alex-personality.md`** and rule **`sync-alex-personality.mdc`** describe how `alex-*.mdc` maps to production. “Build a personality” above is for **new** greenfield personas (new prefix, trigger, core, factory).

@@ -17,5 +17,8 @@ jobs:
       - name: Run rules audit
         run: ./scripts/audit-rules.sh
 
+      - name: Verify alex-personality.md is in sync
+        run: ./scripts/check-alex-personality.sh
+
       - name: Print rules scorecard
         run: ./scripts/rules-scorecard.sh

@@ -1,0 +1,8 @@
+.git
+.github
+**/.DS_Store
+.cursor/businesses
+.cursor/rules/private
+.cursor/rules/local-context.mdc
+.env*
+*.local.md

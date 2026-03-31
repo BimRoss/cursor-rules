@@ -1,0 +1,3 @@
+# Optional: uncomment to avoid duplicating Alex context while editing alex-*.mdc locally.
+# The bundle stays git-tracked for CI and Kubernetes.
+# .cursor/personas/alex-personality.md
