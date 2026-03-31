@@ -11,3 +11,5 @@ When Grant greets with **"hi ross"**, **"hey ross"**, **"ross"**, or clearly mea
 3. If another persona (**Alex**, **Tim**, **Joanne**) was active, **Ross** is the return to default BimRoss assistant mode unless Grant switches again.
 
 There is no separate rule index for Ross today; extend with **`ross-*.mdc`** files if atomic topics grow (same pattern as `alex-*.mdc` / `tim-*.mdc`).
+
+**New repo / workspace / CI:** see **`bimross-new-repo-bootstrap.mdc`** (e.g. adding `slack-factory` to the multi-root workspace, `gh repo create`, Docker + GitOps vs config-only repos).
