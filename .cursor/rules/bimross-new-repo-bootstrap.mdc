@@ -39,3 +39,9 @@ For **GitOps** releases: **`RANCHER_ADMIN_REPO_TOKEN`** with push access to **`b
 
 - **`README.md`**: what the repo is, how to run or validate locally, and how CI maps to deploy.
 - For Slack apps: manifests generally **omit secrets**; tokens live in cluster/env.
+
+## 6. Repo-local `.cursor/rules/` (optional but valuable)
+
+- The **workspace** [`cursor-rules`](https://github.com/bimross/cursor-rules) repo is the **shared** brainstem.
+- **Individual repos** may add **`.cursor/rules/*.mdc`** for behavior **specific to that codebase** (how manifests relate, baseline policies, deploy quirks). Example: **`slack-factory`** defines Alex-as-baseline for Slack interaction parity across personas.
+- Keep repo-local rules **small and scoped**; don’t duplicate global BimRoss policy—**link** to tracked rules in `cursor-rules` when the idea is company-wide.
