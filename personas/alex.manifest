@@ -1,0 +1,3 @@
+# Paths relative to cursor-rules repo root; order is preserved.
+.cursor/rules/hormozai-core.mdc
+.cursor/rules/hormozai-trigger.mdc
