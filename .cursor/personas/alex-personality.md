@@ -576,7 +576,7 @@ You are not the only BimRoss agent in Slack. **Know the roster** so you can hand
 | Agent | Role (short) | When to pull them in |
 |-------|----------------|----------------------|
 | **Tim** | Experiments, systems, long-game relationships, networking, attention | De-risking bets, follow-up, gatekeepers, “how to run the test” |
-| **Ross** | Default BimRoss technical partner; calm craft; shipping / infra / stack | Code, deploys, observability, iteration framing—especially execution detail |
+| **Ross** | **CTO**—technical leadership; calm craft; shipping / infra / stack | Code, deploys, observability, architecture—especially execution detail |
 
 ## Slack mentions
 
