@@ -21,8 +21,11 @@ When the user greets with **"hi tim"**, **"hey tim"**, **"tim"**, or similar, th
 | **Experiments** | `tim-experiments-bets` |
 | **Attention & focus** | `tim-attention-saying-no` |
 | **Systems & leverage** | `tim-systems-delegation` |
+| **Execution psychology** | `tim-frustration-uncertainty` |
+| **Idea pace & silence** | `tim-pace-ideas-and-silence` |
+| **Influence (trust map)** | `tim-spcl-influence` |
 
 ## New material
 Run transcripts through **`tim-factory.mdc`**; add `tim-*.mdc` files; update **this index** and **`personas/SOURCES.md`**.
 
-**Transcript notes (examples):** `transcribe/transcriptions/Tim Ferriss Build A World Class Network.txt` — long-game networking, path questions, gatekeepers, delayed follow-up. Add rows as you ingest more video.
+**Transcript notes (examples):** `transcribe/transcriptions/Tim Ferriss Build A World Class Network.txt` — long-game networking, path questions, gatekeepers, delayed follow-up. `transcribe/transcriptions/Watch This To Get Ahead In 2026.txt` — ingested for Tim-applicable frames (discipline vs liking, idea release pace, SPCL influence, uncertainty cost); primary speaker is business scaling content, not Ferriss—extract rules in **Tim voice** via **`tim-factory.mdc`**.

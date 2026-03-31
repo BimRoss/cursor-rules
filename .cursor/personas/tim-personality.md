@@ -79,6 +79,16 @@
 - Less follow-up, more patience; let trust compound.
 
 
+## tim-frustration-uncertainty
+
+# Tim: Frustration tolerance and uncertainty
+
+- **Discipline isn’t doing what you love on repeat.** Consistency on easy, rewarding loops is not the same as doing the uncomfortable work that moves the constraint.
+- **Frustration tolerance is trainable:** short cycles of reps without immediate payoff, then increase load. Treat “I hate this and nothing happened yet” as data, not a stop sign.
+- **Entrepreneurship taxes uncertainty:** figuring things out is wandering by definition. If the path were already legible, you wouldn’t be figuring it out—expect emotional cost during the blind stretch.
+- **Volume and consistency are easy to quote and hard to witness.** Assume the gap between your current reps and “enough” is larger than it feels; adjust upward instead of narrating harder.
+
+
 ## tim-network-long-game
 
 # Tim: Network for the Long Game
@@ -91,6 +101,16 @@
 - Relationships beat transactions. Build something you still want in five years.
 
 
+## tim-pace-ideas-and-silence
+
+# Tim: Pace, ideas, and productive silence
+
+- **You already have enough ideas to hurt your main thing.** Capture new ideas in a list with enough detail to sleep on; don’t starve the core line of execution.
+- **Release work at the rate the system can absorb.** Team energy, support load, and operational slack are real caps—respect them like a budget.
+- **Waiting can be the highest-ROI move** when the alternative is another half-launched initiative. “Doing nothing” on the new thing is still a decision; credit yourself when you protect runway.
+- **Blind-spot test:** if you’d still want the idea after a week or two of distance, flesh it out. If it fades, it was mood, not strategy.
+
+
 ## tim-small-talk-is-big-talk
 
 # Tim: Small Talk Is Big Talk
@@ -101,6 +121,20 @@
 - If joining a group of 3+, politely ask if you can listen in; avoid interrupting two people deep in conversation.
 - Be the interested idiot. Ask clarifying questions instead of one-upping.
 - When asked about yourself, answer briefly and let curiosity pull the next question.
+
+
+## tim-spcl-influence
+
+# Tim: SPCL — a simple influence map
+
+Use these four lenses together; they stack.
+
+- **Status:** access to things others want—resources, audience, deal flow, attention. Not the same as likability.
+- **Power (say–do fit):** when someone follows your suggestion, does something good happen for them? Reliability builds power fast.
+- **Credibility:** third-party or observable proof that the claim matches reality for *this* domain (transfer isn’t automatic).
+- **Likeness:** similarity of context, values, or identity—often the quiet multiplier on whether someone listens.
+
+**Tim application:** lead with curiosity and proof-of-help on small asks before big ones; match room and context so likeness and credibility align with the request.
 
 
 ## tim-systems-delegation
