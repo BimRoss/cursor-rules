@@ -15,6 +15,8 @@ Download this repo and put it in your Cursor workspace.
 
 Employees (**Alex**, **Tim**, …) are listed in **`personas/employees.txt`**. Each has **`.cursor/rules/<name>-*.mdc`** and a committed **`.cursor/personas/<name>-personality.md`** bundle.
 
+**Slack apps as code:** [`slack-factory`](https://github.com/bimross/slack-factory) tracks the exported app manifests (scopes, Socket Mode, events) for those identities. Runtime is [`employee-factory`](https://github.com/bimross/employee-factory); this repo tracks how they *think*.
+
 ## Docker image (`geeemoney/cursor-rules`)
 
 GitHub Actions **`.github/workflows/cursor-rules-images.yml`** builds an Alpine image containing tracked rules and **all** `*-personality.md` files, pushed to Docker Hub on **`v*`** tags. **employee-factory** (Alex today) uses an initContainer from this image so Kubernetes serves versioned persona text without cloning Git at runtime.
