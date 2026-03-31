@@ -1,0 +1,10 @@
+# Optional: list rule basenames (one per line) to omit from the Slack / employee-factory
+# persona bundle. Lines starting with # are ignored.
+#
+# When to add excludes:
+# - Index-only files whose content is duplicated by the full rules linked from them
+#   (you already exclude alex-trigger and alex-factory via --compact).
+# - alex-growth-levers.mdc — high-level map; every lever points to another file that is
+#   fully inlined. Excluding saves tokens; keeping it gives the model a navigation summary.
+#   Uncomment the next line to drop the map:
+#alex-growth-levers.mdc
