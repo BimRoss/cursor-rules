@@ -1,0 +1,41 @@
+---
+description: "Grant says okay deploy or deploy everything — push all pending work, cut cursor-rules v* release, monitor Actions + K8s rollout, leave workspace clean."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# "Okay deploy" — full BimRoss release pass
+
+When Grant says **okay deploy**, **deploy everything**, or clearly means **push + release + verify rollout** (multi-repo, not a one-line fix in a single file), execute this protocol.
+
+## Authorization
+
+This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`cursor-rules`** (and **`employee-factory`** when its code changed) is **in scope** for this turn—see the exception note in **`bimross-git-dev-and-releases.mdc`**.
+
+## Default scope
+
+| Repo | Typical action |
+|------|----------------|
+| **`cursor-rules`** | `master` pushed; then **next semver `v*`** tag → **`geeemoney/cursor-rules`** image + GitOps updates **`cursor-rules` init** lines in **`rancher-admin`** `admin/apps/employee-factory/{alex,tim,ross}-deployment.yaml`. |
+| **`transcribe`** | Commit **`transcriptions/*.txt`** when new; push **`master`**. |
+| **`employee-factory`**, **`slack-factory`**, **`rancher-admin`** | Push **`master`** if there are commits; **tag `employee-factory`** only when **app/Docker** changes need a new **`geeemoney/employee-factory`** image (not required for persona-only updates). |
+
+## Order (keep this sequence)
+
+1. **Preflight:** `git status --short --branch` on each repo you will touch. If unrelated dirty files appear, stop and ask (**`git-worktree-safe-staging.mdc`**).
+2. **Land commits** with **explicit `git add <paths>`**; push **`master`** (or each repo’s integration branch).
+3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**. Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
+4. **Monitor CI:** `gh run list` / `gh run watch` for the **tag** workflow on **`cursor-rules`** until green (Docker + **`rancher-admin`** push from workflow when configured).
+5. **Rollout:** If kubeconfig is available (e.g. **`KUBECONFIG=$HOME/.kube/config/grant-admin.yaml`**): **`kubectl rollout status deployment/employee-factory-{alex,tim,ross} -n employee-factory`** (or get pods / describe if stuck).
+6. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push.
+
+## Out of scope unless Grant asks
+
+- Creating GitHub **Releases** UI notes, marketing comms, or **`employee-factory`** tags when only **`cursor-rules`** content changed.
+- Applying runtime secrets (kubectl) unless Grant included that in the same instruction.
+
+## Done when
+
+- **`cursor-rules`** tag workflow succeeded (or failure is explained with next step).
+- **`transcribe`** pushed if it had uncommitted **`transcriptions/`** files.
+- Cluster shows **Ready** pods for employee-factory workloads **or** a clear blocker (image pull, secret, Fleet lag).
+- No leftover uncommitted changes in touched repos.

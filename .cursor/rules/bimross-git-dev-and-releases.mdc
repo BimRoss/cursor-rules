@@ -22,9 +22,13 @@ Do **not** leave large finished changes only on disk; **push** so your human loo
 
 ## Releases and tags — human gate
 
-- **Do not** create **`v*`** tags, GitHub **Releases**, or production promotion steps **unless Grant explicitly asks** in the conversation (e.g. “tag it,” “cut a release,” “publish `v0.0.7`”).
+- **Do not** create **`v*`** tags, GitHub **Releases**, or production promotion steps **unless Grant explicitly asks** in the conversation (e.g. “tag it,” “cut a release,” “publish `v0.0.7`”, **“okay deploy”** / **“deploy everything”**).
 - Pushing to the default branch is **not** a release; it is **dev visibility + CI**.
 - If unsure whether to tag: **push only** and state what’s left for a human release.
+
+### Exception: “okay deploy”
+
+When Grant runs the full deploy pass (**`bimross-okay-deploy.mdc`**): **tag `cursor-rules`** as specified there (semver bump, push tag, monitor Actions + rollout). That phrase is an explicit release/deploy instruction for the multi-repo checklist—not a silent tag.
 
 ## Why
 
