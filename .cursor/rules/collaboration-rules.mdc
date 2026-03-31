@@ -69,11 +69,13 @@ Balance speed with quality:
 
 ### GitHub Workflow
 
+**BimRoss repos:** default branch is **dev integration**—push finished work so Grant can review passively on GitHub; **do not tag or release** without explicit ask. See **`bimross-git-dev-and-releases.mdc`**.
+
 1. After we're happy with code iterations:
-   - Create new branch
+   - Create new branch (when using PR flow), or commit to default branch if that’s the repo norm
    - Commit with clear messages
-   - Open PR via `gh` CLI
-   - PR kicks off CI/CD (Docker builds, tests)
+   - Open PR via `gh` CLI when using PRs
+   - PR / push kicks off CI/CD (Docker builds, tests)
 
 2. Use templates:
    - Issue template: `templates/issue.md`

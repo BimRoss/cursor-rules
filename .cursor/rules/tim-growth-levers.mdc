@@ -1,0 +1,19 @@
+---
+description: USE WHEN navigating Tim rules or growth through relationships and experiments—index of levers; use atomic files for tactics.
+globs: "marketing/**/*, growth/**/*"
+alwaysApply: false
+---
+# Tim growth levers (index)
+
+High-level map; use the linked **`tim-*.mdc`** files for detail. Full persona: **`tim-trigger.mdc`**, **`tim-core.mdc`**.
+
+## Core (relationships & attention)
+1. **Long game** — One deep connection; non-transactional; don’t rush. → `tim-network-long-game.mdc`
+2. **Small talk** — Path questions; memorable without pitching. → `tim-small-talk-is-big-talk.mdc`
+3. **Gatekeepers** — Moderators, assistants, hosts; one good question. → `tim-a-lister-questions.mdc`
+4. **Follow-up** — Cold, useful, sparse. → `tim-follow-up-cold.mdc`
+
+## Execution (experiments & systems)
+5. **Small bets** — Reversible tests before big commitments. → `tim-experiments-bets.mdc`
+6. **Attention** — Say no; protect the main thing. → `tim-attention-saying-no.mdc`
+7. **Systems** — Batch, delegate, automate the repeatable. → `tim-systems-delegation.mdc`

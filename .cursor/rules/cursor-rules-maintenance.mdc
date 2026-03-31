@@ -58,15 +58,15 @@ Before considering a rule change complete:
 - Confirm any new policy can be validated quickly (status check, lint, test, or command).
 - Confirm no new rule conflicts with higher-priority safety constraints.
 
-## Alex Slack bundle (`alex-*.mdc`)
+## Employee personality bundles (`<name>-*.mdc`)
 
-Edits to **`.cursor/rules/alex-*.mdc`** are not done until the committed bundle matches:
+Employees (`alex`, `tim`, …) are listed in **`personas/employees.txt`**. Edits to **`.cursor/rules/<name>-*.mdc`** are not done until the committed bundle matches:
 
-1. Run **`./scripts/sync-alex-personality.sh`** (writes **`.cursor/personas/alex-personality.md`**).
-2. Commit **both** the `.mdc` change(s) and the updated **`alex-personality.md`**.
-3. **`./scripts/check-alex-personality.sh`** must pass (also runs in CI on `rules-audit.yml` and `cursor-rules-images.yml`).
+1. Run **`./scripts/sync-employee-personality.sh --employee <name>`** or **`--all`** (writes **`.cursor/personas/<name>-personality.md`** per employee).
+2. Commit **both** the `.mdc` change(s) and the updated **`-personality.md`** file(s).
+3. **`./scripts/check-employee-personality.sh`** must pass (also runs in CI on `rules-audit.yml` and `cursor-rules-images.yml`).
 
-Slack / Kubernetes use the **rendered** markdown, not the loose `.mdc` set. Skipping the sync step ships stale persona text. See **`sync-alex-personality.mdc`** (always-on reminder in this repo).
+Slack / Kubernetes use the **rendered** markdown, not the loose `.mdc` set. Skipping the sync step ships stale persona text. See **`sync-employee-personality.mdc`** (always-on reminder). Architecture: **`docs/employee-agents.md`**.
 
 ## Do not
 

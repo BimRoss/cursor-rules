@@ -1,0 +1,31 @@
+---
+description: "BimRoss Git flow: default branch is dev integration; push finished work to GitHub; version tags and releases are human-controlled unless explicitly requested."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# BimRoss: default branch, GitHub, and releases
+
+## Default branch = dev
+
+Treat **`main`** / **`master`** (per repo) as the **integration line**—not a sacred “only via release” branch. Work lands here so you can **passively** verify via Git history, Actions, and diffs on GitHub.
+
+## After a medium or large implementation
+
+When implementation is **done** (builds/checks pass, self-review complete):
+
+1. **Commit** with a clear message.
+2. **Push to GitHub** on the default branch (or the branch you use for integration—match the repo’s norm).
+
+Do **not** leave large finished changes only on disk; **push** so your human loop can see it without asking.
+
+## Releases and tags — human gate
+
+- **Do not** create **`v*`** tags, GitHub **Releases**, or production promotion steps **unless Grant explicitly asks** in the conversation (e.g. “tag it,” “cut a release,” “publish `v0.0.7`”).
+- Pushing to the default branch is **not** a release; it is **dev visibility + CI**.
+- If unsure whether to tag: **push only** and state what’s left for a human release.
+
+## Why
+
+Releases are the **stopgap** where the human decides timing, comms, and coordination with image/GitOps—agents ship **code**; humans ship **releases** when ready.

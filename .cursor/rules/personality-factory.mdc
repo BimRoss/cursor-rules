@@ -26,4 +26,4 @@ When the user asks to **"build a personality"**, create a reusable persona packa
 
 ## Slack / employee-factory (existing employees)
 
-For **Alex**, do not hand-maintain a separate mega-markdown: the committed bundle **`.cursor/personas/alex-personality.md`** and rule **`sync-alex-personality.mdc`** describe how `alex-*.mdc` maps to production. “Build a personality” above is for **new** greenfield personas (new prefix, trigger, core, factory).
+For **existing** employees (Alex, Tim, …), do not hand-maintain a separate mega-markdown: committed **`.cursor/personas/<name>-personality.md`** and **`sync-employee-personality.mdc`** describe how `<name>-*.mdc` maps to production bundles. “Build a personality” above is for **new** greenfield personas (new first-name prefix, trigger, core, factory)—then add the name to **`personas/employees.txt`** and wire bundles like existing employees.

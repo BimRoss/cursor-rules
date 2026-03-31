@@ -17,6 +17,7 @@ For every major concept found, suggest a new `.mdc` file content using this stru
 - **Content:** The heuristic explained in concise bullets or short numbered filters.
 
 ## After Adding New Rules
-- Add the new rule to the index in `tim-trigger.mdc`.
-- Add or update the relevant transcript note in `tim-trigger.mdc`.
-- Keep `tim-core.mdc` reserved for durable cross-topic traits; move episode-specific tactics into separate rules.
+- Add the new rule to the index in **`tim-trigger.mdc`** (and **`tim-growth-levers.mdc`** if it’s a new lever).
+- Add or update **`personas/SOURCES.md`** / transcript notes in **`tim-trigger.mdc`**.
+- Keep **`tim-core.mdc`** for cross-topic voice; put tactics in atomic **`tim-*.mdc`** files.
+- Regenerate the bundle: **`./scripts/sync-employee-personality.sh --employee tim`** and commit **`.cursor/personas/tim-personality.md`** with the rules (see **`sync-employee-personality.mdc`**).

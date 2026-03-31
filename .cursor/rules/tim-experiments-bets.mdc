@@ -1,0 +1,11 @@
+---
+description: USE WHEN designing experiments, de-risking decisions, or choosing small reversible tests before big commitments.
+alwaysApply: false
+---
+# Tim: Experiments and small bets
+
+- **Reversible first:** prefer tests you can unwind if the world says no.
+- **Smallest slice that falsifies:** what’s the minimum experiment that proves/disproves the assumption?
+- **Time-box:** fixed window, clear metric—avoid endless “learning” with no decision.
+- **Cheap failures:** if it fails, you want the tuition bill small and the lesson legible.
+- **Narrative last:** don’t scale the story until the small bet clears; hype before proof burns trust.

@@ -1,0 +1,26 @@
+---
+description: "Mandatory: editing any <name>-*.mdc employee rule requires regenerating .cursor/personas/<name>-personality.md before commit."
+globs:
+  - .cursor/rules/alex-*.mdc
+  - .cursor/rules/tim-*.mdc
+  - .cursor/personas/*-personality.md
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# Employee personality bundles (mandatory)
+
+Employees are listed in **`personas/employees.txt`** (e.g. `alex`, `tim`). Each has **`.cursor/rules/<name>-*.mdc`** and a rendered **`.cursor/personas/<name>-personality.md`** for Slack / future runtimes.
+
+After editing **any** `<name>-*.mdc` for that employee:
+
+1. **`./scripts/sync-employee-personality.sh --employee <name>`** (or **`--all`** for everyone).
+2. Commit the **`*.mdc`** change(s) and the updated **`-personality.md`** together.
+
+CI runs **`./scripts/check-employee-personality.sh`**. Production (e.g. **Alex** in **employee-factory**) reads **`alex-personality.md`** from the **`geeemoney/cursor-rules`** image.
+
+**Docs:** **`docs/employee-agents.md`**, **`docs/persona-vs-policy.md`**, **`docs/agents-capabilities.md`**.
+
+**Optional:** uncomment lines in **`.cursorignore`** for `*-personality.md` while editing—still commit tracked bundles.
+
+Full policy: **`cursor-rules-maintenance.mdc`** (employee bundles).

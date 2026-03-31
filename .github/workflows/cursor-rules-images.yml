@@ -25,8 +25,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify alex-personality.md matches rules
-        run: ./scripts/check-alex-personality.sh
+      - name: Verify employee personality bundles match rules
+        run: ./scripts/check-employee-personality.sh
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
