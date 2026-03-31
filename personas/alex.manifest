@@ -1,5 +1,0 @@
-# Paths relative to cursor-rules repo root; order is preserved.
-# "Core Four" and obscurity/boom live in hormozai-obscurity-boom — include it or the model will guess wrong.
-.cursor/rules/hormozai-core.mdc
-.cursor/rules/hormozai-trigger.mdc
-.cursor/rules/hormozai-obscurity-boom.mdc

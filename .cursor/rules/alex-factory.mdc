@@ -16,6 +16,7 @@ For every major concept found, suggest a new `.mdc` file content using this stru
 - **Content:** The framework explained in bullet points or LaTeX for math.
 
 ## After Adding New Rules:
-- Add the new rule to the **index** in `hormozai-trigger.mdc` (so "hi alex" pulls it in).
-- If it's a growth lever, add a line to `hormozai-growth-levers.mdc` in the appropriate section.
-- Long-form interviews (e.g. `How To Move Ten Times Faster.txt`) often yield **decision-speed** and **psychology** rules—pair with `hormozai-region-beta-anxiety-cost.mdc` and `hormozai-core.mdc` filters.
+- Save the file as **`.cursor/rules/alex-<topic>.mdc`** so **employee-factory** persona sync (and Cursor) pick it up without a manifest.
+- Add the new rule to the **index** in `alex-trigger.mdc` (so "hi alex" pulls it in for interactive Cursor use).
+- If it's a growth lever, add a line to `alex-growth-levers.mdc` in the appropriate section.
+- Long-form interviews (e.g. `How To Move Ten Times Faster.txt`) often yield **decision-speed** and **psychology** rules—pair with `alex-region-beta-anxiety-cost.mdc` and `alex-core.mdc` filters.

@@ -54,4 +54,4 @@ docker compose run --rm transcribe
 
 ## Optional: Hormozi / long-form follow-up
 
-If the user wants rules extracted from the transcript, see `cursor-rules` → `hormozai-factory.mdc` and `hormozai-trigger.mdc`.
+If the user wants rules extracted from the transcript, see `cursor-rules` → `alex-factory.mdc` and `alex-trigger.mdc`.

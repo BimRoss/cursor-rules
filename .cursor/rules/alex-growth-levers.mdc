@@ -1,0 +1,75 @@
+---
+description: USE WHEN thinking about growth strategy, or when user says "hi alex" and asks about growth. Index of all Hormozi growth levers and related rules—use the specific rule for tactics.
+globs: "marketing/**/*, growth/**/*"
+alwaysApply: false
+---
+# Growth Levers (Index)
+
+High-level map of where each lever lives. Use the specific rule for tactics. **When user says "hi alex"**, also consider `alex-trigger.mdc` for full index and persona.
+
+## Core growth (original transcript)
+1. **Nobody knows you exist** → First 4 hrs/day on obscurity. Core Four (outreach / content / ads)—pick one, go all in. Advertising = boom (order of magnitude), not optimization. → `alex-obscurity-boom.mdc`
+
+2. **Shrink competition** → Grow so big they can't be heard, or kill with kindness. Claim flaws first. Repetition = reminder, not just teach. Hate response: "You're right" + kindness. → `alex-shrink-competition.mdc`
+
+3. **Clear, not clever** → Third-grade language; match analogy to audience. **Proof over promise**; show don't sell; do epic stuff then talk. → `alex-clear-proof.mdc`
+
+4. **Hook > everything** → Proof, Promise, Plan. First 1–5 sec. **Steal from yourself:** 70% copy what works, 20% adjacent, 10% new. → `alex-hook-steal.mdc`
+
+5. **More, not better/new** → Master "more" of what works. Volatility = low volume; flip annual result to daily volume. **Word of mouth:** negative >> positive; proof early to contain damage. → `alex-more-word-of-mouth.mdc`
+
+6. **Awareness + 70/30** → High-info vs low-info buyers; five levels of awareness. 70% give / 30% ask; 18 months to see return. B2B pairings: your outcomes, others' outcomes, free content/products. → `alex-awareness-give-ask.mdc`
+
+7. **State facts, list, masters** → Change reality; show/say only what you can. Best in a puddle. **List** = right people; avatar in ad. **Masters** = more leading indicators, not binary. → `alex-facts-list-masters.mdc`
+
+## From "13 Years" / "2026" transcripts
+8. **Expensive anchor** → Menu item 10x–100x you never plan to sell; anchors core offer; whales. → `alex-anchor-expensive.mdc`
+
+9. **One channel, one avatar, one product** → Under $1M/year: focus; delay second channel until ~$1M/mo. → `alex-one-channel-avatar-product.mdc`
+
+10. **Stair-step / bucket** → Until $100k/mo = all advertising; then fix holes in bucket; then 10x. → `alex-stair-step-bucket.mdc`
+
+11. **Always start free** → Proof first; testimonial at satisfaction, sell at pain. → `alex-always-start-free.mdc`
+
+12. **Raising prices** → Almost always more money; inelastic; 3–6% annually; grandfather. → `alex-raising-prices.mdc`
+
+13. **Talk to customers** → Solve (almost) every problem; cancel call = "what would it take to make it right?" → `alex-talk-to-customers.mdc`
+
+14. **10x before new** → Do 10x of what works before something new; constraint = what blocks 10x. → `alex-10x-before-new.mdc`
+
+15. **Look-back window** → Customers judge by last purchase; "what have you done for me lately." Recurring/retainer: last delivery matters most. → `alex-look-back-window.mdc`
+
+16. **Stress mindset** → Growth/stagnation/decline all stressful; don't quit or pivot to escape stress. Problem categorization often worse than the problem. → `alex-stress-mindset.mdc`
+
+## From "26 Harsh Lessons" (2025 transcript)
+17. **Fear in the fog** → Write down what you're afraid of in detail; commitment to effort divorced from outcome; dare greatly. → `alex-fear-dare-greatly.mdc`
+
+18. **Mental toughness** → Four elements: threshold, magnitude of change, rebound speed, rebound height. Trauma = permanent change; power follows blame. → `alex-mental-toughness.mdc`
+
+19. **Hard conversations up front** → Contracts; friendship founded on business; five levels of friend; frontload discomfort to avoid years of lawsuits. → `alex-hard-conversations-upfront.mdc`
+
+20. **Two decision frames** → What do I want to have happen? What increases the odds? Often "do nothing" wins. → `alex-two-frames-decision.mdc`
+
+21. **When to reap** → Third marshmallow fallacy; appropriate time to accept gratification; it's okay to make money; draw the line "today I begin reaping." → `alex-reap-when.mdc`
+
+## From "Watch This To Get Ahead In 2026" / "Alex Hormozi Brutally Honest" (same talk)
+22. **Discipline = things you don't like** → Real discipline is consistency with what you don't like; frustration tolerance is a skill; Rule of 100 for 100 days. → `alex-discipline-not-liking.mdc`
+
+23. **Big list of ideas** → Capture every idea in a doc; don't act until team has capacity; if you forget it it wasn't that good; release work at rate business can handle; sometimes wait is most profitable. → `alex-big-list-of-ideas.mdc`
+
+24. **Pricing extremes** → Extremely expensive to few OR super cheap to everyone; the middle is where people die. Unscalable = high margins up market; bottom = small $ = huge % income = needy. → `alex-pricing-extremes.mdc`
+
+25. **Declarative vs procedural** → Declarative (about) = use to sell; procedural (how) = what you sell. Give away info, sell implementation; in content teach declarative. → `alex-declarative-procedural.mdc`
+
+26. **Management diamond** → Why didn't they do it? Didn't know wanted/how/when, blocking, didn't want to (usually last). Use on yourself: why am I not doing more? → `alex-management-diamond.mdc`
+
+## From "Ultimate Sales Blueprint" (`Alex Hormozi Course.txt`)
+27. **Ultimate Sales Blueprint** → Sales multipliers (speed × calendar, sell when buyers are free), train closers back-to-front, AAA + stall questions, kind vs nice / commission breath, say less, don't be cute, sales as personalized marketing, pipeline pulse. → `alex-ultimate-sales-blueprint.mdc`
+
+## From "How To Move Ten Times Faster" (`How To Move Ten Times Faster.txt`)
+28. **Region beta + anxiety cost** → "Okay" traps; unmade decisions burn attention; compress decision windows; first hard action becomes proof for the next. → `alex-region-beta-anxiety-cost.mdc`
+
+## Offers & sales (cross-reference)
+- **Value equation / offers:** `alex-offer-math.mdc`
+- **CLOSER / sales calls:** `alex-sales-closer.mdc`
+- **Ultimate Sales Blueprint (systems):** `alex-ultimate-sales-blueprint.mdc`
