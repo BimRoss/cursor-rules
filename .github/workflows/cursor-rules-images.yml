@@ -1,5 +1,9 @@
 name: Build cursor-rules bundle image
 
+# Run JavaScript-based actions on Node.js 24 (runner deprecation of Node 20; security patches).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
 
@@ -23,7 +27,7 @@ jobs:
       IMAGE_NAME: geeemoney/cursor-rules
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Verify employee personality bundles match rules
         run: ./scripts/check-employee-personality.sh
@@ -77,7 +81,7 @@ jobs:
           echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
 
       - name: Checkout rancher-admin
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ env.RANCHER_ADMIN_REPO }}
           ref: master

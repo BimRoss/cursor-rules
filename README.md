@@ -24,3 +24,5 @@ After editing any **`<name>-*.mdc`**, run **`./scripts/sync-employee-personality
 **Release order:** publish a **`cursor-rules`** tag so the image exists before Fleet rolls manifests that reference **`geeemoney/cursor-rules:<semver>`**.
 
 **GitHub Actions secrets** (this repo): `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN` (push on `v*`), and `RANCHER_ADMIN_REPO_TOKEN` for **`gitops-release`** (clone/push `bimross/rancher-admin`—same policy as other BimRoss image repos; do not substitute `github.token` for that checkout).
+
+**CI runtimes:** workflows set **`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`** so Actions use **Node.js 24** (security patches; Node 20 runner deprecation). **`actions/checkout@v6`** on the workflows that ship images and audit rules—bump action majors when GitHub publishes updates.
