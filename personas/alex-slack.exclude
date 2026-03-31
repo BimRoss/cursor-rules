@@ -7,4 +7,4 @@
 # - alex-growth-levers.mdc — high-level map; every lever points to another file that is
 #   fully inlined. Excluding saves tokens; keeping it gives the model a navigation summary.
 #   Uncomment the next line to drop the map:
-#alex-growth-levers.mdc
+alex-growth-levers.mdc

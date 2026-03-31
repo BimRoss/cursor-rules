@@ -22,7 +22,7 @@ If present, **`personas/{employee}-slack.exclude`** is passed as **`--exclude-fi
 
 **Real duplication (already handled):** `{employee}-trigger` (full index of filenames) and `{employee}-factory` (how to author `.mdc` files) are **excluded in `--compact`** because the same rules appear again as full sections.
 
-**Optional trim:** `alex-growth-levers.mdc` is a **map** to other files; those files are already inlined in full. Keeping growth-levers gives the model a **one-screen outline**; dropping it saves a noticeable chunk of tokens. Uncomment the line in [`alex-slack.exclude`](alex-slack.exclude) if you want outline out, map-only savings.
+**Optional trim:** `alex-growth-levers.mdc` is a **map** to other files; those files are already inlined in full. [`alex-slack.exclude`](alex-slack.exclude) **excludes growth-levers by default** for Slack to save tokens (outline is redundant once every lever file is inlined). Comment out that line if you want the one-screen outline back in the bundle.
 
 **Going further:** use **`--manifest`** with an explicit ordered list (core + highest-value modules) for very small models or tight `LLM_SYSTEM_MAX_RUNES` caps in employee-factory.
 

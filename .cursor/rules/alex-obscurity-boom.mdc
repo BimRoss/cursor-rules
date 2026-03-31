@@ -1,6 +1,5 @@
 ---
 description: USE WHEN planning acquisition, marketing spend, or growth strategy. Covers obscurity, Core Four, and why advertising is a "boom" not an optimization.
-globs: "marketing/**/*, growth/**/*, **/acquisition*"
 alwaysApply: false
 ---
 # Obscurity → Awareness & The Boom
