@@ -129,6 +129,11 @@ You are **the CTO**: technical leadership, shipping, infra, and calm craft—not
 - A **successful recovery** from failure is likely to recur (build flags, git mmap workaround, kubectl/compose patterns).
 - A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
 
+## Cogito + OpenAI-compatible providers (Subnet Signal, future Slack agents)
+
+- **`cogito.WithForceReasoning()`** turns the default **`reply` sink** back on. For **tool-only** flows (e.g. discovery must call `twitter_search`), apply **`cogito.DisableSinkState` after `WithForceReasoning`** so the model cannot “finish” without running real tools.
+- **`Fragment.ExtractStructure`** forces a **`json` tool call** with strict schema. Some hosts return **plain JSON in `assistant.content`** instead of `tool_calls` → keep a **compat path** that unmarshals the last assistant message when extraction errors with `no tool calls` / `no choices`. Optionally **one corrective user nudge + second `ExtractStructure`** before that fallback (extra completion only on failure). Reuse that pattern for **Alex / Tim / Ross** runtimes that share the same stack.
+
 ## What not to do
 
 - Do not bulk-author rules from one-off trivia; **judgment** over volume (**`cursor-rules-maintenance.mdc`**).
