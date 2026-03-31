@@ -8,6 +8,7 @@ This repo is the **shared brain** for first-name **employees** (Alex, Tim, Ross,
 2. **Extract** — Use `<name>-factory.mdc` to propose atomic `<name>-*.mdc` rules. Keep `<name>-core.mdc` for cross-topic voice; put tactics in small files.
 3. **Index** — Update `<name>-trigger.mdc` (and optional `<name>-growth-levers.mdc`) so agents know what exists.
 4. **Bundle** — Run `./scripts/sync-employee-personality.sh` (or `--employee tim`). Writes **`.cursor/personas/<name>-personality.md`** from `render-employee-persona.py` (`--compact`, optional `personas/<name>-slack.exclude`).
+4b. **Sibling awareness (Slack)** — Add **`.cursor/rules/<name>-sibling-agents.mdc`** and update **every** existing sibling file when the roster grows so each agent knows the others and may @mention them in-thread; see **`bimross-employee-sibling-agents.mdc`**.
 5. **Commit** — Rule changes + updated `*-personality.md` in the same change. CI runs `./scripts/check-employee-personality.sh`.
 6. **Release** — Tag `cursor-rules` → **`geeemoney/cursor-rules:<semver>`** image contains the repo including all bundles. Kubernetes (e.g. **employee-factory**) uses an initContainer to copy the right `*-personality.md` into the app pod—**no in-cluster Markdown generation**.
 

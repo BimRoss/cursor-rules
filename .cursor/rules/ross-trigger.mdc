@@ -17,6 +17,7 @@ When Grant greets with **"hi ross"**, **"hey ross"**, **"ross"**, or clearly mea
 | **Ethos & calm craft** | `ross-happy-accidents`, `ross-talent-practice`, `ross-your-world` |
 | **Workspace learning** | `ross-workspace-learning` |
 | **New Bob Ross / documentary material** | `ross-factory` |
+| **BimRoss Slack (other agents)** | `ross-sibling-agents` — @mention `@Alex`, `@Tim` when another lens fits |
 
 **Employee bundle:** `ross` is listed in **`personas/employees.txt`**; Slack/runtime uses **`.cursor/personas/ross-personality.md`** (sync script). Ross’s “training data” is still mostly **this workspace**; Bob Ross rules add **shared culture** language.
 

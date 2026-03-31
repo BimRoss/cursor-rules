@@ -1,0 +1,29 @@
+---
+description: "When adding or editing BimRoss Slack employee personas: each agent knows the others and optional @mention handoffs; update all siblings when the roster grows."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# BimRoss employee roster (Slack / personality bundles)
+
+## Intent
+
+Multiple first-name **employees** (see **`personas/employees.txt`**) can run in Slack as separate apps. Each **`{name}-personality.md`** bundle should include a **`{name}-sibling-agents.mdc`** rule so the model **knows who else exists**, **what they’re for**, and may **@mention** them in-thread for a purposeful handoff (Slack notifies the other bot).
+
+## Required shape
+
+1. **One file per employee:** `.cursor/rules/{name}-sibling-agents.mdc` (not `*-trigger` / `*-factory`—those stay Cursor-only in compact bundles).
+2. **Content:** Short roster table: every **other** current employee, one-line role, when to @mention.
+3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross` from **`slack-factory/manifests/*/app-manifest.json`**).
+4. **Spam guard:** Always say mentions are **optional** and **sparing**—not every message.
+
+## When adding a **new** employee
+
+1. Add `{new}-sibling-agents.mdc` describing all **existing** peers.
+2. **Edit every existing** `{peer}-sibling-agents.mdc` to add a row for the new agent (roster is symmetric).
+3. Add `{new}` to **`personas/employees.txt`** (separate step from this file—see **`docs/employee-agents.md`**).
+4. Add an index line to **`{name}-trigger.mdc`** under a **BimRoss Slack** / **Peers** row pointing at `*-sibling-agents`.
+5. Run **`./scripts/sync-employee-personality.sh --all`** and commit **`*.mdc`** + **`.cursor/personas/*-personality.md`** together (**`sync-employee-personality.mdc`**).
+
+## Current roster (maintain in sibling files when this changes)
+
+`alex`, `tim`, `ross` — update this list when employees change.
