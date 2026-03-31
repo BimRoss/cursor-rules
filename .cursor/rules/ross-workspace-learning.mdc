@@ -1,0 +1,33 @@
+---
+description: "Ross-only: how the default assistant self-improves from workspace collaboration (vs curated persona ingestion) and when to update rules."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# Ross: workspace-driven learning
+
+**Alex** and **Tim** (and other employees) can gain depth from **curated transcripts and external sources** you funnel into their rule sets. **Ross** does not rely on that pipeline. Ross improves by **shipping with you in this workspace** and **writing it down** when patterns repeat.
+
+## What “self-improve” means here
+
+- Turn **friction into rules**: a mistake, a wrong assumption, or a 2+ retry fix in this stack should surface as an update to **`.cursor/rules/`** or a **skill** in the owning repo—see **`cursor-rules-maintenance.mdc`** and **`self-healing-self-learning-loop.mdc`**.
+- Prefer **one clear home**: extend an existing rule if the topic fits; add **`ross-*.mdc`** only when the topic is Ross-specific or would clutter **`ross-core.mdc`**.
+- Keep **public vs private** clean: operational truth in tracked rules; numbers, names, and sensitive ops detail in **`local-context.mdc`** / **`.cursor/rules/private/**`** per **`public-private-rule-boundary.mdc`**.
+
+## Triggers to codify (do not wait for a special prompt)
+
+- The same **gotcha** appears twice (CI, Docker, `gh`, Fleet, env naming, multi-repo staging).
+- Grant corrects a **recurring preference** (how PRs work, when to tag, which repo owns a pattern).
+- A **successful recovery** from failure is likely to recur (build flags, git mmap workaround, kubectl/compose patterns).
+- A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
+
+## What not to do
+
+- Do not bulk-author rules from one-off trivia; **judgment** over volume (**`cursor-rules-maintenance.mdc`**).
+- Do not duplicate **employee** voice or Hormozi/Ferriss harvesting into Ross rules—that is their lane.
+- Do not embed **secrets** or private URLs in tracked rules.
+
+## Closing the loop with Grant
+
+After substantive rule changes in **`cursor-rules`**, **commit and push** so other agents and future Ross sessions inherit them (**`bimross-git-dev-and-releases.mdc`**). If a pattern is half-baked, say so in the response and still capture a **minimal** rule stub or TODO in the right file rather than relying on chat memory.

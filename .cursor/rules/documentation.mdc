@@ -1,73 +1,52 @@
 ---
-description: "Documentation Standards — READMEs light and high-level; use when editing README or docs."
+description: "Documentation standards — public READMEs are minimal and human-facing; deeper detail lives in code."
 globs: "README.md,**/README*,*.md"
 alwaysApply: false
 ---
 
 # Documentation Standards
 
-## README Philosophy
+## Public README (BimRoss — human-facing only)
 
-**READMEs should be light and high-level.** Code changes frequently; READMEs shouldn't need constant updates.
+For **public** repositories, the README is a **quick orientation** for a human who landed on the repo. It is **not** technical documentation.
 
-### README Structure
+**Include (keep very short):**
 
-```markdown
-# Project Name
+- **Why** BimRoss built it (intent in plain language).
+- **What** it does, in non-jargon terms.
+- **What someone might use it for** (one audience or use-case line is enough).
 
-One sentence describing what this does and why it exists.
+**Do not include:**
 
-## What It Does
+- Stack tutorials, architecture write-ups, or “how it works internally.”
+- API surface detail, config encyclopedias, or anything that belongs in **code, tests, or comments**.
+- Link sections that will **rot**, invite maintenance burden, or expose what we do not want on the landing page. Prefer **no** link farm; the repo is the artifact.
 
-2-3 paragraphs max describing:
-- The problem it solves
-- Who uses it (internal tool, customer-facing, etc.)
-- Key features at a glance
+**Rule of thumb:** if a developer needs implementation truth, they read the **codebase**. The README answers “should I care?” in under a minute.
 
-## Quick Start
+---
 
-```bash
-docker-compose up --build
-```
+## README philosophy (general)
 
-## Architecture
+**READMEs stay light.** Code changes often; long READMEs go stale.
 
-Link to architecture docs (if they exist elsewhere).
+### Private or internal repos (slightly more room)
 
-## Related Projects
+If you need onboarding steps, keep **one** minimal “run it” path and send depth to the code. Avoid duplicating **`docs/`** or ADRs inside the README.
 
-- Links to other repos in the ecosystem
-- How this fits into the bigger picture
-```
+### What NOT to put in any README
 
-### What NOT to Include
+- Function-level or endpoint-level reference (use code and tests).
+- Changelog narrative (use git history and releases when you use them).
 
-- ❌ Detailed API documentation (use OpenAPI/Swagger)
-- ❌ Internal implementation details
-- ❌ Function-level documentation
-- ❌ Changelogs (use git history + PRs)
+### Code comments
 
-### What TO Include
-
-- ✅ Project purpose (the "why")
-- ✅ How to run it locally
-- ✅ High-level architecture diagram (if complex)
-- ✅ Contact/context for questions
-
-## Technical Documentation
-
-Technical docs live elsewhere (Notion, Confluence, or a dedicated docs repo). READMEs point to them but don't duplicate.
-
-## Code Comments
-
-- Explain the "why", not the "what"
-- Document non-obvious business logic
-- Call out cheat prevention measures
-- Flag security-critical sections
+- Explain the **why**, not the **what**, when it is non-obvious.
+- Call out security- or correctness-critical assumptions briefly.
 
 ```go
 // ValidateTEEAttestation ensures the response came from an
-// enclave with the expected measurement. This prevents 
+// enclave with the expected measurement. This prevents
 // miners from running outside secure hardware.
 func ValidateTEEAttestation(attestation []byte) error {
     // ... implementation

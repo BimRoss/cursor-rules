@@ -1,5 +1,7 @@
 # Cursor Rules
 
-**BimRoss treats the company as code.** This repo is the **shared brain**: durable rules and employee personas so agents and humans align on how we think, ship, and recover—instead of re-deriving it in every chat.
+**BimRoss** keeps shared editor defaults and agent persona text in one place so we do not re-derive how we build and operate on every task.
 
-Employees (Alex, Tim, …) live as `.cursor/rules/<name>-*.mdc` and synced bundles under `.cursor/personas/`. Slack app shape is [`slack-factory`](https://github.com/bimross/slack-factory); the worker is [`employee-factory`](https://github.com/bimross/employee-factory). Anything deeper is in `docs/`.
+**What this is:** a living bundle of Cursor rules and synced personas we use across our work.
+
+**You might use it** as a reference or starting point for your own team conventions—expect to adapt; the repository files are the real contract.
