@@ -1,11 +1,13 @@
 ---
-description: "Grant says okay deploy or deploy everything — push all pending work, cut cursor-rules v* release, monitor Actions + K8s rollout, leave workspace clean."
+description: "Grant says okay deploy, deploy everything, or deploy — multi-repo push, cursor-rules v* tag, monitor Actions + K8s; single-repo deploy uses same ship steps for the repo in context."
 alwaysApply: false
 reviewBy: "2026-09-30"
 ---
 # "Okay deploy" — full BimRoss release pass
 
-When Grant says **okay deploy**, **deploy everything**, or clearly means **push + release + verify rollout** (multi-repo, not a one-line fix in a single file), execute this protocol.
+When Grant says **okay deploy**, **deploy everything**, or **deploy** in the **full-workspace / multi-repo** sense—or clearly means **push + tag + release notes + verify rollout** across the usual repos—execute this protocol.
+
+For **one repo** after a focused feature, **“deploy”** still means **commit → push → `v*` where the repo’s CI expects it → GitHub Release description → monitor CI/GitOps**; use the repo’s canonical workflow (see **`bimross-git-dev-and-releases.mdc`** and that repo’s **`*.yml`**), not only the multi-repo table below.
 
 ## Authorization
 
