@@ -3,7 +3,7 @@ description: Apply when user says "lets upgrade our bimross infrastructure" (or 
 alwaysApply: false
 ---
 
-# Bimross infrastructure upgrade resume rule
+# BimRoss infrastructure upgrade resume rule
 
 When the user says **"lets upgrade our bimross infrastructure"** (or close variants like "upgrade bimross infra"), resume from the existing Safe Mode checkpoint and do not restart discovery from scratch.
 

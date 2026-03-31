@@ -1,5 +1,5 @@
 ---
-description: Re-read plans and do a second implementation pass for decently large features, with Bimross fit checks.
+description: Re-read plans and do a second implementation pass for decently large features, with BimRoss fit checks.
 globs: "*"
 alwaysApply: true
 reviewBy: "2026-06-30"
@@ -14,17 +14,17 @@ Use this when the task is a **decently large feature or greater**: multi-file fe
 1. Make a plan first.
 2. Implement the plan to a working state.
 3. Re-read the plan and the resulting diff **forensically** before calling the work done.
-4. Do a deliberate second implementation pass, not just a review pass, when the feature would benefit from clearer structure, stronger scaling, or better Bimross alignment.
+4. Do a deliberate second implementation pass, not just a review pass, when the feature would benefit from clearer structure, stronger scaling, or better BimRoss alignment.
 
 ## Second-pass checklist
 
 - **Succinctness**: remove unnecessary abstraction, duplicate logic, dead config, and extra surface area. If the implementation is not succinct, refactor it.
 - **Scalability**: scan for brittle one-off paths, avoidable N+1 behavior, poor separation of concerns, and choices that will hurt when the feature grows.
-- **Bimross stack fit**: keep backends in **Go** unless the user explicitly asked otherwise. Keep frontends in **Next.js**, server-render meaningful content, and optimize for AI/human parsability with real metadata, canonical URLs, and structured content in the `grantfoster.dev` spirit.
-- **Deployment fit**: make sure the feature plugs cleanly into how Bimross ships software: Dockerized services, Fleet/GitOps-friendly manifests, and the `local` + `ui` compose pattern when a web UI talks to remote services.
-- **CI/CD fit**: when release automation is involved, match Bimross conventions for tag-driven image builds, `geeemoney/*` images, and `rancher-admin` GitOps updates with the proper token rules.
+- **BimRoss stack fit**: keep backends in **Go** unless the user explicitly asked otherwise. Keep frontends in **Next.js**, server-render meaningful content, and optimize for AI/human parsability with real metadata, canonical URLs, and structured content in the `grantfoster.dev` spirit.
+- **Deployment fit**: make sure the feature plugs cleanly into how BimRoss ships software: Dockerized services, Fleet/GitOps-friendly manifests, and the `local` + `ui` compose pattern when a web UI talks to remote services.
+- **CI/CD fit**: when release automation is involved, match BimRoss conventions for tag-driven image builds, `geeemoney/*` images, and `rancher-admin` GitOps updates with the proper token rules.
 - **Whole-feature integration**: update the surrounding surface area too: docs, env examples, health endpoints, manifests, tests, and operational wiring that the feature actually depends on.
 
 ## Exit gate
 
-Do not stop at "it works." For large features, stop after the second pass confirms the implementation is succinct, scalable enough for the next phase, and aligned with existing Bimross frontend, backend, CI/CD, and deployment conventions.
+Do not stop at "it works." For large features, stop after the second pass confirms the implementation is succinct, scalable enough for the next phase, and aligned with existing BimRoss frontend, backend, CI/CD, and deployment conventions.

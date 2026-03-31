@@ -1,12 +1,12 @@
 ---
-description: "Local Bimross development assumes macOS on the operator machine; align commands, paths, and native deps accordingly."
+description: "Local BimRoss development assumes macOS on the operator machine; align commands, paths, and native deps accordingly."
 alwaysApply: true
 reviewBy: "2027-03-30"
 ---
 
-# Bimross local development = macOS
+# BimRoss local development = macOS
 
-For **local, interactive work** on Bimross repos (laptop scripts, face tooling, ad-hoc CLI, path assumptions in examples), treat the environment as **macOS** unless the user explicitly says otherwise.
+For **local, interactive work** on BimRoss repos (laptop scripts, face tooling, ad-hoc CLI, path assumptions in examples), treat the environment as **macOS** unless the user explicitly says otherwise.
 
 ## Default assumptions
 

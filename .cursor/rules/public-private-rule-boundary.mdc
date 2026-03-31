@@ -15,11 +15,11 @@ Maintain rules in three layers so the repo stays useful to the public while pres
 - Write guidance so an external engineer can use it without internal company access.
 - Prefer generic naming for private systems unless the reference is already intentionally public.
 
-## Layer 2: Bimross conventions (tracked, sanitized)
+## Layer 2: BimRoss conventions (tracked, sanitized)
 
-- Bimross workflow patterns are allowed in tracked rules when they are operationally useful and non-secret.
+- BimRoss workflow patterns are allowed in tracked rules when they are operationally useful and non-secret.
 - Never include credentials, private URLs, account IDs, or sensitive customer data.
-- If a Bimross rule needs sensitive context, split it: keep the reusable policy tracked, move sensitive details to private files.
+- If a BimRoss rule needs sensitive context, split it: keep the reusable policy tracked, move sensitive details to private files.
 
 ## Layer 3: Us/private business context (gitignored)
 
