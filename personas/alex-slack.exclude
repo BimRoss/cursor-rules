@@ -4,7 +4,19 @@
 # When to add excludes:
 # - Index-only files whose content is duplicated by the full rules linked from them
 #   (you already exclude alex-trigger and alex-factory via --compact).
-# - alex-growth-levers.mdc — high-level map; every lever points to another file that is
-#   fully inlined. Excluding saves tokens; keeping it gives the model a navigation summary.
-#   Uncomment the next line to drop the map:
+# - Large reference modules that stay in `.cursor/rules/` for Cursor IDE but blow the
+#   default LLM_SYSTEM_MAX_RUNES (48k) budget for Slack. See `employee-factory` router
+#   hints: hints must point at modules that remain in the bundle.
+#
+# Navigation map (levers point to fully inlined files):
 alex-growth-levers.mdc
+# Token-heavy; smaller modules cover closers; full blueprint stays in repo for IDE:
+alex-ultimate-sales-blueprint.mdc
+# Long reference lists; not needed for short Slack replies:
+alex-facts-list-masters.mdc
+alex-clear-proof.mdc
+alex-hard-conversations-upfront.mdc
+alex-awareness-give-ask.mdc
+# Overlap with stair-step / one-channel / stress rules still in bundle:
+alex-obscurity-boom.mdc
+alex-mental-toughness.mdc
