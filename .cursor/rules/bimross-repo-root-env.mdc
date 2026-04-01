@@ -1,0 +1,26 @@
+---
+description: BimRoss repos should expose required configuration via a tracked repo-root .env.example (and gitignored .env) for discoverability in Cursor and multi-root workspaces.
+alwaysApply: false
+globs: "**/.env.example"
+reviewBy: "2026-09-30"
+---
+# Repo-root environment discovery (BimRoss)
+
+## Convention
+
+- **Tracked:** **`.env.example`** at the **repository root** (unless the repo genuinely has no env-driven behavior—e.g. pure static docs).
+- **Gitignored:** **`.env`** (and common variants like **`.env.local`**) containing real secrets; never commit keys, tokens, or kubeconfigs.
+- **Purpose:** Operators and agents see **one obvious place** for “what variables exist” when the repo is open in Cursor or the BimRoss multi-root workspace—without opening Kubernetes or GitHub first.
+
+## What to put in `.env.example`
+
+- **Names** of all variables the app, scripts, or Terraform expect, with **short comments** pointing to where values come from (e.g. “Stripe Dashboard → Developers → API keys”, “`gh secret set`”, “Rancher”).
+- **No real secrets**—use empty values, `sk_test_...` placeholders, or obvious placeholders.
+
+## Stripe / stripe-factory
+
+- **`STRIPE_API_KEY_TEST`** and similar names refer to the Stripe **Dashboard secret key** for the right mode (`sk_test_…` / `sk_live_…`), not something generated inside **`stripe-factory`**. The factory repo versions **catalog** (Terraform); keys always come from Stripe (or GitHub Actions secrets for CI).
+
+## When bootstrapping a new repo
+
+See **`bimross-new-repo-bootstrap.mdc`**: add **`.env.example`** early in the same change that introduces scripts, Compose, or backends that read env.

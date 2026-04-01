@@ -12,6 +12,7 @@ When Grant starts a **new project** (e.g. `slack-factory`, a service, a library)
 - **Create** under **`bimross`** when it is company-owned: prefer **`gh repo create bimross/<name>`** (private by default unless publishing intentionally).
 - **Clone** into `~/Documents/<name>` (or the agreed dev root), then **add the folder to the Cursor multi-root workspace** so rules and cross-repo refactors apply.
 - Root **`.gitignore`**: include **`.DS_Store`**; never commit **`.env`**, tokens, or kubeconfigs.
+- **Env discovery:** For repos that read environment variables (services, Terraform operators, Compose), add a tracked **`.env.example`** at the repo root listing variable **names** and where to get values (see **`bimross-repo-root-env.mdc`**). Keep **`.env`** gitignored; do not use a pattern like `.env.*` if it would ignore **`.env.example`**.
 
 ## 2. CI/CD shape (pick one)
 
