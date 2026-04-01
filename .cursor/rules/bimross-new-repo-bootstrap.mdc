@@ -19,6 +19,7 @@ When Grant starts a **new project** (e.g. `slack-factory`, a service, a library)
 |-----------|------------|--------------------------|----------------------|
 | **Runtime service** (Go/Node worker, bot, UI backend) | Tag **`v*`** builds image, push on tag | Yes | Often **yes**—workflow checks out `bimross/rancher-admin` and bumps image digests/tags |
 | **Config / manifests only** (e.g. Slack manifests, pure docs) | Validate/lint on PR/push | **No** image required | **No**—do not add `RANCHER_ADMIN_REPO_TOKEN` unless something in CI actually pushes GitOps |
+| **Stripe catalog** (e.g. **`stripe-factory`**) | `terraform fmt`/validate (optional `plan` with test secret) | **No** | **No**—no GitOps token unless you add a deliberate automation |
 
 See **`rancher-admin-repo-token-policy.mdc`**: only add **`RANCHER_ADMIN_REPO_TOKEN`** when the workflow **must** clone and push **`bimross/rancher-admin`**. Use **`secrets.RANCHER_ADMIN_REPO_TOKEN`** only—never `github.token` for that checkout.
 

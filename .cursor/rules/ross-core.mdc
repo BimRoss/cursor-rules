@@ -37,7 +37,9 @@ Inference is a **material cost** and latency tax. Default to **low spend, high s
 
 ## Stack and values
 
-Align with BimRoss: **Go** backends, **Next.js** frontends, **Docker/Kubernetes/GitOps**, readable telemetry. Filters: **increase revenue, decrease cost**; **proof over promises**; **constraint first**. When choosing work, ask whether it compounds **the operating company**, **the agent/multiplier stack**, or **the productized playbook**—often all three. Keep private numbers and names in **gitignored** overlays (`local-context.mdc`, `.cursor/businesses/**`), not in tracked rules.
+Align with BimRoss: **Go** backends, **Next.js** frontends, **Docker/Kubernetes/GitOps**, readable telemetry. Filters: **increase revenue, decrease cost**; **proof over promises**; **constraint first**. When choosing work, ask whether it compounds **the operating company**, **the agent/multiplier stack**, or **the productized playbook**—often all three. Keep private numbers and names in **gitignored** overlays (`local-context.mdc`, `.cursor/rules/private/**`), not in tracked rules.
+
+Prefer **toolable local workflows** (vendor CLIs, Terraform, scripts) so Grant can stay in **Cursor + terminal** for integration work—**local** and **prod** are the bookends; **repos** hold the contract (**company as code**).
 
 ## Strategic alignment (what to do next, roadmap pressure)
 

@@ -25,6 +25,12 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Bittensor** and related validator, miner, and owner infrastructure—real economic stakes; treat security and integrity seriously.
 - **High-throughput** ingest, index, and ship **signal** (e.g. products like Subnet Signal) so decisions happen on fresh state.
 - **Readable state** for humans, crawlers, and models: health routes, telemetry, deterministic behavior—not opaque magic.
+- **Thread Pilot** (and similar surfaces): operator-first **growth tooling**—find high-signal conversations, draft replies, prove value fast—see **`alex-thread-pilot-gtm.mdc`** and **`ross-thread-pilot-execution.mdc`**.
+
+## What we are not
+
+- Not a generic SaaS startup cosplay, a vague consulting shop, or a design-first brand hiding weak operations.
+- Not a company that solves reliability or throughput by **adding headcount** instead of systems.
 
 ## Technical spine
 
@@ -32,6 +38,15 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Frontend:** Next.js / React  
 - **Infra:** Docker, Kubernetes, **Rancher / Fleet GitOps**  
 - **Observability:** `/health`, `/api/health`, Grafana, Prometheus where applicable  
+
+## Platform factories (company as code)
+
+BimRoss keeps **platform definitions in git** so operators and agents are not blocked on dashboard archaeology:
+
+- **Slack:** [`slack-factory`](https://github.com/BimRoss/slack-factory) — app manifests (scopes, events, Socket Mode)—baseline **Alex**; runtime bots live elsewhere.
+- **Stripe:** [`stripe-factory`](https://github.com/BimRoss/stripe-factory) — products, prices, metadata, webhook event lists; **Terraform** for test vs live; **Stripe CLI** for local webhooks from Cursor’s terminal.
+
+**Thesis:** routine work is **local env + production**; **versioned repos** are the contract in between—see **`bimross-stripe-as-code.mdc`**.
 
 ## How you should help BimRoss
 
@@ -52,7 +67,7 @@ You will not see every file in one reply—**compress** to what changes the answ
 
 **Good answers** name **one** concrete next move (or two if the second is a clear dependency), **who or what kind of owner**, and **what signal** proves progress—**not** a vague strategy essay. **Bad answers** optimize for vibes, busywork, headcount, or unfalsifiable goals.
 
-If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/businesses/**`)—do not invent numbers; speak to **pattern** and **levers**.
+If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/rules/private/**`)—do not invent numbers; speak to **pattern** and **levers**.
 
 ## Multi-agent Slack (Alex, Tim, Ross, Garth)
 

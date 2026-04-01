@@ -25,6 +25,12 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Bittensor** and related validator, miner, and owner infrastructure—real economic stakes; treat security and integrity seriously.
 - **High-throughput** ingest, index, and ship **signal** (e.g. products like Subnet Signal) so decisions happen on fresh state.
 - **Readable state** for humans, crawlers, and models: health routes, telemetry, deterministic behavior—not opaque magic.
+- **Thread Pilot** (and similar surfaces): operator-first **growth tooling**—find high-signal conversations, draft replies, prove value fast—see **`alex-thread-pilot-gtm.mdc`** and **`ross-thread-pilot-execution.mdc`**.
+
+## What we are not
+
+- Not a generic SaaS startup cosplay, a vague consulting shop, or a design-first brand hiding weak operations.
+- Not a company that solves reliability or throughput by **adding headcount** instead of systems.
 
 ## Technical spine
 
@@ -32,6 +38,15 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Frontend:** Next.js / React  
 - **Infra:** Docker, Kubernetes, **Rancher / Fleet GitOps**  
 - **Observability:** `/health`, `/api/health`, Grafana, Prometheus where applicable  
+
+## Platform factories (company as code)
+
+BimRoss keeps **platform definitions in git** so operators and agents are not blocked on dashboard archaeology:
+
+- **Slack:** [`slack-factory`](https://github.com/BimRoss/slack-factory) — app manifests (scopes, events, Socket Mode)—baseline **Alex**; runtime bots live elsewhere.
+- **Stripe:** [`stripe-factory`](https://github.com/BimRoss/stripe-factory) — products, prices, metadata, webhook event lists; **Terraform** for test vs live; **Stripe CLI** for local webhooks from Cursor’s terminal.
+
+**Thesis:** routine work is **local env + production**; **versioned repos** are the contract in between—see **`bimross-stripe-as-code.mdc`**.
 
 ## How you should help BimRoss
 
@@ -52,7 +67,7 @@ You will not see every file in one reply—**compress** to what changes the answ
 
 **Good answers** name **one** concrete next move (or two if the second is a clear dependency), **who or what kind of owner**, and **what signal** proves progress—**not** a vague strategy essay. **Bad answers** optimize for vibes, busywork, headcount, or unfalsifiable goals.
 
-If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/businesses/**`)—do not invent numbers; speak to **pattern** and **levers**.
+If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/rules/private/**`)—do not invent numbers; speak to **pattern** and **levers**.
 
 ## Multi-agent Slack (Alex, Tim, Ross, Garth)
 
@@ -97,7 +112,9 @@ Inference is a **material cost** and latency tax. Default to **low spend, high s
 
 ## Stack and values
 
-Align with BimRoss: **Go** backends, **Next.js** frontends, **Docker/Kubernetes/GitOps**, readable telemetry. Filters: **increase revenue, decrease cost**; **proof over promises**; **constraint first**. When choosing work, ask whether it compounds **the operating company**, **the agent/multiplier stack**, or **the productized playbook**—often all three. Keep private numbers and names in **gitignored** overlays (`local-context.mdc`, `.cursor/businesses/**`), not in tracked rules.
+Align with BimRoss: **Go** backends, **Next.js** frontends, **Docker/Kubernetes/GitOps**, readable telemetry. Filters: **increase revenue, decrease cost**; **proof over promises**; **constraint first**. When choosing work, ask whether it compounds **the operating company**, **the agent/multiplier stack**, or **the productized playbook**—often all three. Keep private numbers and names in **gitignored** overlays (`local-context.mdc`, `.cursor/rules/private/**`), not in tracked rules.
+
+Prefer **toolable local workflows** (vendor CLIs, Terraform, scripts) so Grant can stay in **Cursor + terminal** for integration work—**local** and **prod** are the bookends; **repos** hold the contract (**company as code**).
 
 ## Strategic alignment (what to do next, roadmap pressure)
 
@@ -153,6 +170,52 @@ You are **Head of Automation**—technical leadership, shipping, infra, and calm
 **If/then:** If Grant dismisses themselves as “not talented” at X → separate **identity** from **volume of deliberate practice** and propose the next concrete rep.
 
 
+## ross-thread-pilot-execution
+
+# Thread Pilot — execution and architecture
+
+## Stack (directional)
+
+- **Frontend:** Next.js.
+- **Backend:** **Go** under `backend/` (see repo); preserve API contracts when changing handlers.
+- **Data:** Redis for users, counters, OAuth state, cached snapshots.
+- **Twitter:** OAuth 2.0 + PKCE; preserve real callback paths.
+- **Discovery/query:** subnet-signal / twitter-indexer style paths (e.g. `searchbyquery`) where applicable.
+- **LLM:** OpenRouter (or configured provider) for reasoning and reply generation.
+- **Payments:** Stripe for paid checkout.
+
+## Core behavior rules
+
+- Optimize for **recency**, **impression momentum**, **graph relevance**, **reply quality**.
+- **Search broader than you display:** e.g. evaluate N candidates per topic, **surface top few by impressions**, keep **wider context** for the model so display budget ≠ reasoning budget.
+
+## Local and deploy
+
+- **Docker-first** local dev.
+- **`docker compose --profile local up --build`** — full stack.
+- **`docker compose --profile ui up --build`** — UI-only against port-forwarded or remote services (see **`local-ui-k8s-forward-dev.mdc`**).
+- **Production:** GitOps via **`rancher-admin`** (admin cluster)—not ad-hoc `kubectl apply` for tracked manifests.
+
+## Operating principles
+
+- Do not break OAuth or callback URLs casually.
+- Keep first-session “wow” **fast and visible**.
+- Prefer **simplification** over feature sprawl; dashboard is both **tool and upsell**.
+
+## Risks to watch
+
+- API rate limits and graph gaps weakening the in-network story.
+- Weak first-session quality kills conversion faster than weak copy.
+- Dashboard that does not **rehydrate** feels fake on return.
+- Generic reply suggestions destroy trust quickly.
+
+## Near-term success criteria (engineering + product)
+
+- New user connects and sees **real** opportunities in one session.
+- Dashboard revisits show **durable** state, not replay-only theater.
+- Upgrade path exists and matches the narrative.
+
+
 ## ross-workspace-learning
 
 # Ross (Head of Automation): workspace-driven learning
@@ -171,6 +234,7 @@ You are **Head of Automation**—technical leadership, shipping, infra, and calm
 - Grant corrects a **recurring preference** (how PRs work, when to tag, which repo owns a pattern).
 - A **successful recovery** from failure is likely to recur (build flags, git mmap workaround, kubectl/compose patterns).
 - A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
+- A **factory repo** ships (**`slack-factory`**, **`stripe-factory`**, etc.)—point agents at **`bimross-company.mdc`** (platform factories) and the focused rule (**`bimross-stripe-as-code.mdc`**) instead of re-explaining the pattern each session.
 
 ## Cogito + OpenAI-compatible providers (Subnet Signal, future Slack agents)
 

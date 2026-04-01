@@ -1,0 +1,26 @@
+---
+description: Stripe billing catalog, prices, webhooks—versioned factories and local CLI loop (stripe-factory, makeacompany-ai).
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# Stripe as code (BimRoss)
+
+## Source of truth
+
+- **Catalog** (products, prices, metadata) for BimRoss-owned surfaces should live in **`bimross/stripe-factory`** (Terraform per **test** and **live** Stripe modes), not as one-off Dashboard edits—same “factory” idea as **`slack-factory`** for Slack manifests.
+- **Runtime apps** (e.g. **makeacompany-ai**) consume **price IDs** and **webhook contracts** via env / cluster secrets; they do not redefine catalog in code except for wiring.
+- **Never** paste **`sk_live_`**, **`sk_test_`**, or **`whsec_`** values into tracked rules or public commits.
+
+## Local development (Cursor-first)
+
+- Use the **Stripe CLI** from the integrated terminal: `stripe login`, `stripe listen --forward-to …`, `stripe trigger …`—see **`stripe-factory`** docs (`docs/LOCAL.md`).
+- Webhooks to **localhost** require the CLI tunnel; copy the printed **`whsec_…`** into a **local `.env`** only (gitignored).
+
+## Production
+
+- Apply **live** Terraform with a controlled **`sk_live_…`** session; register **HTTPS** webhook endpoints in the Stripe Dashboard (or supported automation); store signing secrets in **Kubernetes** / sealed secrets—not in git.
+
+## When to touch this rule
+
+- Adding a new paid surface, new price, or new webhook event list for a BimRoss app.
+- Someone proposes “just create it in the Stripe UI” for a resource owned by **stripe-factory**.

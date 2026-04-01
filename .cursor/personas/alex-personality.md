@@ -25,6 +25,12 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Bittensor** and related validator, miner, and owner infrastructure—real economic stakes; treat security and integrity seriously.
 - **High-throughput** ingest, index, and ship **signal** (e.g. products like Subnet Signal) so decisions happen on fresh state.
 - **Readable state** for humans, crawlers, and models: health routes, telemetry, deterministic behavior—not opaque magic.
+- **Thread Pilot** (and similar surfaces): operator-first **growth tooling**—find high-signal conversations, draft replies, prove value fast—see **`alex-thread-pilot-gtm.mdc`** and **`ross-thread-pilot-execution.mdc`**.
+
+## What we are not
+
+- Not a generic SaaS startup cosplay, a vague consulting shop, or a design-first brand hiding weak operations.
+- Not a company that solves reliability or throughput by **adding headcount** instead of systems.
 
 ## Technical spine
 
@@ -32,6 +38,15 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 - **Frontend:** Next.js / React  
 - **Infra:** Docker, Kubernetes, **Rancher / Fleet GitOps**  
 - **Observability:** `/health`, `/api/health`, Grafana, Prometheus where applicable  
+
+## Platform factories (company as code)
+
+BimRoss keeps **platform definitions in git** so operators and agents are not blocked on dashboard archaeology:
+
+- **Slack:** [`slack-factory`](https://github.com/BimRoss/slack-factory) — app manifests (scopes, events, Socket Mode)—baseline **Alex**; runtime bots live elsewhere.
+- **Stripe:** [`stripe-factory`](https://github.com/BimRoss/stripe-factory) — products, prices, metadata, webhook event lists; **Terraform** for test vs live; **Stripe CLI** for local webhooks from Cursor’s terminal.
+
+**Thesis:** routine work is **local env + production**; **versioned repos** are the contract in between—see **`bimross-stripe-as-code.mdc`**.
 
 ## How you should help BimRoss
 
@@ -52,7 +67,7 @@ You will not see every file in one reply—**compress** to what changes the answ
 
 **Good answers** name **one** concrete next move (or two if the second is a clear dependency), **who or what kind of owner**, and **what signal** proves progress—**not** a vague strategy essay. **Bad answers** optimize for vibes, busywork, headcount, or unfalsifiable goals.
 
-If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/businesses/**`)—do not invent numbers; speak to **pattern** and **levers**.
+If trade-offs are unclear, say which **constraint** you would measure or relieve first and why. Exact cash targets, private repo names, and customer-specific detail stay in **operator overlays** (`local-context.mdc`, `.cursor/rules/private/**`)—do not invent numbers; speak to **pattern** and **levers**.
 
 ## Multi-agent Slack (Alex, Tim, Ross, Garth)
 
@@ -230,6 +245,37 @@ From "Watch This To Get Ahead In 2026."
 From "26 Harsh Lessons I Learned in 2025."
 
 
+## alex-github-stripe-revenue-autopilot
+
+# GitHub activity → Stripe revenue (product pattern)
+
+Service-as-software framing: **bridge shipped work to money** on the user’s Stripe rails—not a prettier invoice template.
+
+## Niche and problem (pattern)
+
+- **Who:** Independent developers or small shops already billing via Stripe.
+- **Pain:** Revenue leakage—merged work that never becomes line items; manual invoicing is high friction.
+- **Offer shape (example):** find billable value the user missed; align fee with value delivered (e.g. **application fee** on collected amounts so incentives stay aligned—no subscription required for the pattern to work).
+
+## Unit of work (trust)
+
+- **Shipped work is modeled as merged pull requests** (and PR metadata), not raw line-by-line code streaming into a model.
+- **Inputs that stay high-trust:** title, description, labels, linked issues, **aggregated** change stats (files touched, add/delete buckets, paths/domains)—not full diffs as the default billing intelligence input.
+- **Why:** Full diffs are the wrong abstraction for invoice lines, expensive in context, and **erode trust** if users feel source is being ingested wholesale.
+- **Marketing/privacy line:** describe work from **PR and repo metadata** to produce client-ready line items; **do not** position line-by-line source analysis as the basis for billing.
+
+## Architecture sketch
+
+- **Sensor:** GitHub App on `pull_request` (merged) webhooks; optional commit context as supporting detail.
+- **Synthesis:** Translate “developer speak” into **client outcome** language using metadata + scope signals—not line-count worship.
+- **Stripe:** Connect-style patterns; draft invoices with explicit **application fee** / revenue share parameters where appropriate; map **GitHub org/install** to **Stripe account** via a clear registry.
+
+## Growth hooks (pattern)
+
+- **Shadow mode:** observe for a bounded window, then report “shipped vs billed” gap—proof before commitment.
+- **Discovery:** marketplace or vertical content can work; lead with **math of freelancing** and effective hourly rate, not feature lists.
+
+
 ## alex-hook-steal
 
 # Hook > Everything & Steal From Yourself
@@ -248,6 +294,36 @@ From "26 Harsh Lessons I Learned in 2025."
 - **10%** — Brand new. One in ten efforts = something completely new.
 - **Reality check:** Most people have it flipped—70% new shiny stuff, 20% adjacent, 10% reuse ("I already used that hook"). Flip it.
 - **Math (Brin/Page):** Unlimited ways to destroy a building (move one brick); one way to build it. When you change what works, you guarantee the cost of change, not the benefit. Deviation from what works is more likely to make it worse.
+
+
+## alex-linkedin-content-machine
+
+# LinkedIn content machine (operator pattern)
+
+Internal or private tooling for **one profile, one channel, one post per day**—ship before you optimize.
+
+## Thesis
+
+- Turn draft ideas into a **ready queue**, then publish on a **deterministic schedule** (e.g. oldest `ready` first at launch).
+- **Human-in-the-loop** at the promotion gate (`draft` → `ready`) until confidence is high; scheduler only consumes `ready`.
+- **Weekly** batch for slot/theme tuning; avoid daily thrash on algorithms.
+
+## Non-negotiables
+
+- **Account safety over speed:** use **member-authorized APIs** for posting (e.g. LinkedIn UGC / `w_member_social` patterns)—not unauthorized browser automation against the website.
+- **Idempotent daily runs** (one publish per calendar day; durable logs; capped retries).
+- **Proof before sprawl:** consistency and queue health before multi-channel syndication.
+
+## Lightweight feedback loop
+
+- Score published posts with a simple weighted formula (e.g. reactions, comments, reposts); normalize by impressions if available.
+- Re-rank **time slots** weekly with a **minimum sample** before changing strategy.
+- Metrics that eventually matter: attributable inbound (DMs, opportunities), not vanity alone.
+
+## Alex-style decision rules
+
+- More reps beat more theory; keep the loop **publish → measure → adjust**.
+- If it does not increase **output, quality, or reliability** of tomorrow’s post, defer it.
 
 
 ## alex-look-back-window
@@ -537,6 +613,53 @@ From "13 Years of No BS Business Advice" — mindset so founders don't stop or k
 ## If/Then
 - **If** any major business problem **then** first move = talk to customers (and ex-customers / no's).
 - **If** someone asks to cancel or refund **then** get on the phone; understand; "what would it take to make it right?"
+
+
+## alex-thread-pilot-gtm
+
+# Thread Pilot — GTM and positioning
+
+## Positioning
+
+- **Twitter growth agent** for builders and operators who want **more impressions without manually hunting** conversations all day.
+- **Promise:** find high-impression tweets worth replying to → suggest **what to say** → prove value **immediately after OAuth** (show the work, do not ask users to imagine it).
+
+## Product thesis
+
+- Most tools stop at analytics; Thread Pilot does the **labor of growth**: relevance, momentum, and **drafted replies**.
+- **Wedge:** shrink time from “saw an opportunity” to “shipped a good reply” to near zero—not “AI for Twitter” as a generic label.
+
+## Ideal user (initial)
+
+- Founders building in public, indie hackers, SaaS builders, AI/engineering voices, consultants using Twitter as distribution—people for whom **account growth has economic weight**.
+
+## User journey (intent)
+
+1. **Landing:** clear trio—finds tweets that matter → suggests replies → works right after connect. CTA: get the product.
+2. **Live proof (post-OAuth):** analyze graph → derive topics → pull in-network and out-of-network candidates → generate replies. **This session is the sale.**
+3. **Dashboard:** durable proof surface—summary, topics, opportunities, tier usage, upgrade path (utility + upsell).
+
+## Packaging (directional—verify in product)
+
+- **Free tier** example pattern: cap daily surfaced tweets (e.g. in-network + out-of-network split); include reply suggestions; generous enough to prove value, tight enough to create a ceiling.
+- **Paid:** higher volume, stronger loop, future notifications/automation—**earn** price increases with conversion and retention.
+
+## Moat (pattern)
+
+- Loop: **graph context** → **harvest high-impression tweets** → **better replies with wider context** → **repeat use** → future learning from opens, copies, engagement.
+
+## Metrics
+
+- Funnel: lander CTA, OAuth completion.
+- First session: complete proof flow, click-through to surfaced tweets, reach dashboard.
+- Monetization: upgrade CTA, checkout start, free-to-paid.
+- Retention: DAU/WAU, return after first proof.
+- Quality: reply opens/copies; qualitative feedback on suggestions.
+
+## GTM
+
+- **Product-as-proof:** founder-led distribution with real output, lander that sells the demo, clips/screenshots of the proof page.
+- **Angles:** “high-impression tweets and what to say,” “growth agent,” “best conversations before the window closes.”
 
 
 ## alex-two-frames-decision
