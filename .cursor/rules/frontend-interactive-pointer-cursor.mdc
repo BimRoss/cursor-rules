@@ -1,0 +1,50 @@
+---
+description: "USE WHEN styling buttons, links, CTAs, or icon controls in BimRoss Next.js/marketing frontends—pointer cursor and hit-area affordance."
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Interactive controls: pointer cursor (global affordance)
+
+Users should see the **pointer (hand) cursor** over the full clickable region, including when the pointer is over nested **text** or **SVG/icons**. Some browsers default nested nodes to `cursor: auto`, which reads as “not clickable.”
+
+## Required behavior
+
+1. **Root interactive element** (`<button>`, `<a href>`, large icon hit targets): set `cursor: pointer` (Tailwind `cursor-pointer` or plain CSS).
+2. **Descendants** inside that control: `cursor: inherit` on children (or a single rule like `.my-cta * { cursor: inherit }`) so label + icon match the parent.
+3. **Disabled** interactive elements: `cursor: not-allowed` (and keep inherited cursor off misleading “clickable” affordance).
+
+## Optional global baseline (site CSS)
+
+For marketing/landing sites without heavy custom button chrome, a small global layer in `globals.css` (or equivalent) keeps behavior consistent:
+
+```css
+a[href]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+a[href] * {
+  cursor: inherit;
+}
+button:not(:disabled) {
+  cursor: pointer;
+}
+button:not(:disabled) * {
+  cursor: inherit;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+```
+
+Narrow or override per component when a control intentionally uses another cursor (`wait`, `text`, resize handles, etc.).
+
+## CTA motion: translate + transition gotcha
+
+If a **hover nudge** (e.g. arrow sliding right) uses CSS `transition-property: transform` but Tailwind’s `translate-x-*` utilities map to the separate **`translate`** longhand (common in modern Tailwind), the **transition may not run**—motion looks instant or broken.
+
+**Fix:** drive the nudge with **`transform: translate3d(...)`** in your own class (see `makeacompany-ai` `.waitlist-cta-arrow`), or add `translate` to `transition-property`. Respect `prefers-reduced-motion: reduce`.
+
+## Cross-links
+
+- AI-readable surfaces: **`ai-readiness-first-frontends.mdc`**
+- Copy/metadata sync: **`frontend-content-sync-agent-surfaces.mdc`**
