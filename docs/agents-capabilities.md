@@ -6,9 +6,10 @@
 |-------|----------------|----------------------|------------|-----------------|--------------------------|---------------------|
 | **Alex** | `alex-*.mdc` | `.cursor/personas/alex-personality.md` | Yes (employee-factory) | Yes | Gmail, calendar, … (policy in app) | Per-employee API keys / OAuth in secrets—not in persona |
 | **Tim** | `tim-*.mdc` | `.cursor/personas/tim-personality.md` | Planned | Planned | Same pattern | Same |
-| **Ross** | `ross-*.mdc` | `.cursor/personas/ross-personality.md` | Yes (employee-factory `EMPLOYEE_ID=ross`; **CTO** persona) | Planned | Same pattern | Same |
+| **Ross** | `ross-*.mdc` | `.cursor/personas/ross-personality.md` | Yes (employee-factory `EMPLOYEE_ID=ross`; **Head of Automation** persona) | Planned | Same pattern | Same |
+| **Garth** | `garth-*.mdc` | `.cursor/personas/garth-personality.md` | Yes (employee-factory `EMPLOYEE_ID=garth`; **Head of Interns** persona) | Planned | Same pattern | Same |
 
-**Ross** is the **CTO** (first name Ross): technical leadership, shipping, infra—see **`ross-core.mdc`**.
+**Alex** is **Head of Sales**; **Tim** is **Head of Simplifying**; **Ross** is **Head of Automation** (first name Ross): technical leadership, shipping, infra—see **`ross-core.mdc`**. **Garth** is **Head of Interns**: eager intern lane—see **`garth-core.mdc`**.
 
 **Cogito** = Go worker stack described in **employee-factory** (Socket Mode Slack today; extend with HTTP tools later).
 

@@ -4,7 +4,7 @@ Persona markdown for Slack and other **employee** runtimes is built by **`script
 
 ## Employees list
 
-**`employees.txt`** — one lowercase first name per line (`alex`, `tim`, …). Used by **`sync-employee-personality.sh`** / **`check-employee-personality.sh`** to regenerate or verify **every** **`.cursor/personas/<name>-personality.md`**.
+**`employees.txt`** — one lowercase first name per line (`alex`, `tim`, `ross`, `garth`, …). Used by **`sync-employee-personality.sh`** / **`check-employee-personality.sh`** to regenerate or verify **every** **`.cursor/personas/<name>-personality.md`**.
 
 ## Committed bundles
 

@@ -17,7 +17,7 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 
 | Repo | Typical action |
 |------|----------------|
-| **`cursor-rules`** | `master` pushed; then **next semver `v*`** tag → **`geeemoney/cursor-rules`** image + GitOps updates **`cursor-rules` init** lines in **`rancher-admin`** `admin/apps/employee-factory/{alex,tim,ross}-deployment.yaml`. |
+| **`cursor-rules`** | `master` pushed; then **next semver `v*`** tag → **`geeemoney/cursor-rules`** image + GitOps updates **`cursor-rules` init** lines in **`rancher-admin`** `admin/apps/employee-factory/{alex,tim,ross,garth}-deployment.yaml`. |
 | **`transcribe`** | Commit **`transcriptions/*.txt`** when new; push **`master`**. |
 | **`employee-factory`**, **`slack-factory`**, **`rancher-admin`** | Push **`master`** if there are commits; **tag `employee-factory`** only when **app/Docker** changes need a new **`geeemoney/employee-factory`** image (not required for persona-only updates). |
 
@@ -27,7 +27,7 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 2. **Land commits** with **explicit `git add <paths>`**; push **`master`** (or each repo’s integration branch).
 3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**. Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
 4. **Monitor CI:** `gh run list` / `gh run watch` for the **tag** workflow on **`cursor-rules`** until green (Docker + **`rancher-admin`** push from workflow when configured).
-5. **Rollout:** If kubeconfig is available (e.g. **`KUBECONFIG=$HOME/.kube/config/grant-admin.yaml`**): **`kubectl rollout status deployment/employee-factory-{alex,tim,ross} -n employee-factory`** (or get pods / describe if stuck).
+5. **Rollout:** If kubeconfig is available (e.g. **`KUBECONFIG=$HOME/.kube/config/grant-admin.yaml`**): **`kubectl rollout status deployment/employee-factory-{alex,tim,ross,garth} -n employee-factory`** (or get pods / describe if stuck).
 6. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push.
 
 ## Out of scope unless Grant asks

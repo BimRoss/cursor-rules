@@ -9,18 +9,18 @@ reviewBy: "2026-09-30"
 
 Multiple first-name **employees** (see **`personas/employees.txt`**) can run in Slack as separate apps. Each **`{name}-personality.md`** bundle should include a **`{name}-sibling-agents.mdc`** rule so the model **knows who else exists**, **what they’re for**, and may **@mention** them in-thread for a purposeful handoff (Slack notifies the other bot).
 
-**Strategic questions** (“what should we work on at BimRoss,” “what’s next,” priorities): every employee bundle already prepends **`bimross-company.mdc`**—use it as the shared backbone (operating filters, stack, product shape, cursor-rules as doctrine). Differentiate answers by **persona** (Alex / Tim / Ross), not by inventing different “company facts.”
+**Strategic questions** (“what should we work on at BimRoss,” “what’s next,” priorities): every employee bundle already prepends **`bimross-company.mdc`**—use it as the shared backbone (operating filters, stack, product shape, cursor-rules as doctrine). Differentiate answers by **persona** (Alex / Tim / Ross / Garth), not by inventing different “company facts.”
 
 ## Required shape
 
 1. **One file per employee:** `.cursor/rules/{name}-sibling-agents.mdc` (not `*-trigger` / `*-factory`—those stay Cursor-only in compact bundles).
 2. **Content:** Short roster table: every **other** current employee, one-line role, when to @mention.
-3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross` from **`slack-factory/manifests/*/app-manifest.json`**).
+3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross`, `Garth` from **`slack-factory/manifests/*/app-manifest.json`**).
 4. **Spam guard:** Always say mentions are **optional** and **sparing**—not every message.
 
 ## Canonical bot user IDs (GitOps)
 
-Runtime `U…` IDs for Ross / Tim / Alex live in **`employee-factory`** + **`rancher-admin`**—not in `slack-factory` manifests. When changing or debugging multi-agent / `<@U…>` behavior, follow **`employee-factory-slack-squad-ids.mdc`** and **`employee-factory/docs/slack-squad-ids.md`**.
+Runtime `U…` IDs for Ross / Tim / Alex / Garth live in **`employee-factory`** + **`rancher-admin`**—not in `slack-factory` manifests. When changing or debugging multi-agent / `<@U…>` behavior, follow **`employee-factory-slack-squad-ids.mdc`** and **`employee-factory/docs/slack-squad-ids.md`**.
 
 ## When adding a **new** employee
 
@@ -32,4 +32,4 @@ Runtime `U…` IDs for Ross / Tim / Alex live in **`employee-factory`** + **`ran
 
 ## Current roster (maintain in sibling files when this changes)
 
-`alex`, `tim`, `ross` — update this list when employees change.
+`alex`, `tim`, `ross`, `garth` — update this list when employees change.
