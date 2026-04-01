@@ -1,0 +1,43 @@
+---
+description: Keep GitHub Actions on latest supported majors (or workspace majority during staged rollouts), especially for Node runtime transitions.
+globs:
+  - "**/.github/workflows/*.yml"
+  - "**/.github/workflows/*.yaml"
+alwaysApply: true
+reviewBy: "2026-10-01"
+---
+# GitHub Actions version standard (BimRoss)
+
+When editing workflow files, keep action versions aligned to a clear default so we do not drift into deprecated runtimes.
+
+## Default policy
+
+- Prefer the **latest supported major** for first-party actions (`actions/*`) and core Docker actions (`docker/*`) used in this workspace.
+- If the workspace is intentionally mid-rollout, match the **current workspace majority major** first, then schedule the major bump explicitly.
+- If there is a conflict between "workspace majority" and an active deprecation warning (for example Node runtime deprecations), prefer the **latest supported major**.
+
+## Required checks on workflow edits
+
+1. Scan current usage in target workflow(s) and nearby canonical repos.
+2. Upgrade majors that are behind and still supported.
+3. Re-run CI for the changed workflow and verify success.
+4. Record any intentional exception in the PR/commit note.
+
+## Practical baseline (current BimRoss standard)
+
+- `actions/checkout@v6`
+- `actions/setup-go@v6`
+- `docker/setup-buildx-action@v4`
+- `docker/login-action@v4`
+- `docker/metadata-action@v6`
+- `docker/build-push-action@v7`
+
+If an action has no newer stable major yet, stay on the newest stable minor/patch within that major.
+
+## Validation commands
+
+```bash
+rg "uses:\\s+(actions|docker)/" .github/workflows
+gh run list --limit 10
+gh run watch <run-id> --exit-status
+```
