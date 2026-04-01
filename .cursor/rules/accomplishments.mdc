@@ -13,4 +13,4 @@ alwaysApply: false
 - Technical spine: **Go** backends, **Next.js / React** frontends, **Docker + Kubernetes + Rancher Fleet GitOps**, and readable telemetry surfaces like `/health`, `/api/health`, Grafana, and Prometheus.
 - Avoid suggestions that optimize for vibes, vanity dashboards, or extra people instead of stronger systems.
 - For “what should we do next at BimRoss” / prioritization questions, use **`bimross-company.mdc`** (operating filters + product spine + cursor-rules-as-brain)—one sharp next move with a measurable signal beats a long list.
-- Keep sensitive metrics, exact cash targets, private repo names, and other operator-specific details in `local-context.mdc` or `.cursor/businesses/**`.
+- Keep sensitive metrics, exact cash targets, private repo names, and other operator-specific details in `local-context.mdc` or `.cursor/rules/private/**`.

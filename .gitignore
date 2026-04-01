@@ -1,7 +1,7 @@
 # macOS folder metadata — never commit
 .DS_Store
 
-# Private business/project charters — do not share
+# Deprecated — do not use; kept ignored so stray folders never commit
 .cursor/businesses/
 
 # Private company context (copy from local-context.mdc.example)

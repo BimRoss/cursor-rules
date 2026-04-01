@@ -1,0 +1,33 @@
+---
+description: "USE WHEN designing GitHub ↔ Stripe products, dev billing automation, or 'autopilot revenue' offers for independent developers."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# GitHub activity → Stripe revenue (product pattern)
+
+Service-as-software framing: **bridge shipped work to money** on the user’s Stripe rails—not a prettier invoice template.
+
+## Niche and problem (pattern)
+
+- **Who:** Independent developers or small shops already billing via Stripe.
+- **Pain:** Revenue leakage—merged work that never becomes line items; manual invoicing is high friction.
+- **Offer shape (example):** find billable value the user missed; align fee with value delivered (e.g. **application fee** on collected amounts so incentives stay aligned—no subscription required for the pattern to work).
+
+## Unit of work (trust)
+
+- **Shipped work is modeled as merged pull requests** (and PR metadata), not raw line-by-line code streaming into a model.
+- **Inputs that stay high-trust:** title, description, labels, linked issues, **aggregated** change stats (files touched, add/delete buckets, paths/domains)—not full diffs as the default billing intelligence input.
+- **Why:** Full diffs are the wrong abstraction for invoice lines, expensive in context, and **erode trust** if users feel source is being ingested wholesale.
+- **Marketing/privacy line:** describe work from **PR and repo metadata** to produce client-ready line items; **do not** position line-by-line source analysis as the basis for billing.
+
+## Architecture sketch
+
+- **Sensor:** GitHub App on `pull_request` (merged) webhooks; optional commit context as supporting detail.
+- **Synthesis:** Translate “developer speak” into **client outcome** language using metadata + scope signals—not line-count worship.
+- **Stripe:** Connect-style patterns; draft invoices with explicit **application fee** / revenue share parameters where appropriate; map **GitHub org/install** to **Stripe account** via a clear registry.
+
+## Growth hooks (pattern)
+
+- **Shadow mode:** observe for a bounded window, then report “shipped vs billed” gap—proof before commitment.
+- **Discovery:** marketplace or vertical content can work; lead with **math of freelancing** and effective hourly rate, not feature lists.

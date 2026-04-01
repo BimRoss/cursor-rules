@@ -1,0 +1,48 @@
+---
+description: "USE WHEN implementing, debugging, or shipping Thread Pilot—stack, OAuth, Docker, discovery, or deployment."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# Thread Pilot — execution and architecture
+
+## Stack (directional)
+
+- **Frontend:** Next.js.
+- **Backend:** **Go** under `backend/` (see repo); preserve API contracts when changing handlers.
+- **Data:** Redis for users, counters, OAuth state, cached snapshots.
+- **Twitter:** OAuth 2.0 + PKCE; preserve real callback paths.
+- **Discovery/query:** subnet-signal / twitter-indexer style paths (e.g. `searchbyquery`) where applicable.
+- **LLM:** OpenRouter (or configured provider) for reasoning and reply generation.
+- **Payments:** Stripe for paid checkout.
+
+## Core behavior rules
+
+- Optimize for **recency**, **impression momentum**, **graph relevance**, **reply quality**.
+- **Search broader than you display:** e.g. evaluate N candidates per topic, **surface top few by impressions**, keep **wider context** for the model so display budget ≠ reasoning budget.
+
+## Local and deploy
+
+- **Docker-first** local dev.
+- **`docker compose --profile local up --build`** — full stack.
+- **`docker compose --profile ui up --build`** — UI-only against port-forwarded or remote services (see **`local-ui-k8s-forward-dev.mdc`**).
+- **Production:** GitOps via **`rancher-admin`** (admin cluster)—not ad-hoc `kubectl apply` for tracked manifests.
+
+## Operating principles
+
+- Do not break OAuth or callback URLs casually.
+- Keep first-session “wow” **fast and visible**.
+- Prefer **simplification** over feature sprawl; dashboard is both **tool and upsell**.
+
+## Risks to watch
+
+- API rate limits and graph gaps weakening the in-network story.
+- Weak first-session quality kills conversion faster than weak copy.
+- Dashboard that does not **rehydrate** feels fake on return.
+- Generic reply suggestions destroy trust quickly.
+
+## Near-term success criteria (engineering + product)
+
+- New user connects and sees **real** opportunities in one session.
+- Dashboard revisits show **durable** state, not replay-only theater.
+- Upgrade path exists and matches the narrative.

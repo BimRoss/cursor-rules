@@ -1,0 +1,49 @@
+---
+description: "USE WHEN messaging, pricing, GTM, or funnel for Thread Pilot (Twitter growth agent) or similar reply-first products."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# Thread Pilot — GTM and positioning
+
+## Positioning
+
+- **Twitter growth agent** for builders and operators who want **more impressions without manually hunting** conversations all day.
+- **Promise:** find high-impression tweets worth replying to → suggest **what to say** → prove value **immediately after OAuth** (show the work, do not ask users to imagine it).
+
+## Product thesis
+
+- Most tools stop at analytics; Thread Pilot does the **labor of growth**: relevance, momentum, and **drafted replies**.
+- **Wedge:** shrink time from “saw an opportunity” to “shipped a good reply” to near zero—not “AI for Twitter” as a generic label.
+
+## Ideal user (initial)
+
+- Founders building in public, indie hackers, SaaS builders, AI/engineering voices, consultants using Twitter as distribution—people for whom **account growth has economic weight**.
+
+## User journey (intent)
+
+1. **Landing:** clear trio—finds tweets that matter → suggests replies → works right after connect. CTA: get the product.
+2. **Live proof (post-OAuth):** analyze graph → derive topics → pull in-network and out-of-network candidates → generate replies. **This session is the sale.**
+3. **Dashboard:** durable proof surface—summary, topics, opportunities, tier usage, upgrade path (utility + upsell).
+
+## Packaging (directional—verify in product)
+
+- **Free tier** example pattern: cap daily surfaced tweets (e.g. in-network + out-of-network split); include reply suggestions; generous enough to prove value, tight enough to create a ceiling.
+- **Paid:** higher volume, stronger loop, future notifications/automation—**earn** price increases with conversion and retention.
+
+## Moat (pattern)
+
+- Loop: **graph context** → **harvest high-impression tweets** → **better replies with wider context** → **repeat use** → future learning from opens, copies, engagement.
+
+## Metrics
+
+- Funnel: lander CTA, OAuth completion.
+- First session: complete proof flow, click-through to surfaced tweets, reach dashboard.
+- Monetization: upgrade CTA, checkout start, free-to-paid.
+- Retention: DAU/WAU, return after first proof.
+- Quality: reply opens/copies; qualitative feedback on suggestions.
+
+## GTM
+
+- **Product-as-proof:** founder-led distribution with real output, lander that sells the demo, clips/screenshots of the proof page.
+- **Angles:** “high-impression tweets and what to say,” “growth agent,” “best conversations before the window closes.”

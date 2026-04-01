@@ -1,0 +1,32 @@
+---
+description: "USE WHEN planning or building LinkedIn posting systems, daily content ops, or founder-led LinkedIn distribution for BimRoss."
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+
+# LinkedIn content machine (operator pattern)
+
+Internal or private tooling for **one profile, one channel, one post per day**—ship before you optimize.
+
+## Thesis
+
+- Turn draft ideas into a **ready queue**, then publish on a **deterministic schedule** (e.g. oldest `ready` first at launch).
+- **Human-in-the-loop** at the promotion gate (`draft` → `ready`) until confidence is high; scheduler only consumes `ready`.
+- **Weekly** batch for slot/theme tuning; avoid daily thrash on algorithms.
+
+## Non-negotiables
+
+- **Account safety over speed:** use **member-authorized APIs** for posting (e.g. LinkedIn UGC / `w_member_social` patterns)—not unauthorized browser automation against the website.
+- **Idempotent daily runs** (one publish per calendar day; durable logs; capped retries).
+- **Proof before sprawl:** consistency and queue health before multi-channel syndication.
+
+## Lightweight feedback loop
+
+- Score published posts with a simple weighted formula (e.g. reactions, comments, reposts); normalize by impressions if available.
+- Re-rank **time slots** weekly with a **minimum sample** before changing strategy.
+- Metrics that eventually matter: attributable inbound (DMs, opportunities), not vanity alone.
+
+## Alex-style decision rules
+
+- More reps beat more theory; keep the loop **publish → measure → adjust**.
+- If it does not increase **output, quality, or reliability** of tomorrow’s post, defer it.

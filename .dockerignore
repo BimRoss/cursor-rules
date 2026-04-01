@@ -1,6 +1,7 @@
 .git
 .github
 **/.DS_Store
+# Deprecated path — ignore if present locally
 .cursor/businesses
 .cursor/rules/private
 .cursor/rules/local-context.mdc

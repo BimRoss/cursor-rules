@@ -25,8 +25,8 @@ Maintain rules in three layers so the repo stays useful to the public while pres
 
 - Put private business strategy, org details, customer specifics, and internal playbooks under gitignored paths:
   - `.cursor/rules/local-context.mdc`
-  - `.cursor/businesses/**`
   - `.cursor/rules/private/**`
+  - (Deprecated path, still ignored if present: `.cursor/businesses/**`—prefer `private/` or sections inside `local-context.mdc`.)
 - Treat these files as local overlays on top of public rules.
 
 ### If private files were accidentally tracked
