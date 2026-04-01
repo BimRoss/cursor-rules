@@ -2,7 +2,7 @@
 description: BimRoss repos should expose required configuration via a tracked repo-root .env.example (and gitignored .env) for discoverability in Cursor and multi-root workspaces.
 alwaysApply: false
 globs: "**/.env.example"
-reviewBy: "2026-09-30"
+reviewBy: "2026-12-31"
 ---
 # Repo-root environment discovery (BimRoss)
 
@@ -21,6 +21,16 @@ reviewBy: "2026-09-30"
 
 - **`STRIPE_API_KEY_TEST`** and similar names refer to the Stripe **Dashboard secret key** for the right mode (`sk_test_…` / `sk_live_…`), not something generated inside **`stripe-factory`**. The factory repo versions **catalog** (Terraform); keys always come from Stripe (or GitHub Actions secrets for CI).
 
+## Admin cluster: `scripts/update-rancher-secrets.sh`
+
+Repos that push **runtime secrets** to the **admin** Kubernetes cluster (not GitOps plaintext) should expose a **single** script at **`scripts/update-rancher-secrets.sh`**:
+
+- **Name is stable** across BimRoss repos so operators always know what to run.
+- **Behavior is repo-specific**: e.g. **stripe-factory** and **makeacompany-ai** apply `makeacompany-ai-runtime-secrets` in namespace `makeacompany-ai`; **employee-factory** delegates to the existing Slack/LLM sync; **cookie-monster** delegates to `sync-twitter-worker-secrets.sh`.
+- Repos with **no** cluster secrets may ship a **no-op** script that prints where to go instead (**rancher-admin** exits non-zero with pointers; some stubs exit 0 with a message).
+
+Kubeconfig: scripts typically default **`KUBECONFIG`** to **`~/.kube/config/admin.yaml`** (fallback **`grant-admin.yaml`**) when unset—see **`bimross-kubeconfig-contexts.mdc`**.
+
 ## When bootstrapping a new repo
 
-See **`bimross-new-repo-bootstrap.mdc`**: add **`.env.example`** early in the same change that introduces scripts, Compose, or backends that read env.
+See **`bimross-new-repo-bootstrap.mdc`**: add **`.env.example`** early in the same change that introduces scripts, Compose, or backends that read env. If the service needs cluster runtime secrets, add **`scripts/update-rancher-secrets.sh`** in the same PR or follow-up.
