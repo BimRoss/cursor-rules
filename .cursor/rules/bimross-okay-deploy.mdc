@@ -27,7 +27,7 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 2. **Land commits** with **explicit `git add <paths>`**; push **`master`** (or each repo’s integration branch).
 3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**. Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
 4. **Monitor CI:** `gh run list` / `gh run watch` for the **tag** workflow on **`cursor-rules`** until green (Docker + **`rancher-admin`** push from workflow when configured).
-5. **Rollout:** If kubeconfig is available (e.g. **`KUBECONFIG=$HOME/.kube/config/grant-admin.yaml`**): **`kubectl rollout status deployment/employee-factory-{alex,tim,ross,garth} -n employee-factory`** (or get pods / describe if stuck).
+5. **Rollout (same bar as single-repo “deploy” in `bimross-git-dev-and-releases.mdc`):** After CI is green, confirm the cluster. If kubeconfig is available: **`kubectl --context admin rollout status deployment/employee-factory-{alex,tim,ross,garth} -n employee-factory`** (or **`get pods` / `describe`** if stuck); **`KUBECONFIG`** may point at **`~/.kube/config/admin.yaml`** per **`bimross-kubeconfig-contexts.mdc`**. If **`kubectl` is unavailable**, check **Rancher** (Fleet sync + workload pods for the target namespace). Do not treat the deploy as done on Actions alone.
 6. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push.
 
 ## Out of scope unless Grant asks
@@ -39,5 +39,5 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 
 - **`cursor-rules`** tag workflow succeeded (or failure is explained with next step).
 - **`transcribe`** pushed if it had uncommitted **`transcriptions/`** files.
-- Cluster shows **Ready** pods for employee-factory workloads **or** a clear blocker (image pull, secret, Fleet lag).
+- **Rollout verified:** cluster shows **Ready** pods (or successful **`rollout status`**) for the touched workloads **or** a clear blocker (image pull, secret, Fleet lag)—via **kubectl** and/or **Rancher**, not GitHub alone.
 - No leftover uncommitted changes in touched repos.

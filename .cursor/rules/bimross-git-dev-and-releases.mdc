@@ -25,9 +25,10 @@ Do **not** leave large finished changes only on disk; **push** so your human loo
 When Grant says **deploy** (in the sense of shipping the work just finished—not casual hypotheticals), treat it as the **standard release path** for the repo(s) in scope:
 
 1. **Commit** and **push** so GitHub has the merged integration line.
-2. Cut a **`v*`** **semver tag** on the repo(s) that ship versioned images or GitOps bumps (match each repo’s CI: tag-driven Docker push, **`rancher-admin`** updates, Fleet apply).
+2. Cut a **`v*`** **semver tag** on the repo(s) that ship versioned images or GitOps bumps (match each repo’s CI: tag-driven Docker push, **`bimross/rancher-admin`** updates, Fleet apply).
 3. Add an **informative GitHub Release** (or release notes on the tag) describing what changed—enough for you and Fleet to know what rolled.
 4. **Let CI/CD finish**: image builds/push, manifest bumps in **`bimross/rancher-admin`** where configured, then GitOps/Fleet rolls the cluster.
+5. **Verify rollout (required for “deploy”):** do not stop at green Actions. Confirm the cluster caught up: **`gh run watch`** (or equivalent) for the tag workflow, then **Kubernetes evidence** for the workloads that changed—e.g. **`kubectl --context admin rollout status deployment/<name> -n <namespace>`**, **`kubectl --context admin get pods -n <namespace>`** (Ready, new image tag if applicable), or **Rancher** → Fleet/GitOps repo sync + workload status for the right cluster (**`bimross-kubeconfig-contexts.mdc`**: admin vs local). If kube access is missing, say so and list what to check in Rancher; do not claim deploy complete without either kubectl/Rancher confirmation or an explicit blocker.
 
 Agents do not invent releases silently; **“deploy” from Grant is explicit authorization** to run that full path for the feature context.
 
