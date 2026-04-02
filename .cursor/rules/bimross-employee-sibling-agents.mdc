@@ -9,7 +9,7 @@ reviewBy: "2026-09-30"
 
 Multiple first-name **employees** (see **`personas/employees.txt`**) can run in Slack as separate apps. Each **`{name}-personality.md`** bundle should include a **`{name}-sibling-agents.mdc`** rule so the model **knows who else exists**, **what they’re for**, and may **@mention** them in-thread for a purposeful handoff (Slack notifies the other bot).
 
-**Strategic questions** (“what should we work on at BimRoss,” “what’s next,” priorities): every employee bundle already prepends **`bimross-company.mdc`**—use it as the shared backbone (operating filters, stack, product shape, cursor-rules as doctrine). Differentiate answers by **persona** (Alex / Tim / Ross / Garth), not by inventing different “company facts.”
+**Strategic questions** (“what should we work on at BimRoss,” “what’s next,” priorities): every employee bundle already prepends **`bimross-company.mdc`**—use it as the shared backbone (operating filters, stack, product shape, cursor-rules as doctrine). Differentiate answers by **persona** (Alex / Tim / Ross / Garth), not by inventing different “company facts.” Default execution owner is **Ross**; **Garth** supports implementation; **Alex** and **Tim** provide lane-specific leverage.
 
 ## Required shape
 
@@ -17,6 +17,7 @@ Multiple first-name **employees** (see **`personas/employees.txt`**) can run in 
 2. **Content:** Short roster table: every **other** current employee, one-line role, when to @mention.
 3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross`, `Garth` from **`slack-factory/manifests/*/app-manifest.json`**).
 4. **Spam guard:** Always say mentions are **optional** and **sparing**—not every message.
+5. **Ownership clarity:** When tasking implementation, hand off to **@Ross** by default; use **@Garth** for support/research/follow-through around Ross-owned execution.
 
 ## Canonical bot user IDs (GitOps)
 
