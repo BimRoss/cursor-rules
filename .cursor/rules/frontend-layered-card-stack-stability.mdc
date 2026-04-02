@@ -1,0 +1,45 @@
+---
+description: Prevent jitter and flip regressions in overlapping card/phone stacks by using slot-based transforms, scoped styles, and bounded interactions.
+globs: "**/components/**/*card-stack*.tsx,**/components/**/*hero*.tsx,**/*.module.css"
+alwaysApply: false
+reviewBy: "2026-10-01"
+---
+
+# Layered card stack stability (forensic rule)
+
+Use this rule when building or debugging overlapping cards (hero phone stacks, deck previews, before/after cards) that animate between front/back positions.
+
+## Why this exists
+
+Repeated regressions came from two patterns:
+
+1. **Identity-based transform classes** (`chat` gets one offset, `thread` gets another) made the back card jump sides when front state changed.
+2. **Hover-triggered front swaps during transition** caused flip-flop jitter and unsmooth animation.
+
+## Required implementation pattern
+
+- Use **slot-based transforms**:
+  - `front` slot transform is always the same.
+  - `back` slot transform is always the same.
+  - Card identity (`chat`, `thread`, etc.) only controls content, never offset direction.
+- Keep overlapping stack styles **scoped** with a colocated `*.module.css` (or equivalent local styling) instead of broad shared utility strings.
+- Keep interaction deterministic:
+  - Prefer click/tap to promote card.
+  - Avoid continuous hover promotion unless you can prove no re-entry jitter.
+  - If animation lock/debounce is needed, align lock duration with actual transition timing.
+- Respect accessibility:
+  - Buttons should remain keyboard-focusable.
+  - Add `aria-label` and `aria-pressed` where “front card” behaves like a toggle.
+  - Add `prefers-reduced-motion` fallbacks.
+
+## Verification checklist (required)
+
+1. Trigger 5-10 rapid swaps on desktop and mobile viewport.
+2. Confirm the **back card anchor** remains in the same position through every swap.
+3. Confirm no oscillation when pointer passes across overlap boundaries.
+4. Run lint on touched components and styles.
+5. If this is a repeated bug class, capture the final pattern in rules before closing the task.
+
+## Tie-breaker
+
+If visual flourish conflicts with deterministic motion, prefer deterministic motion first. Reliable card position beats “fancy” transforms that regress interaction quality.
