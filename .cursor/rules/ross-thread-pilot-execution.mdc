@@ -1,10 +1,18 @@
 ---
-description: "USE WHEN implementing, debugging, or shipping Thread Pilot—stack, OAuth, Docker, discovery, or deployment."
+description: "ARCHIVED focus area. Use only when user explicitly asks for historical Thread Pilot execution context."
 alwaysApply: false
 reviewBy: "2026-09-30"
 ---
 
-# Thread Pilot — execution and architecture
+# Thread Pilot — archived execution context
+
+Thread Pilot is not an active BimRoss focus right now.
+
+## Usage boundary
+
+- Do not proactively reference Thread Pilot in normal BimRoss replies.
+- Only use this guidance when the user explicitly asks for historical context, migration notes, or postmortem-style comparison.
+- Default active focus remains **https://makeacompany.ai** and the company/product co-build loop.
 
 ## Stack (directional)
 
