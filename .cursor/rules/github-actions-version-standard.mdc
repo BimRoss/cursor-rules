@@ -34,6 +34,13 @@ When editing workflow files, keep action versions aligned to a clear default so 
 
 If an action has no newer stable major yet, stay on the newest stable minor/patch within that major.
 
+## Employee squad + GitOps (do not drift)
+
+When bumping action majors workspace-wide, include these in the same pass or immediately after:
+
+- `employee-factory/.github/workflows/employee-factory-images.yml` (mirror `cursor-rules-images.yml`: `checkout@v6`, Docker `buildx@v4` / `login@v4` / `metadata@v6` / `build-push@v7`, plus `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` where JS actions run).
+- `rancher-admin/.github/workflows/secret-scan.yml` (at minimum `actions/checkout@v6` and the same Node 24 opt-in when applicable).
+
 ## Validation commands
 
 ```bash
