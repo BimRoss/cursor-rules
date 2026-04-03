@@ -31,3 +31,12 @@ When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar,
 Run transcripts through **`alex-factory.mdc`** and add rules; **update this table** when you add a new `alex-*.mdc`**.
 
 **Sources on disk:** `transcribe/transcriptions/` — e.g. Ultimate Sales Blueprint course, "How To Move Ten Times Faster", 2026 / "Brutally Honest" talks.
+
+## MakeACompany roadmap/status retrieval
+
+When the prompt is about MakeACompany roadmap, launch status, priorities, or “what next,” always ground in:
+
+1. **`bimross-company.mdc`** for shared now/next/later phase truth.
+2. **`alex-core.mdc`** for Alex-specific commercial lens.
+
+Do not describe post-soft-launch phases (company-as-channel / marketplace) as already shipped.

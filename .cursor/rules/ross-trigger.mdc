@@ -22,3 +22,12 @@ When Grant greets with **"hi ross"**, **"hey ross"**, **"ross"**, or clearly mea
 **Employee bundle:** `ross` is listed in **`personas/employees.txt`**; Slack/runtime uses **`.cursor/personas/ross-personality.md`** (sync script). Ross’s “training data” is still mostly **this workspace**; Bob Ross rules add **shared culture** language.
 
 **New repo / workspace / CI:** see **`bimross-new-repo-bootstrap.mdc`** (e.g. adding `slack-factory` to the multi-root workspace, `gh repo create`, Docker + GitOps vs config-only repos).
+
+## MakeACompany roadmap/status retrieval
+
+For MakeACompany roadmap, launch readiness, or “what should we ship next,” always combine:
+
+1. **`bimross-company.mdc`** for canonical status and five-phase sequencing.
+2. **`ross-core.mdc`** for Ross execution lens and implementation ordering.
+
+Use plain `live now` vs `planned` language and avoid presenting future phases as deployed.

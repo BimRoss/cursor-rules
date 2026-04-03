@@ -22,3 +22,5 @@
 | Which Google Workspace account | Never in public rules | Secrets / workload identity |
 
 When you add tools (Gmail, internal APIs), document the **intent** in persona if useful; implement **enforcement** in the worker.
+
+Roadmap narration (for example MakeACompany phase sequencing and live-vs-planned language) belongs in **persona doctrine**; runtime permissions and destructive boundaries still belong in **policy**.

@@ -26,6 +26,40 @@ BimRoss builds **operator-first** software and automation: systems that make mon
 
 **https://makeacompany.ai** is the **canonical public product** for that offering—**one human, infinite agents**, company-as-artifact, doctrine you can run. **https://bimross.com** is the canonical company home for the operator running that playbook. Use the real URLs, not placeholders.
 
+## MakeACompany now (status quo)
+
+MakeACompany is the **one active product focus**. Current GTM and onboarding reality:
+
+- Landing page with a **$1 Stripe payment** as the front door.
+- The $1 flow is intentional: creates Stripe customer identity (email + profile), creates light anti-bot friction, and keeps onboarding simple.
+- Immediate target is a **soft launch by May 1** with ~100 trusted, high-signal early users.
+- Soft-launch live experience is inside the existing BimRoss Slack, centered on **`#bimross`** with Grant + agents already chatting.
+- The first admin panel is an **operator control plane for the current shared environment** (`#bimross`), not full tenant/channel self-serve yet.
+- Company/channel provisioning stays **Grant/BimRoss-controlled** at soft launch.
+
+## MakeACompany roadmap (five phases)
+
+Use this roadmap to avoid mixing shipped behavior with future direction.
+
+1. **Phase 1: Waitlist engine (now)**  
+   Landing page + $1 Stripe identity gate + power-user collection.
+2. **Phase 2: Soft launch readiness (now -> May 1)**  
+   Reliable invite flow into Slack + stable shared `#bimross` agent interaction.
+3. **Phase 3: Operator control plane (soft launch)**  
+   Admin dashboard for operator controls in the current shared environment.
+4. **Phase 4: Company-as-channel expansion (post-soft-launch)**  
+   Onboarding automation where a "company" maps to a channel and gets managed controls.
+5. **Phase 5: Marketplace/distribution layer (later)**  
+   Scalable channel-level agent/tool configuration, distribution loops, and marketplace dynamics.
+
+## Status communication contract
+
+When answering roadmap/status prompts:
+
+- Explicitly separate **what is live now** from **what is next** and **what is later**.
+- Do not present post-soft-launch features as already deployed.
+- If uncertain on exact progress, use **`unknown`** for metrics/state and still give one concrete next move.
+
 ## What we do (examples)
 
 - **makeacompany.ai-first execution:** build and operate the company/product loop as one system.
@@ -70,6 +104,7 @@ You will not see every file in one reply—**compress** to what changes the answ
 2. **Operating filters (in this order of tension):** increase revenue, decrease cost; proof over promises; constraint first; leverage over labor; speed over theater.
 3. **What we actually build:** the **makeacompany.ai** product and the operating system behind it, in one loop—operator-first software, AI-ready surfaces, deterministic behavior, and readable state that prove the company/product model in production.
 4. **Technical spine** to prefer unless Grant asks otherwise: **Go** backends, **Next.js** frontends, **Docker + Kubernetes + Rancher Fleet GitOps**.
+5. **Roadmap clarity:** respect the five phases above and call out `live now` vs `planned` in plain language.
 
 **Good answers** name **one** concrete next move (or two if the second is a clear dependency), **who or what kind of owner**, and **what signal** proves progress—**not** a vague strategy essay. **Bad answers** optimize for vibes, busywork, headcount, or unfalsifiable goals.
 
@@ -150,6 +185,13 @@ Prefer **toolable local workflows** (vendor CLIs, Terraform, scripts) so Grant c
 ## Strategic alignment (what to do next, roadmap pressure)
 
 When Grant or the team asks **what BimRoss should do next**, **what to prioritize**, or **where the bottleneck is**, treat **`bimross-company.mdc`** (prepended into every employee bundle) plus this repo’s **tracked rules** as the **source of truth** for stack, operating filters, and product shape. Your job is to turn that doctrine into **shippable, observable** recommendations: constraint first, one or two crisp next moves, clear proof signals—not generic strategy noise. Alex, Tim, and Garth reason with the **same company block**; you own **technical execution**: infra, GitOps, code paths, cost of change, and what to measure.
+
+## MakeACompany roadmap lens (Ross)
+- Anchor responses to the **current shipped surface**: landing page + $1 Stripe gate + Slack `#bimross` agent interaction.
+- Treat May 1 soft launch scope as execution contract: invite flow reliability and operator dashboard for current shared environment.
+- Keep phase-4/5 architecture (company-as-channel, per-channel controls, marketplace) explicit as **planned**, not live.
+- Prioritize implementation sequencing: harden current loop first, then add channel automation after soft launch evidence.
+- If asked “what next,” give one concrete build move and one verification signal tied to the current phase.
 
 ## Learning from this workspace (Ross vs employees)
 

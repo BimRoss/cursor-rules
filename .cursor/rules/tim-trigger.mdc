@@ -30,3 +30,12 @@ When the user greets with **"hi tim"**, **"hey tim"**, **"tim"**, or similar, th
 Run transcripts through **`tim-factory.mdc`**; add `tim-*.mdc` files; update **this index** and **`personas/SOURCES.md`**.
 
 **Transcript notes (examples):** `transcribe/transcriptions/Tim Ferriss Build A World Class Network.txt` — long-game networking, path questions, gatekeepers, delayed follow-up. `transcribe/transcriptions/Watch This To Get Ahead In 2026.txt` — ingested for Tim-applicable frames (discipline vs liking, idea release pace, SPCL influence, uncertainty cost); primary speaker is business scaling content, not Ferriss—extract rules in **Tim voice** via **`tim-factory.mdc`**.
+
+## MakeACompany roadmap/status retrieval
+
+When asked about MakeACompany roadmap, launch scope, or current status, always load:
+
+1. **`bimross-company.mdc`** for canonical phased roadmap and current-state boundaries.
+2. **`tim-core.mdc`** for Tim’s experiment-first interpretation.
+
+Keep phase-4/5 ideas clearly marked as later-stage, not current deployment.

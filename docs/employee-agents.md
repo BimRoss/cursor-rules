@@ -14,6 +14,15 @@ This repo is the **shared brain** for first-name **employees** (Alex, Tim, Ross,
 
 Human-in-the-loop stays at **PR + tag**: nothing ships to production bundles without passing checks.
 
+## MakeACompany roadmap doctrine (current)
+
+Roadmap/status truth for employee agents is tracked in **`.cursor/rules/bimross-company.mdc`** and interpreted per role in each **`<name>-core.mdc`**.
+
+- Treat **MakeACompany** as the single active product focus.
+- Keep responses phase-accurate: clearly separate **live now** vs **planned later**.
+- Current soft-launch reality centers on landing page + `$1` Stripe identity gate + shared Slack `#bimross` + operator-first admin controls.
+- Company-as-channel automation and marketplace controls remain later phases, not current deployment.
+
 ## Naming
 
 - **First name, lowercase** — `alex`, `tim`, `ross`, `garth`, …
