@@ -1,0 +1,50 @@
+---
+description: "Technical contract for availability/signoff message routing in Slack agents."
+alwaysApply: true
+reviewBy: "2026-07-01"
+---
+
+# Slack availability/sentiment router contract
+
+Use this contract when implementing or reviewing Slack message routing in runtime code (for example `employee-factory`).
+
+## Signal taxonomy
+
+- `signoff`: cues like `go to bed`, `go to sleep`, `sign off`, `log off`.
+- `availability`: cues like `step away`, `afk`, `away for the afternoon`, `brb`, `back later`.
+- `normal`: everything else.
+
+## Priority order (required)
+
+If multiple classes match in one message:
+
+1. `signoff`
+2. `availability`
+3. `normal`
+
+If routing priorities conflict with normal ideation or delegation behavior, prefer this order.
+
+## Allowed actions
+
+- `signoff` -> `ack_only`
+- `availability` -> `ack_only`
+- `normal` -> `normal`
+
+`ack_only` means:
+
+- one short acknowledgment
+- optional single async checkpoint line
+- no stacked asks
+- no new delegations
+- no fresh @mentions
+
+## Runtime integration points
+
+- Run classification at ingress before branch fan-out (thread/multi-agent/general paths).
+- Re-check before each LLM call site as a guardrail.
+- Add decision tracing with at least: intent, action, reason, confidence, anchor key.
+
+## Rollout safety
+
+- Start in `log-only` mode where classification is logged but not enforced.
+- Enable enforcement only after log review confirms low false positives.
