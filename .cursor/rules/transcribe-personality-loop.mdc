@@ -1,0 +1,28 @@
+---
+description: Apply after transcript ingestion to update employee voice via lightweight rules and synced personality bundles.
+alwaysApply: false
+---
+# Transcript -> personality loop (rule-first)
+
+When a new transcript is added (or a transcribe run completes), default to a lightweight, rule-driven update path for employee voice.
+
+## Default posture
+
+- Prefer updating `.cursor/rules/<name>-*.mdc` over building extraction pipelines or code automation.
+- Keep guidance text-first, loose-but-directive, and editable by humans and agents.
+- Only build heavier automation when the user explicitly asks for it.
+- Treat prompt/rule quality as the primary lever in AI-heavy workflows: simple rule updates should be the default operating move.
+
+## Required loop after transcript ingest
+
+1. Extract durable voice signals from the transcript into atomic `<name>-*.mdc` rule updates (tone, cadence, phrasing patterns, opening style, decision framing).
+2. Add or refresh transcript provenance in `personas/SOURCES.md` and relevant trigger notes.
+3. Regenerate bundles with `./scripts/sync-employee-personality.sh --employee <name>` (or `--all` if shared rules changed).
+4. Verify with `./scripts/check-employee-personality.sh`.
+5. Commit the `.mdc` edits together with updated `.cursor/personas/<name>-personality.md`.
+
+## Anti-robotic guardrail
+
+- Avoid generic lead-ins that can appear across employees ("I'm around and ready to work", repetitive "quick take?" openers).
+- Prefer each employee's natural rhythm and sentence shape from source material.
+- If transcript signals conflict with existing voice rules, prefer transcript-backed phrasing updates and then sync bundles.

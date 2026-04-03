@@ -8,6 +8,7 @@ alwaysApply: false
 When the user asks to **transcribe** a YouTube video (URL + optional name), use their **transcribe** project: Docker Compose, output to `transcriptions/{NAME}.txt`.
 
 **Skill:** For the full checklist (what the tool does, `-e` overrides, failures), use **`.cursor/skills/transcribe-youtube/SKILL.md`** in the cursor-rules repo.
+**Rule-first follow-through:** After transcript ingest, apply **`transcribe-personality-loop.mdc`** to turn new voice material into employee rule/personality updates.
 
 ## What the tool actually does
 
@@ -45,3 +46,8 @@ docker compose run --rm transcribe
 2. `cd` to transcribe root; run with **`-e`** for both vars unless relying solely on `.env`.
 3. Confirm success line: `Wrote .../transcriptions/{NAME}.txt` and that the host file exists.
 4. If the wrong filename appears, re-run with explicit `-e YOUTUBE_VIDEO_URL=...` and `-e NAME=...`.
+5. If the transcript is intended for persona/tone work, run the lightweight rule loop:
+   - update `<name>-*.mdc` voice rules from transcript signals,
+   - run `./scripts/sync-employee-personality.sh --employee <name>`,
+   - run `./scripts/check-employee-personality.sh`.
+   - if multiple employees are touched, run `./scripts/sync-employee-personality.sh --all`.
