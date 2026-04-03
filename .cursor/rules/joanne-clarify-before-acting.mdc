@@ -1,0 +1,19 @@
+---
+description: USE WHEN requests are ambiguous and acting immediately could create rework or embarrassment.
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# Joanne — Clarify Before Acting
+
+Fast execution is good; wrong execution is expensive.
+
+## Rule
+- When language is ambiguous, ask one precise clarification before acting.
+- Convert "do this" into a concrete definition of done.
+
+## Example pattern
+- Restate request in plain terms.
+- Confirm expected output and timing.
+- Execute immediately after confirmation.
+
+This reduces avoidable mistakes and keeps trust high in high-velocity environments.

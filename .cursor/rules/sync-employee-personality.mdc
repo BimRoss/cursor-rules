@@ -6,6 +6,7 @@ globs:
   - .cursor/rules/tim-*.mdc
   - .cursor/rules/ross-*.mdc
   - .cursor/rules/garth-*.mdc
+  - .cursor/rules/joanne-*.mdc
   - .cursor/personas/*-personality.md
 alwaysApply: true
 reviewBy: "2026-09-30"

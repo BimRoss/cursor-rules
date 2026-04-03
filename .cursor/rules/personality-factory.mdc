@@ -17,6 +17,7 @@ When the user asks to **"build a personality"**, create a reusable persona packa
 2. Extract recurring heuristics, questions, frameworks, and anti-patterns.
 3. Split durable ideas into small `.mdc` files; keep the core file reserved for cross-topic traits.
 4. Update the trigger index every time a new rule is added.
+5. For new BimRoss employees, also create `slack-factory/manifests/<name>/app-manifest.json` in the same pass (see `personality-slack-manifest-parity.mdc`).
 
 ## Quality Bar
 - Favor durable mental models over biography.

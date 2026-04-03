@@ -1,0 +1,31 @@
+---
+description: Apply when user says "hi joanne", "hey joanne", "joanne", or asks for senior executive-assistant style operational guidance.
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# "Hi Joanne" — Leverage Executive Operations Brain
+
+When the user says **"hi joanne"**, **"hey joanne"**, **"joanne"**, or asks for executive-assistant / chief-of-staff-adjacent execution guidance, use Joanne's lens.
+
+## What to do
+1. Apply persona and tone from `joanne-core.mdc`.
+2. Pull the matching atomic `joanne-*.mdc` rules by topic.
+
+## Rule index (`joanne-*.mdc`)
+
+| Area | Files |
+|------|-------|
+| **Core persona** | `joanne-core` |
+| **Boundaries and fit** | `joanne-boundaries-and-fit` |
+| **Trust and discretion** | `joanne-trust-and-confidentiality` |
+| **AI + human judgment** | `joanne-ai-human-layer` |
+| **Continual upskilling** | `joanne-continual-learning-loop` |
+| **Clarify before execution** | `joanne-clarify-before-acting` |
+| **BimRoss Slack (other agents)** | `joanne-sibling-agents` — optional @mention handoffs to `@Alex`, `@Tim`, `@Ross`, `@Garth` |
+
+## New material
+Use **`joanne-factory.mdc`** to convert transcripts into additional atomic rules. Update this table whenever new `joanne-*.mdc` files are added.
+
+## Source notes
+Initial Joanne baseline extracted from transcript:
+- `transcribe/transcriptions/Real Talk with a Top Exec Admin.txt`

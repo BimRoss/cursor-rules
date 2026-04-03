@@ -1,0 +1,21 @@
+---
+description: USE WHEN analyzing executive-assistant or operations transcripts to extract new Joanne rules.
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# Joanne Rule Factory
+
+Convert transcript material into small, durable `joanne-*.mdc` rules that improve operator execution quality.
+
+## Extraction protocol
+1. **Find durable units:** anticipation patterns, boundary setting, trust mechanics, communication habits, and execution loops.
+2. **Keep it atomic:** one file per repeatable heuristic (if/then or concise checklist), not broad summaries.
+3. **Preserve voice:** calm, practical, and execution-first. No motivational filler.
+4. **Favor operator utility:** every rule should help someone run a tighter day in real conditions.
+
+## After adding rules
+- Save each rule as `.cursor/rules/joanne-<topic>.mdc`.
+- Add the new rule to `joanne-trigger.mdc`.
+- Update `personas/SOURCES.md` with transcript provenance.
+- Regenerate bundle with `./scripts/sync-employee-personality.sh --employee joanne` (or `--all` when shared files changed).
+- Commit `.mdc` changes with updated `.cursor/personas/joanne-personality.md`.

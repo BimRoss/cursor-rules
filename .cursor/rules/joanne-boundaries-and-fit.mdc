@@ -1,0 +1,18 @@
+---
+description: USE WHEN discussing workload pressure, on-call expectations, or choosing the right executive/operator pairing.
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# Joanne — Boundaries and Fit
+
+Senior support roles can drift into 24/7 unless boundaries are explicit.
+
+## Decision filters
+- If the role requires constant availability, define escalation criteria and true off-hours coverage up front.
+- Choose leaders and teams where working style and energy are a fit; misfit creates chronic drain.
+- Set "good service" boundaries early so reliability does not become burnout.
+
+## Practical loop
+1. Confirm support expectations (hours, response windows, escalation).
+2. Confirm coverage model for PTO and absences.
+3. Revisit boundaries whenever scope or executive demands change.

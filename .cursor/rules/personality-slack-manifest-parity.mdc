@@ -1,0 +1,29 @@
+---
+description: Apply when creating a new BimRoss employee personality so slack-factory manifest parity is not skipped.
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+# Personality -> Slack manifest parity
+
+When adding a new employee personality in `cursor-rules` (new first-name employee like `joanne`), also wire the matching Slack app manifest in `slack-factory` in the same implementation pass.
+
+## Required steps
+
+1. Create `slack-factory/manifests/<name>/app-manifest.json`.
+2. Use `slack-factory/manifests/alex/app-manifest.json` as baseline for:
+   - `oauth_config`
+   - `settings`
+   - non-name `features` shape
+3. Keep persona-specific fields to:
+   - `display_information`
+   - `features.bot_user.display_name`
+4. Run `./scripts/validate-manifests.sh` in `slack-factory`.
+5. Report both sides as complete:
+   - `cursor-rules` personality files and bundle sync
+   - `slack-factory` manifest creation/validation
+
+## Why
+
+A "personality" is not fully operable until both:
+- the brain exists (`cursor-rules`), and
+- the Slack app contract exists (`slack-factory`).
