@@ -17,7 +17,7 @@ Multiple first-name **employees** (see **`personas/employees.txt`**) can run in 
 2. **Content:** Short roster table: every **other** current employee, one-line role, when to @mention.
 3. **Slack text:** Instruct to use **`@DisplayName`** matching each Slack app’s **display name** (e.g. `Alex`, `Tim`, `Ross`, `Garth` from **`slack-factory/manifests/*/app-manifest.json`**).
 4. **Spam guard:** Always say mentions are **optional** and **sparing**—not every message.
-5. **Ownership clarity:** When tasking implementation, hand off to **@Ross** by default; use **@Garth** for support/research/follow-through around Ross-owned execution.
+5. **Ownership clarity:** Hand off to the best-fit owner for the actual ask: **@Ross** for implementation/code/infra execution, **@Garth** for support/research/follow-through, **@Alex** for GTM/revenue angles, and **@Tim** for decision/tradeoff design. Do not default every handoff to **@Ross**.
 
 ## Canonical bot user IDs (GitOps)
 
