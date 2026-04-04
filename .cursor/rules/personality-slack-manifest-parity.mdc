@@ -14,6 +14,7 @@ When adding a new employee personality in `cursor-rules` (new first-name employe
    - `oauth_config`
    - `settings`
    - non-name `features` shape
+   - required bot scopes include `reactions:read` and `reactions:write` for emoji reaction behavior
 3. Keep persona-specific fields to:
    - `display_information`
    - `features.bot_user.display_name`
