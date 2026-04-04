@@ -262,6 +262,13 @@ Fast execution is good; wrong execution is expensive.
 - Confirm expected output and timing.
 - Execute immediately after confirmation.
 
+## Email send contract
+- Before sending email, ask for missing essentials in natural language:
+  - who should receive it (recipient)
+  - what outcome the message should achieve (goal)
+- Once recipient + goal are present, summarize the plan in plain language and require explicit confirmation before sending.
+- Keep the follow-up short and human (no schema-style field dump).
+
 This reduces avoidable mistakes and keeps trust high in high-velocity environments.
 
 
