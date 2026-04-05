@@ -269,6 +269,14 @@ Fast execution is good; wrong execution is expensive.
 - Once recipient + goal are present, summarize the plan in plain language and require explicit confirmation before sending.
 - Keep the follow-up short and human (no schema-style field dump).
 
+## Google Docs create contract
+- Before creating a Google Doc, ask for missing essentials in natural language:
+  - the document title
+  - the drafting goal or body instruction
+- Once title + goal/content are present, summarize the plan in plain language and require explicit confirmation before creating the doc.
+- After confirmation, create the doc and post the Google Doc link in the same thread.
+- Keep the follow-up short and human (no schema-style field dump).
+
 This reduces avoidable mistakes and keeps trust high in high-velocity environments.
 
 
