@@ -1,13 +1,13 @@
 ---
-description: "Grant says okay deploy, deploy everything, or deploy — multi-repo push, cursor-rules v* tag, monitor Actions + K8s; single-repo deploy uses same ship steps for the repo in context."
+description: "Grant says okay deploy, deploy everything, or deploy — multi-repo push + tags/releases; stop after ship artifacts are cut (no rollout polling)."
 alwaysApply: false
 reviewBy: "2026-09-30"
 ---
 # "Okay deploy" — full BimRoss release pass
 
-When Grant says **okay deploy**, **deploy everything**, or **deploy** in the **full-workspace / multi-repo** sense—or clearly means **push + tag + release notes + verify rollout** across the usual repos—execute this protocol.
+When Grant says **okay deploy**, **deploy everything**, or **deploy** in the **full-workspace / multi-repo** sense—or clearly means **push + tag + release notes** across the usual repos—execute this protocol.
 
-For **one repo** after a focused feature, **“deploy”** still means **commit → push → `v*` where the repo’s CI expects it → GitHub Release description → monitor CI/GitOps**; use the repo’s canonical workflow (see **`bimross-git-dev-and-releases.mdc`** and that repo’s **`*.yml`**), not only the multi-repo table below.
+For **one repo** after a focused feature, **“deploy”** still means **commit → push → `v*` where the repo’s CI expects it → GitHub Release description**; then stop active tracking and let CI/GitOps complete asynchronously. Use the repo’s canonical workflow (see **`bimross-git-dev-and-releases.mdc`** and that repo’s **`*.yml`**), not only the multi-repo table below.
 
 ## Authorization
 
@@ -26,9 +26,8 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 1. **Preflight:** `git status --short --branch` on each repo you will touch. If unrelated dirty files appear, stop and ask (**`git-worktree-safe-staging.mdc`**).
 2. **Land commits** with **explicit `git add <paths>`**; push **`master`** (or each repo’s integration branch).
 3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**. Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
-4. **Monitor CI:** `gh run list` / `gh run watch` for the **tag** workflow on **`cursor-rules`** until green (Docker + **`rancher-admin`** push from workflow when configured).
-5. **Rollout (same bar as single-repo “deploy” in `bimross-git-dev-and-releases.mdc`):** After CI is green, confirm the cluster. If kubeconfig is available: **`kubectl --context admin rollout status deployment/employee-factory-{alex,tim,ross,garth} -n employee-factory`** (or **`get pods` / `describe`** if stuck); **`KUBECONFIG`** may point at **`~/.kube/config/admin.yaml`** per **`bimross-kubeconfig-contexts.mdc`**. If **`kubectl` is unavailable**, check **Rancher** (Fleet sync + workload pods for the target namespace). Do not treat the deploy as done on Actions alone.
-6. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push.
+4. **Stop active tracking after ship artifacts are cut:** once commits/tags/releases are pushed, hand off to async CI/GitOps and downstream Slack deploy messaging; do not poll Actions, Kubernetes, or Rancher in-session unless Grant explicitly asks.
+5. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push/tag.
 
 ## Out of scope unless Grant asks
 
@@ -37,7 +36,7 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 
 ## Done when
 
-- **`cursor-rules`** tag workflow succeeded (or failure is explained with next step).
+- **`cursor-rules`** tag is pushed successfully (or failure is explained with next step).
 - **`transcribe`** pushed if it had uncommitted **`transcriptions/`** files.
-- **Rollout verified:** cluster shows **Ready** pods (or successful **`rollout status`**) for the touched workloads **or** a clear blocker (image pull, secret, Fleet lag)—via **kubectl** and/or **Rancher**, not GitHub alone.
+- No in-session rollout polling is required after tags/releases are cut; deployment confirmation is expected through downstream Slack deploy messaging unless Grant asks for active verification.
 - No leftover uncommitted changes in touched repos.
