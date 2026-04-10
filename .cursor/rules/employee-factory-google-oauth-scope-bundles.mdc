@@ -1,0 +1,47 @@
+---
+description: "When providing Google OAuth scopes for employee-factory agents, always return the full scope bundle per agent (not incremental scope deltas)."
+globs:
+  - "**/employee-factory/**"
+  - "**/cursor-rules/**"
+alwaysApply: false
+reviewBy: "2026-10-10"
+---
+
+# employee-factory Google OAuth scope bundles (full-set responses)
+
+## Trigger
+
+Apply when Grant asks for:
+
+- Google OAuth scopes
+- Google Auth Playground URLs
+- refresh-token scope setup
+- "what scopes do we need" for an employee-factory agent (Joanne, etc.)
+
+## Required response behavior
+
+- Always provide the **full current scope bundle** for the requested agent's supported Google vertical tools.
+- Do **not** provide only newly added scopes.
+- If a scope set changes, explicitly provide the refreshed full set.
+- Include scopes as copy-paste-ready URL lines for Google Auth Playground.
+
+## Joanne scope bundle (current canonical set)
+
+Joanne supports two Google verticals in employee-factory:
+
+- Gmail send-email tooling
+- Google Docs create-doc tooling (with Drive permissions grant)
+
+Always provide all three scopes together:
+
+- `https://www.googleapis.com/auth/gmail.send`
+- `https://www.googleapis.com/auth/documents`
+- `https://www.googleapis.com/auth/drive.file`
+
+## Output format contract (when asked)
+
+When returning scopes for Joanne, include:
+
+1. A short "full Joanne bundle" heading.
+2. One code block with the three scope URLs (one per line) for direct paste into Auth Playground.
+3. A one-line reminder that the refresh token must be re-issued with the full set when scopes change.
