@@ -1,0 +1,39 @@
+---
+description: "Technical contract for CEO reaction mirroring in Slack agent runtime."
+alwaysApply: true
+reviewBy: "2026-07-01"
+---
+
+# Slack CEO reaction mirror contract
+
+Use this contract when implementing or reviewing Slack `reaction_added` handling in runtime code (for example `employee-factory`).
+
+## Trigger (required)
+
+- Inbound event is `reaction_added`.
+- Reactor user is the configured CEO user id (`CHAT_ALLOWED_USER_ID`).
+- Reaction target item is a Slack `message` event item.
+- Message belongs to the current bot (`item_user == bot_user_id`).
+- Channel is allowed by runtime channel guards and is not a DM.
+
+## Action (required)
+
+- For every qualifying CEO reaction event, the same bot adds exactly one reaction to the same message.
+- Bot-side reaction is selected randomly from a fixed allowlist of Slack-native emoji names.
+
+## Default allowlist
+
+- `thumbsup`
+- `clap`
+- `eyes`
+- `rocket`
+- `fire`
+- `100`
+- `tada`
+- `raised_hands`
+
+## Safety and operability
+
+- Treat Slack `already_reacted` as success (idempotent behavior).
+- Keep behavior fully non-blocking and tolerant of transient Slack failures.
+- Log structured route decisions with at least: path, employee, channel, anchor timestamp, and reactor user.
