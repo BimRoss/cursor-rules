@@ -15,3 +15,17 @@
 **Cogito** = Go worker stack described in **employee-factory** (Socket Mode Slack today; extend with HTTP tools later).
 
 **Persona** ships in **`geeemoney/cursor-rules`** image; **policy** stays in the worker + secret stores.
+
+## Capability Contract Source Of Truth
+
+Capability metadata now has a two-layer contract:
+
+1. **Shared skill contract metadata** lives in **`slack-factory/skills-catalog.json`**:
+   - core employees
+   - skills by employee
+   - required vs optional parameters per skill
+   - runtime tool key per skill
+2. **Runtime enablement** lives in **`employee-factory`** via **`EMPLOYEE_TOOLS`**:
+   - which runtime tools are actually enabled for each employee in an environment
+
+Joanne’s capability-desk output should read as: **catalog contract + runtime enablement**, not one without the other.
