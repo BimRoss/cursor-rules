@@ -1,0 +1,62 @@
+---
+description: Apply when user says "lets add an employee" (or similar) to run the full BimRoss employee onboarding workflow across cursor-rules, slack-factory, makeacompany-ai, and employee-factory.
+alwaysApply: false
+reviewBy: "2026-09-30"
+---
+# BimRoss add employee workflow
+
+Use this when Grant says phrases like:
+- "lets add an employee"
+- "add a new employee"
+- "add <name> as an employee"
+- "onboard a new Slack employee"
+
+Goal: make new employee onboarding mostly one Cursor-driven flow, with only explicit manual Slack/OAuth steps called out.
+
+## Required execution order
+
+1. **Plan first**: confirm the new employee first name/slug and intended lane/role.
+2. **cursor-rules persona wiring**:
+   - Add `<name>` to `personas/employees.txt`.
+   - Add/update `.cursor/rules/<name>-*.mdc` (at minimum: trigger, core, sibling-agents, and optional factory).
+   - Run `./scripts/sync-employee-personality.sh --employee <name>` (or `--all` when shared rules changed).
+   - Ensure `.cursor/personas/<name>-personality.md` is committed with the rule edits.
+3. **slack-factory app contract**:
+   - Create `slack-factory/manifests/<name>/app-manifest.json`.
+   - Match Alex baseline for `oauth_config`, `settings`, and non-name feature shape.
+   - Keep required scopes including `reactions:read` and `reactions:write`.
+   - Run `./scripts/validate-manifests.sh`.
+4. **catalog + data model sync (channel-ready defaults)**:
+   - Update `slack-factory/skills-catalog.json`:
+     - Add employee in `coreEmployees`.
+     - Initialize `employeeSkillIds.<name>` (empty or mapped skills).
+     - Keep parameter names canonical (`intent`, `type`, `count`, `viewers`, `editors`, `commenters`).
+   - Update/verify `makeacompany-ai` catalog path and snapshots:
+     - `backend/internal/app/catalog.go` default catalog (if seed/default list is maintained there).
+     - `src/data/admin/team-snapshot.json` and `src/data/admin/skills-snapshot.json` via `npm run sync:team`.
+   - Confirm admin cards render the new employee and assigned skills.
+5. **employee-factory runtime wiring**:
+   - Ensure capability/runtime mapping includes the new employee where appropriate.
+   - Update roster/sibling references or deterministic capability desk outputs/tests if they assume fixed employees.
+6. **manual steps (explicitly call out, do not fake)**:
+   - Slack app creation/install approvals.
+   - Bot token/socket mode secrets.
+   - Any OAuth consent/manual callback setup.
+   - Cluster secret/config map wiring where required.
+
+## Output contract in chat
+
+When running this flow, report status in these buckets:
+- `done in code`
+- `done in config`
+- `manual steps remaining`
+- `validation evidence` (tests/lint/commands run)
+
+Never mark onboarding complete if manual Slack/runtime secrets are still pending.
+
+## Guardrails
+
+- Do not hardcode secrets in repo files or rules.
+- Keep names and IDs consistent across repos (`<name>`, lower-case slug).
+- Keep data model normalized for future multi-channel expansion; avoid one-off field names.
+- If adding an employee modifies any `<employee>-*.mdc`, always sync and commit matching personality bundles.

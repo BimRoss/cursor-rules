@@ -29,6 +29,7 @@ Roadmap/status truth for employee agents is tracked in **`.cursor/rules/bimross-
 - **Rules** — `.cursor/rules/<name>-*.mdc` (glob-stable for tools and Cursor).
 - **Bundle** — `.cursor/personas/<name>-personality.md`.
 - **New employee checklist** — Add `<name>` to **`personas/employees.txt`**; add **`.cursor/rules/<name>-*.mdc`** globs to **`sync-employee-personality.mdc`** (Cursor trigger); run **`sync-employee-personality.sh --employee <name>`**.
+- **Cursor phrase trigger** — for onboarding by prompt (e.g. "lets add an employee"), follow **`.cursor/rules/bimross-add-employee-workflow.mdc`**.
 
 ## Where “policy” lives
 
