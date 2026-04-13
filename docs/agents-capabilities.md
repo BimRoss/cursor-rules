@@ -18,14 +18,13 @@
 
 ## Capability Contract Source Of Truth
 
-Capability metadata now has a two-layer contract:
+Capability routing is now **admin-authoritative**:
 
-1. **Shared skill contract metadata** lives in **`slack-factory/skills-catalog.json`**:
-   - core employees
-   - skills by employee
-   - required vs optional parameters per skill
-   - runtime tool key per skill
-2. **Runtime enablement** lives in **`employee-factory`** via **`EMPLOYEE_TOOLS`**:
-   - which runtime tools are actually enabled for each employee in an environment
+1. **Authoritative assignments** live in `/admin` (`makeacompany-ai` -> `GET/PUT /v1/admin/catalog` in Redis):
+   - which employee is assigned to each skill
+   - which runtime tool each skill maps to
+   - required/optional parameter contract
+2. **Runtime readiness** in `employee-factory` (env + secrets) is a prerequisite only:
+   - tooling can execute only when both runtime is ready **and** `/admin` assigns that runtime tool to the employee
 
-Joanne’s capability-desk output should read as: **catalog contract + runtime enablement**, not one without the other.
+Operational rule: if `/admin` does not assign a tool, Slack runtime must not execute it or advertise it as supported.
