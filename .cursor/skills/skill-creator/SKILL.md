@@ -68,6 +68,13 @@ Based on the user interview, fill in these components:
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
 - **the rest of the skill :)**
 
+When a skill is intended to trigger runtime tools, encode a deterministic execution contract in the draft:
+
+- Define explicit intent signatures (what should deterministically match).
+- List required parameters and defaults so routing does not depend on LLM improvisation.
+- Define typed failure outputs (stable diagnostic tags) for missing prerequisites.
+- Avoid silent conversational fallback for direct tool actions; failure should be explicit and actionable.
+
 ### Skill Writing Guide
 
 #### Anatomy of a Skill

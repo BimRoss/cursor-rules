@@ -42,3 +42,14 @@ Use **`docs/provenance-template.md`** and optional **`personas/SOURCES.md`** to 
 ## Capabilities matrix (living)
 
 See **`docs/agents-capabilities.md`** — maps persona bundles to future/ current runtimes (Slack, Cogito, tools, auth). Update when you wire a new surface.
+
+## Runtime routing contract (all employees)
+
+Slack tool routing should follow a deterministic-first model across all employee agents:
+
+- direct tool intents route deterministically,
+- LLM routing is advisory/observability only for direct tool dispatch,
+- in threads, tool execution requires explicit specialist mention in the same message,
+- routing blockers must return typed deterministic failures (not generic chat fallback).
+
+Canonical policy lives in **`.cursor/rules/slack-deterministic-tool-routing-contract.mdc`**.

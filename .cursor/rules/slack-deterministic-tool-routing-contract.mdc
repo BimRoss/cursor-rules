@@ -1,0 +1,61 @@
+---
+description: "Deterministic-first contract for Slack tool routing across all employee agents."
+alwaysApply: true
+reviewBy: "2026-07-01"
+---
+
+# Slack deterministic tool routing contract
+
+Use this contract when implementing or reviewing Slack runtime tool routing (for example `employee-factory`).
+
+## Goal
+
+Keep tool behavior fast, reliable, and explainable:
+
+- direct tool intent routes deterministically,
+- thread targeting is explicit,
+- failures are surfaced with typed diagnostics.
+
+## Deterministic-first dispatch (required)
+
+- For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative.
+- LLM intent classification may be used for observability and ambiguity diagnostics, but must not suppress deterministic direct intent execution.
+- LLM must not introduce new direct tool dispatch decisions when deterministic detection does not match.
+
+## Thread targeting contract (required)
+
+- In threads, owner-scoped tool execution requires explicit mention of the owning specialist in that same message.
+- Do not infer thread ownership as an execution grant for direct tool runs.
+- If mention is missing, reply with deterministic guidance and consume the event.
+- For locked advanced-tool threads, do not fall back into generic LLM thread chat when parsing fails; keep the thread in tool mode with a deterministic nudge or typed failure.
+
+## Failure contract (required)
+
+Never silently fall back to generic chat after a matched direct tool intent.
+
+Return explicit typed failure replies with stable tags, for example:
+
+- `thread_requires_explicit_mention`
+- `catalog_unavailable`
+- `runtime_tool_not_assigned`
+- `handler_declined`
+
+## Logging contract (required)
+
+For every direct tool request, emit route telemetry that makes outcomes auditable:
+
+- `intent`
+- `route_skip` with reason
+- `catalog_block` with reason
+- `execute`
+- `handler_ok` or `handler_declined`
+
+If deterministic intent overrides an LLM merge output, log that override explicitly.
+
+## Test contract
+
+Include regression coverage for:
+
+- strict thread mention requirement,
+- deterministic precedence over LLM for direct intents,
+- typed failure responses for catalog/runtime block conditions.
