@@ -1,0 +1,13 @@
+---
+description: Twitter indexer (makeacompany-ai) is cluster-internal only — no public DNS or ingress for the indexer HTTP API.
+globs: "**/rancher-admin/**","**/employee-factory/**","**/makeacompany-ai/**"
+alwaysApply: false
+reviewBy: "2027-04-01"
+---
+
+# Twitter indexer — internal only
+
+- The `twitter-indexer` workload answers **inside the cluster** (Service DNS in namespace `makeacompany-ai`). **Do not** add Ingress, Tunnel, or public DNS records that expose the indexer API to the internet.
+- **Garth** (`employee-factory`) must use **`GARTH_TWITTER_INDEXER_URL`** with Kubernetes service DNS (for example `http://twitter-indexer.makeacompany-ai.svc.cluster.local:8080`), set in GitOps on the Garth Deployment or non-secret config — not a public URL.
+- **Operator hygiene:** If a public DNS name was ever created for the indexer by mistake, **delete it** in the DNS provider (Cloudflare, etc.). The marketing site may use paths like `/twitter` for **dashboard/embeds only**; that is not the indexer API.
+- Do **not** reintroduce documentation, env examples, or secrets that point Garth at a public hostname for the indexer.
