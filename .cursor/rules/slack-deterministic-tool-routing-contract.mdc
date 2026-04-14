@@ -30,6 +30,11 @@ Keep tool behavior fast, reliable, and explainable:
 - **Channel vs thread:** On **channel** messages, missing thread targeting may still use deterministic failure replies when appropriate. In **threads** without a squad `@mention`, only the **thread owner** pod evaluates capability routing; other pods skip silently. Do **not** broadcast `[router:thread_requires_explicit_mention]` from every pod—fall through so `handleThreadMessage` can let the thread owner respond to general chat; the human `@mentions` the specialist when they want that tool.
 - For locked advanced-tool threads, do not fall back into generic LLM thread chat when parsing fails; keep the thread in tool mode with a deterministic nudge or typed failure.
 
+## Thread owner persistence and handoff (required)
+
+- Persisted thread owner (Redis `thread_owner` for `channel_id` + `thread_ts`) and **explicit CEO @mention of exactly one squad agent** override bot-root inference (a thread whose parent message is from another bot is not stuck on that bot forever).
+- When an advanced-task lock targets one specialist (for example Joanne email), **non-owner pods must not post** that task’s nudge or flow copy—the task owner owns the UX; other pods skip silently.
+
 ## Failure contract (required)
 
 Never silently fall back to generic chat after a matched direct tool intent **on channel messages** where the router has committed to a tool path.
