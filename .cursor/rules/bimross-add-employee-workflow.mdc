@@ -13,20 +13,30 @@ Use this when Grant says phrases like:
 
 Goal: make new employee onboarding mostly one Cursor-driven flow, with only explicit manual Slack/OAuth steps called out.
 
+## Automation entrypoint
+
+Use `cursor-rules/scripts/add-employee-workflow.sh --name <name> --role-title "<title>" --lane <lane>` for first-pass cross-repo scaffolding.
+
 ## Required execution order
 
 1. **Plan first**: confirm the new employee first name/slug and intended lane/role.
-2. **cursor-rules persona wiring**:
+2. **Slack remote baseline first (required)**:
+   - Use `slack-factory/scripts/sync-installed-manifests.sh` to pull currently installed app settings from Slack into `manifests/*/app-manifest.json`.
+   - This script reads `employee-factory/.env` by default and accepts these aliases:
+     - app ids: `<EMPLOYEE>_SLACK_APP_ID` or `<EMPLOYEE>_SLACK_BOT_ID`
+     - config token: `SLACK_APP_CONFIG_TOKEN` (preferred), `SLACK_APP_CONFIG_ACCESS_TOKEN`, or `SLACK_APP_CONFIG_REFRESH_TOKEN`
+   - Do not proceed with new employee wiring until remote baseline sync and `./scripts/validate-manifests.sh` pass.
+3. **cursor-rules persona wiring**:
    - Add `<name>` to `personas/employees.txt`.
    - Add/update `.cursor/rules/<name>-*.mdc` (at minimum: trigger, core, sibling-agents, and optional factory).
    - Run `./scripts/sync-employee-personality.sh --employee <name>` (or `--all` when shared rules changed).
    - Ensure `.cursor/personas/<name>-personality.md` is committed with the rule edits.
-3. **slack-factory app contract**:
+4. **slack-factory app contract**:
    - Create `slack-factory/manifests/<name>/app-manifest.json`.
    - Match Alex baseline for `oauth_config`, `settings`, and non-name feature shape.
    - Keep required scopes including `reactions:read` and `reactions:write`.
    - Run `./scripts/validate-manifests.sh`.
-4. **catalog + data model sync (channel-ready defaults)**:
+5. **catalog + data model sync (channel-ready defaults)**:
    - Update `slack-factory/skills-catalog.json`:
      - Add employee in `coreEmployees`.
      - Initialize `employeeSkillIds.<name>` (empty or mapped skills).
@@ -34,11 +44,12 @@ Goal: make new employee onboarding mostly one Cursor-driven flow, with only expl
    - Update/verify `makeacompany-ai` catalog path and snapshots:
      - `backend/internal/app/catalog.go` default catalog (if seed/default list is maintained there).
      - `src/data/admin/team-snapshot.json` and `src/data/admin/skills-snapshot.json` via `npm run sync:team`.
+     - Confirm new employees preserve `coreEmployees` display order from `slack-factory/skills-catalog.json` and no hardcoded five-employee sorting assumptions remain.
    - Confirm admin cards render the new employee and assigned skills.
-5. **employee-factory runtime wiring**:
+6. **employee-factory runtime wiring**:
    - Ensure capability/runtime mapping includes the new employee where appropriate.
    - Update roster/sibling references or deterministic capability desk outputs/tests if they assume fixed employees.
-6. **manual steps (explicitly call out, do not fake)**:
+7. **manual steps (explicitly call out, do not fake)**:
    - Slack app creation/install approvals.
    - Bot token/socket mode secrets.
    - Any OAuth consent/manual callback setup.
