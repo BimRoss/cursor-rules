@@ -18,22 +18,25 @@ Keep tool behavior fast, reliable, and explainable:
 
 ## Deterministic-first dispatch (required)
 
-- For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative.
-- LLM intent classification may be used for observability and ambiguity diagnostics, but must not suppress deterministic direct intent execution.
+- For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.
+- In **threads without** a squad `@mention`, only the thread owner pod runs capability routing; the capability router LLM may classify `tool_intent: none` so broad keyword matches (for example “onboarding”) do not steal the thread from normal `handleThreadMessage` replies.
+- LLM intent classification may be used for observability and ambiguity diagnostics, but must not suppress deterministic direct intent execution **except** that thread-owner LLM `none` override above.
 - LLM must not introduce new direct tool dispatch decisions when deterministic detection does not match.
 
 ## Thread targeting contract (required)
 
 - In threads, owner-scoped tool execution requires explicit mention of the owning specialist in that same message.
 - Do not infer thread ownership as an execution grant for direct tool runs.
-- If mention is missing, reply with deterministic guidance and consume the event.
+- **Channel vs thread:** On **channel** messages, missing thread targeting may still use deterministic failure replies when appropriate. In **threads** without a squad `@mention`, only the **thread owner** pod evaluates capability routing; other pods skip silently. Do **not** broadcast `[router:thread_requires_explicit_mention]` from every pod—fall through so `handleThreadMessage` can let the thread owner respond to general chat; the human `@mentions` the specialist when they want that tool.
 - For locked advanced-tool threads, do not fall back into generic LLM thread chat when parsing fails; keep the thread in tool mode with a deterministic nudge or typed failure.
 
 ## Failure contract (required)
 
-Never silently fall back to generic chat after a matched direct tool intent.
+Never silently fall back to generic chat after a matched direct tool intent **on channel messages** where the router has committed to a tool path.
 
-Return explicit typed failure replies with stable tags, for example:
+In threads without an explicit squad mention, capability routing may **skip** without posting so the thread owner LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat to the thread owner.
+
+Return explicit typed failure replies with stable tags when posting (for example on channel or when a single pod is responsible), for example:
 
 - `thread_requires_explicit_mention`
 - `catalog_unavailable`
