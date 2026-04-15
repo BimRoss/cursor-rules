@@ -29,6 +29,24 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 - New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `write-*` paths queue + confirm (or the established pattern for that vertical, e.g. Joanne email/docs).
 - If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
 
+## Compound skills (one skill ID, several sub-actions)
+
+Some skills intentionally cover **multiple user-facing actions** under one catalog id (example: Joanne Slack onboarding—list channels, read history, create channel, invite—wired to `read-slack` / `write-slack` and one handler). When you add or extend one:
+
+1. **Discovery menu** — If the user signals the capability but the message does **not** parse to a concrete action, reply with a one-line scope statement plus a **bullet list** of sub-actions (plain language; use a consistent bullet character such as `•`). Optionally reserve heavy **mrkdwn** for confirmations and tool results so the menu stays readable. Close with one short line inviting plain-language follow-up (e.g. “Say what you need…”).
+
+2. **Parse order** — Implement a dedicated parser that returns `(action, matched bool)`. **Try specific actions first**; only when `matched == false` **and** the text still matches the broad capability intent, show the discovery menu. Do not show the menu when a specific sub-action already parsed.
+
+3. **Phrase alignment** — Draft menu bullets so their wording **overlaps** the keywords or regexes the parser uses (e.g. “List the channels…” ↔ patterns that include `list` and `channels`). Users often echo the nearest bullet; alignment reduces friction.
+
+4. **Permission boundaries** — If sub-actions mix observation and mutation, enforce **per `runtimeTool` / catalog permission** (read vs write), not only by skill id prefix.
+
+5. **Tests** — Add table-driven tests for: each sub-action phrase → correct action; natural variants (“list our channels”, etc.); and non-Joanne/non-owner bots returning false where applicable. Add tests for the **vague-intent → menu** branch when feasible (handler or golden copy).
+
+6. **Catalog copy** — Keep the skill-level **`description`** accurate for the whole family; the threaded menu carries the detailed sub-list. Update **`slack-factory/skills-catalog.json`**, **`makeacompany-ai`** default catalog, and **`employee-factory`** `capability_catalog.go` / snapshots together when descriptions change.
+
+**Reference implementation:** `employee-factory/internal/slackbot/joanne_slack.go` (`joanneSlackCapabilityHelpText`, `parseJoanneSlackAction`, `tryHandleJoanneSlackOnboard`) and `joanne_slack_test.go`.
+
 ## Related docs
 
 - **`slack-factory`** repo: [`README.md`](https://github.com/BimRoss/slack-factory/blob/main/README.md) — skills catalog section.
