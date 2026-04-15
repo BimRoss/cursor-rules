@@ -1,5 +1,5 @@
 ---
-description: "BimRoss Git flow: default branch is dev integration; push finished work to GitHub; deploy = commit + push + v* tag + release notes, no rollout polling."
+description: "BimRoss Git flow: default branch is dev integration; push finished work to GitHub; deploy = commit + push + v* tag + GitHub Release with readable notes (see bimross-deploy-tag-and-release.mdc)."
 globs: "*"
 alwaysApply: true
 reviewBy: "2026-09-30"
@@ -26,7 +26,7 @@ When Grant says **deploy** (in the sense of shipping the work just finished—no
 
 1. **Commit** and **push** so GitHub has the merged integration line.
 2. Cut a **`v*`** **semver tag** on the repo(s) that ship versioned images or GitOps bumps (match each repo’s CI: tag-driven Docker push, **`bimross/rancher-admin`** updates, Fleet apply).
-3. Add an **informative GitHub Release** (or release notes on the tag) describing what changed—enough for you and Fleet to know what rolled.
+3. Create the **GitHub Release** for that tag with **structured, easy-to-read notes**—not tag-only drops. Format and tooling: **`bimross-deploy-tag-and-release.mdc`**.
 4. Stop active deploy tracking after tag/release creation. CI/CD and GitOps continue asynchronously (image builds/push, manifest bumps in **`bimross/rancher-admin`** where configured, then Fleet rollout), and runtime confirmation comes from the downstream Slack deploy signal rather than in-session polling.
 
 Agents do not invent releases silently; **“deploy” from Grant is explicit authorization** to run that full path for the feature context.

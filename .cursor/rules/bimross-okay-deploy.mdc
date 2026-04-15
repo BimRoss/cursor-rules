@@ -7,7 +7,7 @@ reviewBy: "2026-09-30"
 
 When Grant says **okay deploy**, **deploy everything**, or **deploy** in the **full-workspace / multi-repo** sense—or clearly means **push + tag + release notes** across the usual repos—execute this protocol.
 
-For **one repo** after a focused feature, **“deploy”** still means **commit → push → `v*` where the repo’s CI expects it → GitHub Release description**; then stop active tracking and let CI/GitOps complete asynchronously. Use the repo’s canonical workflow (see **`bimross-git-dev-and-releases.mdc`** and that repo’s **`*.yml`**), not only the multi-repo table below.
+For **one repo** after a focused feature, **“deploy”** means **commit → push → `v*` where the repo’s CI expects it → GitHub Release** with readable notes (**`bimross-deploy-tag-and-release.mdc`**); then stop active tracking and let CI/GitOps complete asynchronously. Use the repo’s canonical workflow (see **`bimross-git-dev-and-releases.mdc`** and that repo’s **`*.yml`**), not only the multi-repo table below.
 
 ## Authorization
 
@@ -25,18 +25,20 @@ This is an **explicit release / deploy** request. **Pushing `v*` tags** for **`c
 
 1. **Preflight:** `git status --short --branch` on each repo you will touch. If unrelated dirty files appear, stop and ask (**`git-worktree-safe-staging.mdc`**).
 2. **Land commits** with **explicit `git add <paths>`**; push **`master`** (or each repo’s integration branch).
-3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**. Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
-4. **Stop active tracking after ship artifacts are cut:** once commits/tags/releases are pushed, hand off to async CI/GitOps and downstream Slack deploy messaging; do not poll Actions, Kubernetes, or Rancher in-session unless Grant explicitly asks.
-5. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push/tag.
+3. **`cursor-rules` tag:** After **`origin/master`** is current, **`git tag v0.0.X`** one patch above the latest **`v*`** on **`origin`**, then **`git push origin v0.0.X`**, then **`gh release create`** for that tag (**`bimross-deploy-tag-and-release.mdc`**). Use **`git -c pack.window=0 …`** if push fails with mmap/pack errors (**`git-mmap-timeout-workaround.mdc`**).
+4. **Other tagged repos (e.g. `employee-factory`):** same—**tag push and `gh release create`** per **`bimross-deploy-tag-and-release.mdc`**.
+5. **Stop active tracking after ship artifacts are cut:** once commits/tags/**Releases** are pushed, hand off to async CI/GitOps and downstream Slack deploy messaging; do not poll Actions, Kubernetes, or Rancher in-session unless Grant explicitly asks.
+6. **Clean workspace:** Re-check **`git status`** on every repo edited—should be clean after push/tag.
 
 ## Out of scope unless Grant asks
 
-- Creating GitHub **Releases** UI notes, marketing comms, or **`employee-factory`** tags when only **`cursor-rules`** content changed.
+- Marketing/comms beyond the **operator-focused** Release body (still write the GitHub Release—see **`bimross-deploy-tag-and-release.mdc`**).
 - Applying runtime secrets (kubectl) unless Grant included that in the same instruction.
 
 ## Done when
 
-- **`cursor-rules`** tag is pushed successfully (or failure is explained with next step).
-- **`transcribe`** pushed if it had uncommitted **`transcriptions/`** files.
+- **`cursor-rules`** tag **and GitHub Release** are created successfully (or failure is explained with next step).
+- Other **`v*`** repos in scope (e.g. **`employee-factory`**) have **tag + Release** when applicable.
+- **`transcribe`** pushed if it had uncommitted **`transcriptions/`** files (Release N/A if no tag).
 - No in-session rollout polling is required after tags/releases are cut; deployment confirmation is expected through downstream Slack deploy messaging unless Grant asks for active verification.
 - No leftover uncommitted changes in touched repos.

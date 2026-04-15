@@ -1,0 +1,54 @@
+---
+description: "Deploy = semver tag plus GitHub Release with readable notes; gh-first; no rollout polling after ship artifacts."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# BimRoss deploy: tag **and** GitHub Release
+
+When Grant authorizes **deploy** (single repo or multi-repo), **deploy** is **not** “push a tag only.” For any repo where CI expects a **`v*`** semver tag, **deploy** means:
+
+1. **Commit** and **push** the integration branch (`main` / `master` as usual).
+2. Cut the next **`v*`** tag per repo convention (patch bump unless Grant says otherwise).
+3. Create a matching **GitHub Release** for that tag with **easy-to-scan notes** (below)—not an empty release and not tag-only.
+
+Repos that **do not** use semver **`v*`** for shipping (e.g. content-only pushes) may omit the Release; say so in the session summary.
+
+## Release notes — readability contract
+
+Write for **operators and Future You**, not marketing fluff. Prefer this shape (omit empty sections):
+
+- **Title** (`gh release create` `--title`): `vX.Y.Z` plus a **short clause** (e.g. `v0.5.6 — channel-knowledge limits and LLM timeouts`).
+- **Summary**: 1–3 bullets: *what shipped* and *why it matters* (product/ops).
+- **Changes** (optional sub-bullets): by area—runtime, config/GitOps, docs, catalog, etc.
+- **Ops**: image names, manifest/repo touched, or “GitOps/Fleet async after CI.”
+- **Verify**: tests/commands run before tag; **do not** promise cluster state.
+
+Use complete sentences or tight fragments; avoid dense single paragraphs.
+
+## Tooling preference
+
+- Prefer **`gh release create`** (see **`github-cli-preference.mdc`**) so the Release tracks the tag in one step.
+- Example pattern:
+
+```bash
+gh release create "v0.5.6" --repo "bimross/employee-factory" \
+  --title "v0.5.6 — channel-knowledge defaults and digest limits" \
+  --notes "## Summary
+- ...
+
+## Changes
+- ...
+"
+```
+
+- If **`gh`** is unavailable, state that and give the equivalent **GitHub → Releases → Draft a release** steps; still produce the same note text for paste.
+
+Optional: **`gh release create ... --generate-notes`** as a **starting point**, then edit for the structure above—do not ship empty or auto-only notes when Grant asked for deploy quality.
+
+## Coordination with other rules
+
+- Authorization to run this full path still comes from Grant’s deploy language—see **`bimross-git-dev-and-releases.mdc`** (human gate).
+- Multi-repo passes: **`bimross-okay-deploy.mdc`** (order, scope, no rollout polling).
+- After tag + Release are pushed: **stop** active tracking; CI/GitOps/Fleet and Slack deploy signals own verification unless Grant asks otherwise.

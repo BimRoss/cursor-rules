@@ -69,7 +69,7 @@ Balance speed with quality:
 
 ### GitHub Workflow
 
-**BimRoss repos:** default branch is **dev integration**—push finished work so Grant can review passively on GitHub; **do not tag or release** without explicit ask. See **`bimross-git-dev-and-releases.mdc`**.
+**BimRoss repos:** default branch is **dev integration**—push finished work so Grant can review passively on GitHub; **do not tag, GitHub Release, or cut `v*`** without explicit ask. When Grant asks **deploy**, use **`bimross-deploy-tag-and-release.mdc`** (semver tag **and** readable Release). See also **`bimross-git-dev-and-releases.mdc`**.
 
 1. After we're happy with code iterations:
    - Create new branch (when using PR flow), or commit to default branch if that’s the repo norm
