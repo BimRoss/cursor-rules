@@ -1,0 +1,35 @@
+---
+description: >-
+  Apply when adding or editing MakeACompany capability skills, slack-factory
+  skills-catalog.json, or employee-factory Slack runtime tooling—read-* vs
+  write-* skill IDs define the default UX contract (immediate vs confirm).
+alwaysApply: true
+reviewBy: "2027-04-01"
+---
+
+# BimRoss Slack skill IDs: `read-*` vs `write-*`
+
+MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.json`** (seeded into Redis / consumed by **`makeacompany-ai`** and **`employee-factory`**). The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
+
+## Naming contract
+
+| Prefix   | Meaning (default) | Slack UX expectation |
+|----------|-------------------|----------------------|
+| **`read-*`** | Observational / non-mutating from the user’s perspective (list, search, fetch, read history) | **Run immediately** after a successful parse—no Confirm/Cancel step for that tool. |
+| **`write-*`** | Mutates external or durable state (create channel, invite, send email, publish doc) | **Confirm before run** (explicit Confirm/Cancel or equivalent), unless a documented product exception exists. |
+
+## Catalog copy
+
+- Each skill’s **`description`** should state whether it runs **immediately** or requires **explicit confirmation** before writes, so operators and `/admin` stay honest.
+- **`makeacompany-ai`** backend default catalog (`backend/internal/app/catalog.go`) and **data snapshots** should stay aligned when you change **`slack-factory`** descriptions.
+
+## Runtime (`employee-factory`)
+
+- There is **no** single global interpreter that reads `read-` / `write-` from the ID string and enforces UX automatically.
+- New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `write-*` paths queue + confirm (or the established pattern for that vertical, e.g. Joanne email/docs).
+- If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
+
+## Related docs
+
+- **`slack-factory`** repo: [`README.md`](https://github.com/BimRoss/slack-factory/blob/main/README.md) — skills catalog section.
+- Deterministic routing in Slack: **`slack-deterministic-tool-routing-contract.mdc`** (direct tool intents; separate from confirm UX).
