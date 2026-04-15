@@ -30,13 +30,13 @@ If routing priorities conflict with normal ideation or delegation behavior, pref
 - `availability` -> `ack_only`
 - `normal` -> `normal`
 
-`ack_only` means:
+`ack_only` means **routing policy**, not a shared hardcoded script:
 
-- one short acknowledgment
-- optional single async checkpoint line
-- no stacked asks
-- no new delegations
-- no fresh @mentions
+- **Visible text** (when enforcement posts) should be a **short LLM completion** that conveys the same intent in varied wording (same pattern as channel-knowledge cron “one line along the lines of…”), not a fixed string duplicated across pods.
+- **Do** suppress the behaviors that hurt async handoffs: no stacked asks, no new delegations, no fresh @mentions on that turn—pre-LLM / ingress guards plus tight system instructions on the micro-completion.
+- **Tool calls** and other deterministic UX may still use specific structured copy where appropriate; this path is for conversational acks only.
+
+Apply classification to **operator-authored** messages only for enforcement; squad-bot or third-party text must not trigger availability posts (their prose can contain phrases like “sign off” in a different sense).
 
 ## Runtime integration points
 
