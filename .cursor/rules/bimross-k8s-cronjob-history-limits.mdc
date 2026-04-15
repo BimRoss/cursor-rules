@@ -1,0 +1,19 @@
+---
+description: Default Kubernetes CronJob finished-job retention for BimRoss GitOps (rancher-admin).
+globs:
+  - "**/rancher-admin/**/*.yaml"
+  - "**/admin/apps/**/*.yaml"
+alwaysApply: false
+reviewBy: 2027-01-01
+---
+
+# CronJob history limits (BimRoss)
+
+When adding or editing **`batch/v1` CronJob** resources in **`rancher-admin`** (or matching GitOps repos), set:
+
+- **`successfulJobsHistoryLimit: 1`** — keep exactly one last successful run visible for “it completed” confidence in Rancher/`kubectl`.
+- **`failedJobsHistoryLimit: 1`** — keep exactly one last failure for debugging without a pile of Completed/Failed pods.
+
+Do **not** default to `0`/`0` unless there is a documented exception (e.g. paired with aggressive **`ttlSecondsAfterFinished`** and an explicit reason to leave no Job record).
+
+If a workload needs more failure history for triage, bump **`failedJobsHistoryLimit`** in that manifest only and note why in the PR.
