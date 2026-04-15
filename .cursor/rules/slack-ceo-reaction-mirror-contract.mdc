@@ -11,8 +11,8 @@ Use this contract when implementing or reviewing Slack `reaction_added` handling
 ## Trigger (required)
 
 - Inbound event is `reaction_added`.
-- Reactor is a **channel operator** for that channel: `owner_ids` on the Redis company-channel row, or—if `owner_ids` is empty—`CHAT_ALLOWED_USER_ID` as bootstrap until owners are populated.
-- For channels **not** in the registry, the reactor must match `CHAT_ALLOWED_USER_ID` (legacy single-channel mode).
+- Reactor is a **channel operator** for that channel: Slack user id appears in `owner_ids` (or merged legacy owner fields) on the Redis company-channel row. Empty `owner_ids` means **no** operators for that row—there is no global fallback user id.
+- Channels **not** in the registry do not treat any user as an operator for this feature (unless the registry is empty and broader channel allow rules apply elsewhere).
 - Reaction target item is a Slack `message` event item.
 - Message belongs to the **current** bot (`item_user == bot_user_id` for this process).
 - Channel is allowed by runtime channel guards and is not a DM.
@@ -29,8 +29,8 @@ Each employee runs as a separate Slack app / deployment. When an operator reacts
 
 ## Registry / owners
 
-- Prefer listing real human Slack user ids in `owner_ids` for each company channel (e.g. `#bimross`).
-- Empty `owner_ids` on a row still allows the configured primary human (`CHAT_ALLOWED_USER_ID`) so onboarding does not block mirroring.
+- List every human Slack user id that should count as an operator in `owner_ids` for each company channel (e.g. `#bimross`). Joanne append-owner flows add the requester; seed additional ids in Redis when needed.
+- Empty `owner_ids` after normalization means mirroring does not run for that channel row until owners are written.
 
 ## Safety and operability
 
