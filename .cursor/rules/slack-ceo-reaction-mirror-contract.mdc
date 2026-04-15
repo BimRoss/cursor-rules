@@ -1,39 +1,39 @@
 ---
-description: "Technical contract for CEO reaction mirroring in Slack agent runtime."
+description: "Channel operator reaction mirroring on Slack bot messages (employee-factory)."
 alwaysApply: true
 reviewBy: "2026-07-01"
 ---
 
-# Slack CEO reaction mirror contract
+# Slack channel operator → bot reaction mirror
 
 Use this contract when implementing or reviewing Slack `reaction_added` handling in runtime code (for example `employee-factory`).
 
 ## Trigger (required)
 
 - Inbound event is `reaction_added`.
-- Reactor user is the configured CEO user id (`CHAT_ALLOWED_USER_ID`).
+- Reactor is a **channel operator** for that channel: `owner_ids` on the Redis company-channel row, or—if `owner_ids` is empty—`CHAT_ALLOWED_USER_ID` as bootstrap until owners are populated.
+- For channels **not** in the registry, the reactor must match `CHAT_ALLOWED_USER_ID` (legacy single-channel mode).
 - Reaction target item is a Slack `message` event item.
-- Message belongs to the current bot (`item_user == bot_user_id`).
+- Message belongs to the **current** bot (`item_user == bot_user_id` for this process).
 - Channel is allowed by runtime channel guards and is not a DM.
+- `general_auto_reaction_enabled` is true for the channel (same toggle as other reaction UX).
 
 ## Action (required)
 
-- For every qualifying CEO reaction event, the same bot adds exactly one reaction to the same message.
-- Bot-side reaction is selected randomly from a fixed allowlist of Slack-native emoji names.
+- For every qualifying event, **that same bot** (the message author) adds exactly one reaction to the same message.
+- The bot uses the **same emoji name** Slack sent on the event (`reaction` field).
 
-## Default allowlist
+## Multi-agent note
 
-- `thumbsup`
-- `clap`
-- `eyes`
-- `rocket`
-- `fire`
-- `100`
-- `tada`
-- `raised_hands`
+Each employee runs as a separate Slack app / deployment. When an operator reacts to **Joanne’s** message, only **Joanne’s** runtime has `item_user` matching; other squad processes ignore. Mirror is per authoring bot.
+
+## Registry / owners
+
+- Prefer listing real human Slack user ids in `owner_ids` for each company channel (e.g. `#bimross`).
+- Empty `owner_ids` on a row still allows the configured primary human (`CHAT_ALLOWED_USER_ID`) so onboarding does not block mirroring.
 
 ## Safety and operability
 
 - Treat Slack `already_reacted` as success (idempotent behavior).
-- Keep behavior fully non-blocking and tolerant of transient Slack failures.
-- Log structured route decisions with at least: path, employee, channel, anchor timestamp, and reactor user.
+- Keep behavior fully non-blocking and tolerant to transient Slack failures.
+- Log structured route decisions with at least: path, employee, channel, anchor timestamp, reactor user, mirrored reaction name.
