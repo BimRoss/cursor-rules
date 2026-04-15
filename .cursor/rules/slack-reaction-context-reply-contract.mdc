@@ -1,0 +1,36 @@
+---
+description: "Technical contract for operator-message thumbs reactions that trigger a threaded LLM reply in Slack agent runtime."
+alwaysApply: true
+reviewBy: "2026-07-01"
+---
+
+# Slack reaction → threaded context reply
+
+Use this contract when implementing or reviewing Slack `reaction_added` handling that posts **chat text** after thumbs reactions on **human operator** top-level messages (for example `employee-factory`).
+
+## Trigger (required)
+
+- Inbound event is `reaction_added`.
+- Item is a **message** in a channel allowed by the company-channel registry / enforcement policy (not a DM).
+- Message author (`item_user`) is a **human operator** for that channel (`OperatorAllowedForChannel` / `company_channels` `owner_ids`, with legacy fields merged; unknown channels fall back to `CHAT_ALLOWED_USER_ID`).
+- Reactor is **not** the message author (ignore self-reactions on the same message).
+- Reaction is a thumbs class: `:+1:`, `:-1:`, `:thumbsup:`, or `:thumbsdown:` (Slack reaction names as emitted by the Events API).
+- Message is a **channel root** message (not a reply inside someone else’s thread).
+- Multi-agent squad wiring is configured (`MULTIAGENT_BOT_USER_IDS` + `MULTIAGENT_ORDER`); optional broadcast-active guard should suppress noise during `<!everyone>` sessions.
+
+## Action (required)
+
+- Exactly **one** squad bot posts **one** short LLM reply **in the thread** under the operator message (`thread_ts` = anchor timestamp).
+- Winner selection must match **plain-message general auto-reaction** semantics (deterministic per anchor + `MULTIAGENT_ORDER` + shuffle secret + last-winner anti-repeat), so every pod agrees on **which** bot speaks.
+- **Dedupe** across pods with Redis `SETNX` (or equivalent) per `(channel_id, message_ts)` so duplicate reactions do not produce duplicate replies.
+
+## Safety and operability
+
+- If Redis is unavailable, **do not** post (avoid N duplicate LLM replies from N pods).
+- Keep the user payload explicit: quoted operator text + which thumbs reaction fired; instruct one or two sentences, no stacked asks, thread-local tone.
+- Log structured route decisions with at least: path, employee, channel, anchor timestamp, reactor user, reaction name.
+
+## Non-goals
+
+- Do not add env toggles for this behavior unless explicitly requested; it is core multi-agent runtime behavior when multi-agent is configured.
+- This is separate from **CEO reaction mirror** (CEO reacts to a **bot** message → bot mirrors emoji). Do not conflate the two triggers.
