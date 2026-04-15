@@ -12,6 +12,7 @@ Maintain rules in three layers so the repo stays useful to the public while pres
 ## Layer 1: Public baseline (tracked)
 
 - Keep shared engineering behavior in tracked `.cursor/rules/*.mdc` files.
+- **BimRoss multi-root workspaces:** company-wide rules live in the **`cursor-rules`** repo; individual repos may add their own **`.cursor/rules/`** for repo-only scope—see **`bimross-workspace-repo-rule-layering.mdc`**.
 - Write guidance so an external engineer can use it without internal company access.
 - Prefer generic naming for private systems unless the reference is already intentionally public.
 

@@ -1,0 +1,35 @@
+---
+description: "Workspace cursor-rules repo = BimRoss-wide doctrine; each git repo may add .cursor/rules for repo-only scope. Where to put guidance and how layers combine."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# BimRoss Cursor rules: workspace vs repo
+
+Grant’s **multi-root Cursor workspace** is the BimRoss company loop. Rules come in **two complementary layers**—not duplicates of the same file.
+
+## Layer A — Workspace / company doctrine (`cursor-rules` repo)
+
+- The **[`cursor-rules`](https://github.com/bimross/cursor-rules)** repository (opened as a workspace folder) holds **shared** `.cursor/rules/*.mdc` files: company identity, GitOps/CI policy, Slack contracts, persona bundles, deploy/release standards, and cross-cutting engineering defaults.
+- Treat this layer as **BimRoss-wide**: if a convention should apply to **most repos** or **every agent** working in this workspace, it belongs here (sanitized per **`public-private-rule-boundary.mdc`**).
+
+## Layer B — Repo-local rules (each repository)
+
+- Any **individual git repo** in the workspace (e.g. **`employee-factory`**, **`slack-factory`**) may define its own **`.cursor/rules/*.mdc`** for guidance **scoped to that codebase**: manifest baselines, service-specific env or test quirks, CI paths, or “how this repo is structured.”
+- Keep repo rules **narrow** (clear `description`, purposeful **`globs`** when file-scoped). If the idea generalizes to the whole company, **promote** it into **`cursor-rules`** and **link** instead of copying long policy.
+
+## How they work together
+
+- With **multi-root** workspaces, Cursor can load rules from **more than one folder**. **Both** layers apply: company doctrine from **`cursor-rules`** plus whatever is in the **active repo’s** `.cursor/rules/` when that repo is in scope for the task.
+- **Repo-local** rules **refine** behavior for that repository (paths, tools, naming). They do not replace safety or security rules from the workspace layer.
+- **Conflict tie-break** (when guidance disagrees): **(1)** user’s explicit instruction in the thread → **(2)** safety/security → **(3)** more **specific** rule for the file/path/repo → **(4)** workspace-wide defaults. If still ambiguous, ask once rather than guessing.
+
+## Private overlays
+
+- Gitignored **`local-context.mdc`** / **`.cursor/rules/private/**`** remain **per-machine or per-operator** overlays—see **`public-private-rule-boundary.mdc`**. That is orthogonal to “workspace vs repo”: private files can sit beside either layer.
+
+## Related
+
+- New repos: **`bimross-new-repo-bootstrap.mdc`** (bootstrap checklist including optional repo rules).
+- Rule hygiene: **`cursor-rules-maintenance.mdc`**, **`rules-audit-and-pruning.mdc`**.
