@@ -17,6 +17,8 @@ Repos that **do not** use semver **`v*`** for shipping (e.g. content-only pushes
 
 ## Release notes — readability contract
 
+**Standard template:** copy and fill **`cursor-rules`** **`.cursor/templates/github-release.md`** (omit empty sections). Same structure as below.
+
 Write for **operators and Future You**, not marketing fluff. Prefer this shape (omit empty sections):
 
 - **Title** (`gh release create` `--title`): `vX.Y.Z` plus a **short clause** (e.g. `v0.5.6 — channel-knowledge limits and LLM timeouts`).
@@ -33,15 +35,13 @@ Use complete sentences or tight fragments; avoid dense single paragraphs.
 - Example pattern:
 
 ```bash
+# Prefer a filled copy of .cursor/templates/github-release.md
 gh release create "v0.5.6" --repo "bimross/employee-factory" \
   --title "v0.5.6 — channel-knowledge defaults and digest limits" \
-  --notes "## Summary
-- ...
-
-## Changes
-- ...
-"
+  --notes-file /path/to/release-notes.md
 ```
+
+Inline `--notes` is fine for tiny patches; still follow the same section order when possible.
 
 - If **`gh`** is unavailable, state that and give the equivalent **GitHub → Releases → Draft a release** steps; still produce the same note text for paste.
 
