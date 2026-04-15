@@ -21,7 +21,8 @@ Use this contract when implementing or reviewing Slack `reaction_added` handling
 ## Action (required)
 
 - Exactly **one** squad bot posts **one** short LLM reply **in the thread** under the operator message (`thread_ts` = anchor timestamp).
-- Winner selection must match **plain-message general auto-reaction** semantics (deterministic per anchor + `MULTIAGENT_ORDER` + shuffle secret + last-winner anti-repeat), so every pod agrees on **which** bot speaks.
+- **Responder = the squad bot who added the thumbs reaction** when `reaction_added` user id matches a configured `MULTIAGENT_BOT_USER_IDS` entry (same agent as general auto-reaction emoji). All pods agree by inspecting `ev.User`, not a second hash that could disagree with last-winner anti-repeat on the message path.
+- If the reactor is **not** a squad bot (e.g. a human thumbed the message), fall back to deterministic winner selection (per anchor + `MULTIAGENT_ORDER` + shuffle secret + last-winner anti-repeat) so someone still speaks.
 - **Dedupe** across pods with Redis `SETNX` (or equivalent) per `(channel_id, message_ts)` so duplicate reactions do not produce duplicate replies.
 
 ## Safety and operability
