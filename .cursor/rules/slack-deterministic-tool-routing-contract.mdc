@@ -37,16 +37,17 @@ Keep tool behavior fast, reliable, and explainable:
 
 ## Failure contract (required)
 
-Never silently fall back to generic chat after a matched direct tool intent **on channel messages** where the router has committed to a tool path.
-
-In threads without an explicit squad mention, capability routing may **skip** without posting so the thread owner LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat to the thread owner.
-
-Return explicit typed failure replies with stable tags when posting (for example on channel or when a single pod is responsible), for example:
+Return explicit typed failure replies with stable tags when the router **cannot** execute due to policy or infrastructure (for example catalog lookup, thread mention rules, runtime assignment):
 
 - `thread_requires_explicit_mention`
 - `catalog_unavailable`
 - `runtime_tool_not_assigned`
-- `handler_declined`
+
+When routing selects a tool route but the route **Handle** returns false without posting (parse miss, guard, or “not handled yet”), the capability router **does not** emit a synthetic user error. It **falls through** (`handler_fallthrough` in logs) so the normal pipeline continues: capability desk → unsupported-capability → `handleThreadMessage` (threads) or channel multiagent / broadcast routing (roots). That preserves “try tool first, then general reply in thread” for @mentions and threads.
+
+In threads without an explicit squad mention, capability routing may **skip** without posting so the thread owner LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat to the thread owner.
+
+Locked advanced-tool threads (`tryHandleLockedAdvancedTask`) keep their existing nudge / no-generic-fallback rules; do not conflate that path with capability-router fallthrough.
 
 ## Logging contract (required)
 
@@ -56,7 +57,7 @@ For every direct tool request, emit route telemetry that makes outcomes auditabl
 - `route_skip` with reason
 - `catalog_block` with reason
 - `execute`
-- `handler_ok` or `handler_declined`
+- `handler_ok` or `handler_fallthrough` (handler returned false; downstream pipeline may reply)
 
 If deterministic intent overrides an LLM merge output, log that override explicitly.
 
