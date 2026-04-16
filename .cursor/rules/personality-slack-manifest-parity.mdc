@@ -25,7 +25,7 @@ When adding a new employee personality in `cursor-rules` (new first-name employe
 
 ## Orchestrator (non-employee)
 
-**`slack-orchestrator`** is not a named employee persona, but it still ships a first-class manifest: **`slack-factory/manifests/orchestrator/app-manifest.json`** (Socket Mode + message/mention/reaction ingress). Same discipline: validate with **`./scripts/validate-manifests.sh`**, export with **`sync-installed-manifests.sh`** when `ORCHESTRATOR_SLACK_APP_ID` is set and **`orchestrator`** is included in **`EMPLOYEE_KEYS`**.
+**`slack-orchestrator`** is not a named employee persona, but it still ships a first-class manifest: **`slack-factory/manifests/orchestrator/app-manifest.json`** (Socket Mode + `message.*` / `app_mention` ingress; squad apps carry **`reaction_added` / `reaction_removed`** so reaction UX stays on employee Socket Mode without double-subscribing messages). Same discipline: validate with **`./scripts/validate-manifests.sh`**, export with **`sync-installed-manifests.sh`** when `ORCHESTRATOR_SLACK_APP_ID` is set and **`orchestrator`** is included in **`EMPLOYEE_KEYS`**.
 
 ## Why
 
