@@ -23,6 +23,10 @@ When adding a new employee personality in `cursor-rules` (new first-name employe
    - `cursor-rules` personality files and bundle sync
    - `slack-factory` manifest creation/validation
 
+## Orchestrator (non-employee)
+
+**`slack-orchestrator`** is not a named employee persona, but it still ships a first-class manifest: **`slack-factory/manifests/orchestrator/app-manifest.json`** (Socket Mode + message/mention/reaction ingress). Same discipline: validate with **`./scripts/validate-manifests.sh`**, export with **`sync-installed-manifests.sh`** when `ORCHESTRATOR_SLACK_APP_ID` is set and **`orchestrator`** is included in **`EMPLOYEE_KEYS`**.
+
 ## Why
 
 A "personality" is not fully operable until both:
