@@ -1,0 +1,33 @@
+---
+description: "Go slack-go Socket Mode — app-level token, Ack per envelope, references."
+globs: "**/slack-orchestrator/**/*.go","**/employee-factory/internal/slackbot/**/*.go"
+alwaysApply: false
+reviewBy: "2027-06-01"
+---
+
+# BimRoss: Go + Slack Socket Mode (slack-go)
+
+Use this when wiring or reviewing **Socket Mode** in Go (`slack-orchestrator`, legacy `employee-factory` paths, or new workers).
+
+## API client
+
+Slack **Socket Mode** requires opening the connection with an **app-level** token (`xapp-`). Construct the API client with both the bot token and `slack.OptionAppLevelToken`:
+
+```go
+api := slack.New(botToken, slack.OptionAppLevelToken(appToken))
+client := socketmode.New(api)
+```
+
+Without `OptionAppLevelToken`, `apps.connections.open` cannot run and Socket Mode will not connect.
+
+## Ack (required)
+
+Slack sends request envelopes over the WebSocket. **Acknowledge each envelope quickly** with `client.Ack(*evt.Request)` so Slack knows the payload was received and will not retry or fault the connection. This is **transport-level**, not a user-visible chat message.
+
+- For `socketmode.EventTypeEventsAPI`, call **Ack** after you accept the envelope and before heavy work (or immediately, then process async if you add a queue).
+- For other event types that include `evt.Request`, Ack when the library expects it (interactive payloads, etc.).
+
+## References
+
+- **slack-go** Socket Mode example (upstream): [examples/socketmode](https://github.com/slack-go/slack/tree/master/examples/socketmode)  
+- **BimRoss** orchestrator (single ingress, metrics, routing): `slack-orchestrator/cmd/slack-orchestrator/main.go`

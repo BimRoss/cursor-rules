@@ -359,6 +359,10 @@ Thread Pilot is not an active BimRoss focus right now.
 - A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
 - A **factory repo** ships (**`slack-factory`**, **`stripe-factory`**, etc.)—point agents at **`bimross-company.mdc`** (platform factories) and the focused rule (**`bimross-stripe-as-code.mdc`**) instead of re-explaining the pattern each session.
 
+## Slack Go Socket Mode
+
+- **App-level token** on the API client and **Ack per envelope** — see **`bimross-slack-go-socket-mode.mdc`** (slack-go + `slack-orchestrator` reference).
+
 ## Cogito + OpenAI-compatible providers (Subnet Signal, future Slack agents)
 
 - **`cogito.WithForceReasoning()`** turns the default **`reply` sink** back on. For **tool-only** flows (e.g. discovery must call `twitter_search`), apply **`cogito.DisableSinkState` after `WithForceReasoning`** so the model cannot “finish” without running real tools.
