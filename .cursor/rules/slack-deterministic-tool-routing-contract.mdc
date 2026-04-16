@@ -1,7 +1,7 @@
 ---
 description: "Deterministic-first contract for Slack tool routing across all employee agents."
 alwaysApply: true
-reviewBy: "2026-07-01"
+reviewBy: "2026-10-01"
 ---
 
 # Slack deterministic tool routing contract
