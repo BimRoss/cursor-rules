@@ -1,0 +1,50 @@
+---
+description: Rancher Fleet / Helm — avoid Namespace ownership conflicts when adding apps under rancher-admin (prefer defaultNamespace-only bundles).
+alwaysApply: false
+globs: "**/fleet.yaml","**/rancher-admin/**/*.yaml"
+reviewBy: "2027-04-01"
+---
+# BimRoss Fleet: namespaces without Helm pain
+
+Use this when adding a **new app** to **`bimross/rancher-admin`** (`admin/apps/<app>/`), editing **`fleet.yaml`**, or deciding whether to commit a **`Namespace`** manifest.
+
+## What goes wrong (repeat offender)
+
+Fleet bundles are applied as **Helm releases**. If the bundle contains a **`Namespace`** resource and a namespace with that **name already exists** on the cluster **without** Helm’s ownership metadata, sync fails with errors like:
+
+- **invalid ownership metadata**
+- missing **`app.kubernetes.io/managed-by: Helm`**
+- missing **`meta.helm.sh/release-name`** / **`meta.helm.sh/release-namespace`**
+
+That happens when someone created the namespace earlier with **`kubectl`**, another tool, or an older process—so the live object is **not** owned by this release.
+
+## Default pattern (preferred)
+
+Match **`admin/apps/employee-factory/`**:
+
+1. **`fleet.yaml`** sets **`defaultNamespace: <name>`** so Fleet targets that namespace.
+2. **Do not** add a standalone **`Namespace`** YAML in the bundle unless you have a **hard requirement** and you **know** the namespace will be created only by this release from a clean state.
+
+Fleet can use an **existing** namespace for namespaced resources (Deployment, Service, etc.) **without** Helm trying to **own** the `Namespace` object itself—avoiding the adoption conflict.
+
+## When you think you need a Namespace manifest
+
+- **Labels / annotations on the namespace only:** prefer **Fleet** `namespaceLabels` / `namespaceAnnotations` on the **`fleet.yaml`** bundle (see [Rancher Fleet docs](https://fleet.rancher.io/ref-fleet-yaml)) instead of a committed `Namespace` object, when those fields satisfy the need.
+- **New cluster / greenfield:** a `Namespace` resource in git can still race with manual creation—**process first** (create only via GitOps), not “fix in cluster by hand then turn on Fleet.”
+
+## If sync is already failing
+
+1. **Preferred fix:** remove the **`Namespace`** manifest from the bundle; keep **`defaultNamespace`**; push **`rancher-admin`**; let Fleet reconcile (same fix as **slack-orchestrator**).
+2. **Destructive (only with intent):** delete the namespace and all resources in it, then let Helm create it—only when downtime / data loss is acceptable.
+3. **Avoid as routine:** hand-patching namespaces to fake Helm labels—fragile and release-name-dependent.
+
+## Verification
+
+- Rancher **Continuous Delivery** → GitRepo → bundle **Ready**; no Helm namespace adoption errors.
+- **`kubectl --context admin -n <ns> get deploy`** (or equivalent) after sync.
+
+## Related
+
+- **`bimross-new-repo-bootstrap.mdc`** — new repos and GitOps wiring.
+- **`collaboration-rules.mdc`** — Fleet GitOps baseline (no ad-hoc `kubectl apply` for that stack).
+- **`dual-sync-runtime-and-gitops.mdc`** — runtime vs GitOps paths.

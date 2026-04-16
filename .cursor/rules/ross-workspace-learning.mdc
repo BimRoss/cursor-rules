@@ -21,6 +21,7 @@ reviewBy: "2026-09-30"
 - Grant corrects a **recurring preference** (how PRs work, when to tag, which repo owns a pattern).
 - A **successful recovery** from failure is likely to recur (build flags, git mmap workaround, kubectl/compose patterns).
 - A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
+- **Fleet / new Kubernetes namespaces** in **`rancher-admin`** repeat the same Helm ownership trap—use **`bimross-fleet-namespace-gitops.mdc`** (`defaultNamespace` in **`fleet.yaml`**, avoid extra **`Namespace`** YAML unless greenfield-only).
 - A **factory repo** ships (**`slack-factory`**, **`stripe-factory`**, etc.)—point agents at **`bimross-company.mdc`** (platform factories) and the focused rule (**`bimross-stripe-as-code.mdc`**) instead of re-explaining the pattern each session.
 
 ## Slack Go Socket Mode

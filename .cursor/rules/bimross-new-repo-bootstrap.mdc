@@ -24,6 +24,8 @@ When Grant starts a **new project** (e.g. `slack-factory`, a service, a library)
 
 See **`rancher-admin-repo-token-policy.mdc`**: only add **`RANCHER_ADMIN_REPO_TOKEN`** when the workflow **must** clone and push **`bimross/rancher-admin`**. Use **`secrets.RANCHER_ADMIN_REPO_TOKEN`** only—never `github.token` for that checkout.
 
+**Fleet bundles in `rancher-admin`:** for a new app directory under **`admin/apps/`**, prefer **`defaultNamespace`** in **`fleet.yaml`** and avoid committing a standalone **`Namespace`** manifest unless the namespace will be created only by that Helm release—see **`bimross-fleet-namespace-gitops.mdc`** (prevents “invalid ownership metadata” when a namespace already exists).
+
 Canonical workflow patterns to mirror: **`subnet-signal`**, **`twitter-worker`**, **`employee-factory`**, **`cursor-rules`** (each repo’s `.github/workflows/`).
 When choosing action majors in those workflows, follow **`github-actions-version-standard.mdc`**.
 
