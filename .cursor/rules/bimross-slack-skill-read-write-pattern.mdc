@@ -29,20 +29,24 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 - New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `write-*` paths queue + confirm (or the established pattern for that vertical, e.g. Joanne email/docs).
 - If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
 
-## Joanne: `write-company` vs `write-slack`
+## Six-skill catalog (Joanne + Garth)
 
-- **`write-company` / `joanne-write-company`:** company-channel provisioning, onboarding, create channel, invite flows—natural language like “make a company” or “create a channel.” Confirm before writes.
-- **`write-slack` / `joanne-write-slack`:** Slack **workspace configuration** language (“update slack,” “change slack settings”). Route separately from onboarding; runtime may stub this path until a real config UX exists.
+Canonical skill IDs in **`slack-factory/skills-catalog.json`** (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync):
 
-## Joanne Slack tools (split surfaces; no generic menus)
+| Employee | Skill IDs |
+|----------|-----------|
+| **joanne** | `read-company`, `write-company`, `write-doc`, `write-email` |
+| **garth** | `read-trends`, `read-twitter` |
 
-Prefer **separate catalog skills** and **separate capability intents** so routing + permissions stay clear—do **not** ship a bullet “discovery menu” when NL is ambiguous; the router LLM / keywords should pick a tool, and each handler either runs, asks one short clarifying line, or returns false.
+- **`write-company` / `joanne-write-company`:** company-channel provisioning, onboarding, create channel, invite—confirm before writes. Natural-language parsing lives in `employee-factory/internal/slackbot/joanne_slack.go` (`parseJoanneSlackAction`, **`tryHandleJoanneWriteCompany`**).
+- **`read-company`:** company digest from cached context—run immediately after successful parse when applicable.
+- **Garth** `read-twitter` / `read-trends`:** search vs trend list; keep routing distinct.
 
-- **`read-slack-channels` / `joanne-read-slack-channels`:** list channels the bot can see.
-- **`read-slack-messages` / `joanne-read-slack-messages`:** read recent messages in a named channel (`#…` or link).
-- **`write-company` / `joanne-write-company`:** create channel, invite, company onboarding—confirm before writes.
+There is **no** separate catalog skill for Slack workspace settings, listing all channels, or reading arbitrary channel history—those are out of scope for the trimmed admin/runtime surface unless re-added deliberately everywhere above.
 
-Shared parsing helpers (`parseJoanneSlackAction`) may stay; handlers are **`tryHandleJoanneReadSlackList`**, **`tryHandleJoanneReadSlackMessages`**, **`tryHandleJoanneWriteCompany`** in `employee-factory/internal/slackbot/joanne_slack.go`. Update **`slack-factory/skills-catalog.json`**, **`makeacompany-ai`** default catalog, and **`employee-factory`** `capability_catalog.go` / admin snapshots together when skills change.
+## Channel-root tool gate
+
+On a **channel-root** message (not in a thread), capability **tools** run only if the user **@mentions this bot** or **@mentions a squad member**—see **`employee-factory`** `channelRootCapabilityToolsAllowed` / `tryHandleCapabilityRoutedTools`. Threads keep stricter explicit-mention rules where applicable.
 
 ## Related docs
 
