@@ -34,23 +34,15 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 - **`write-company` / `joanne-write-company`:** company-channel provisioning, onboarding, create channel, invite flows—natural language like “make a company” or “create a channel.” Confirm before writes.
 - **`write-slack` / `joanne-write-slack`:** Slack **workspace configuration** language (“update slack,” “change slack settings”). Route separately from onboarding; runtime may stub this path until a real config UX exists.
 
-## Compound skills (one skill ID, several sub-actions)
+## Joanne Slack tools (split surfaces; no generic menus)
 
-Some skills intentionally cover **multiple user-facing actions** under one catalog id (example: Joanne Slack onboarding—list channels, read history, create channel, invite—wired to `read-slack` / `write-company` and one handler). When you add or extend one:
+Prefer **separate catalog skills** and **separate capability intents** so routing + permissions stay clear—do **not** ship a bullet “discovery menu” when NL is ambiguous; the router LLM / keywords should pick a tool, and each handler either runs, asks one short clarifying line, or returns false.
 
-1. **Discovery menu** — If the user signals the capability but the message does **not** parse to a concrete action, reply with a one-line scope statement plus a **bullet list** of sub-actions (plain language; use a consistent bullet character such as `•`). Optionally reserve heavy **mrkdwn** for confirmations and tool results so the menu stays readable. Close with one short line inviting plain-language follow-up (e.g. “Say what you need…”).
+- **`read-slack-channels` / `joanne-read-slack-channels`:** list channels the bot can see.
+- **`read-slack-messages` / `joanne-read-slack-messages`:** read recent messages in a named channel (`#…` or link).
+- **`write-company` / `joanne-write-company`:** create channel, invite, company onboarding—confirm before writes.
 
-2. **Parse order** — Implement a dedicated parser that returns `(action, matched bool)`. **Try specific actions first**; only when `matched == false` **and** the text still matches the broad capability intent, show the discovery menu. Do not show the menu when a specific sub-action already parsed.
-
-3. **Phrase alignment** — Draft menu bullets so their wording **overlaps** the keywords or regexes the parser uses (e.g. “List the channels…” ↔ patterns that include `list` and `channels`). Users often echo the nearest bullet; alignment reduces friction.
-
-4. **Permission boundaries** — If sub-actions mix observation and mutation, enforce **per `runtimeTool` / catalog permission** (read vs write), not only by skill id prefix.
-
-5. **Tests** — Add table-driven tests for: each sub-action phrase → correct action; natural variants (“list our channels”, etc.); and non-Joanne/non-owner bots returning false where applicable. Add tests for the **vague-intent → menu** branch when feasible (handler or golden copy).
-
-6. **Catalog copy** — Keep the skill-level **`description`** accurate for the whole family; the threaded menu carries the detailed sub-list. Update **`slack-factory/skills-catalog.json`**, **`makeacompany-ai`** default catalog, and **`employee-factory`** `capability_catalog.go` / snapshots together when descriptions change.
-
-**Reference implementation:** `employee-factory/internal/slackbot/joanne_slack.go` (`joanneSlackCapabilityHelpText`, `parseJoanneSlackAction`, `tryHandleJoanneSlackOnboard`) and `joanne_slack_test.go`.
+Shared parsing helpers (`parseJoanneSlackAction`) may stay; handlers are **`tryHandleJoanneReadSlackList`**, **`tryHandleJoanneReadSlackMessages`**, **`tryHandleJoanneWriteCompany`** in `employee-factory/internal/slackbot/joanne_slack.go`. Update **`slack-factory/skills-catalog.json`**, **`makeacompany-ai`** default catalog, and **`employee-factory`** `capability_catalog.go` / admin snapshots together when skills change.
 
 ## Related docs
 
