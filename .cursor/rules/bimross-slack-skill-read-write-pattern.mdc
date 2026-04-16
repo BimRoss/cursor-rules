@@ -29,9 +29,14 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 - New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `write-*` paths queue + confirm (or the established pattern for that vertical, e.g. Joanne email/docs).
 - If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
 
+## Joanne: `write-company` vs `write-slack`
+
+- **`write-company` / `joanne-write-company`:** company-channel provisioning, onboarding, create channel, invite flows—natural language like “make a company” or “create a channel.” Confirm before writes.
+- **`write-slack` / `joanne-write-slack`:** Slack **workspace configuration** language (“update slack,” “change slack settings”). Route separately from onboarding; runtime may stub this path until a real config UX exists.
+
 ## Compound skills (one skill ID, several sub-actions)
 
-Some skills intentionally cover **multiple user-facing actions** under one catalog id (example: Joanne Slack onboarding—list channels, read history, create channel, invite—wired to `read-slack` / `write-slack` and one handler). When you add or extend one:
+Some skills intentionally cover **multiple user-facing actions** under one catalog id (example: Joanne Slack onboarding—list channels, read history, create channel, invite—wired to `read-slack` / `write-company` and one handler). When you add or extend one:
 
 1. **Discovery menu** — If the user signals the capability but the message does **not** parse to a concrete action, reply with a one-line scope statement plus a **bullet list** of sub-actions (plain language; use a consistent bullet character such as `•`). Optionally reserve heavy **mrkdwn** for confirmations and tool results so the menu stays readable. Close with one short line inviting plain-language follow-up (e.g. “Say what you need…”).
 
