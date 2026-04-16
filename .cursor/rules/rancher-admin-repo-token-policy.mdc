@@ -46,6 +46,8 @@ When release automation is configured, ensure all of the following:
 - Docker image repositories are under `geeemoney/*`.
 - Release job updates image tags in `bimross/rancher-admin` manifests.
 
+**Agents:** do **not** manually edit those `geeemoney/*` **image:** tags in `rancher-admin` to simulate a deploy—see **`bimross-rancher-admin-no-manual-image-tags.mdc`**. Operators ship via **tag + Release** in the **source** repo; CI writes the manifest bump.
+
 ### Canonical Forensic Baseline
 
 When evaluating "is CI/CD ready for release?" compare against these canonical workflows first:

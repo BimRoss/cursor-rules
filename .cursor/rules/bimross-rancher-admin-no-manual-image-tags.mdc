@@ -1,0 +1,38 @@
+---
+description: "Never hand-edit application image tags in bimross/rancher-admin; deploy via tag + Release in source repos and CI gitops-release."
+globs: "*"
+alwaysApply: true
+reviewBy: "2026-09-30"
+---
+
+# rancher-admin: no manual `geeemoney/*` image tag edits
+
+## Hard rule
+
+**Do not** change container **`image:`** version tags for **BimRoss application images** under `geeemoney/*` in **`bimross/rancher-admin`** (e.g. `admin/apps/**/{*deployment*,*cronjob*,*job*}.yaml`) **as a substitute for a proper release**.
+
+Those lines are owned by **tag-driven CI**: the **`gitops-release`** (or equivalent) job in each shipping repo runs after a **`v*`** tag, builds/pushes the image, then **commits** the matching tag bump to **`rancher-admin`** using **`RANCHER_ADMIN_REPO_TOKEN`**—see **`rancher-admin-repo-token-policy.mdc`**.
+
+## What “deploy” means here
+
+When Grant says **deploy** for an app that ships Docker images to `geeemoney/*`, **deploy** is **not** “edit `rancher-admin` YAML and push.”
+
+**Deploy** = in the **source** repo: **commit** + **push** integration branch → cut **`v*`** semver tag → **`gh release create`** with readable notes (**`bimross-deploy-tag-and-release.mdc`**) → let **CI** update **`rancher-admin`** image pins.
+
+Do **not** manually bump `geeemoney/employee-factory:…`, `geeemoney/slack-orchestrator:…`, `geeemoney/makeacompany-ai-frontend:…`, `geeemoney/makeacompany-ai-backend:…`, squad **`cursor-rules`** init images tied to releases, or other **`geeemoney/*`** service images in **`rancher-admin`** unless Grant **explicitly** asks for an exceptional one-off (e.g. hotfix coordinated outside normal CI)—and even then, prefer fixing **source-repo release automation** over recurring hand-edits.
+
+## Allowed edits in rancher-admin
+
+Edits that **do not** replace **application** rollout with a hand-picked image tag are still normal:
+
+- New or updated **ConfigMap** / **Secret** *names* and non-image **data** (when not bypassing release discipline).
+- **NetworkPolicy**, **Ingress**, **Service**, **Fleet** bundle layout, **nodeSelector**, resource limits, env vars **other than** sneaking in a new image version.
+- **Infrastructure** images (e.g. `nats:`, `redis:`, `prom/prometheus`) when Grant is explicitly changing infra versions—still **not** a stand-in for app **`v*`** releases.
+
+When unsure: **ask once** rather than editing `image:` tags for `geeemoney/*` apps.
+
+## Cross-links
+
+- **`bimross-deploy-tag-and-release.mdc`** — tag + GitHub Release.
+- **`rancher-admin-repo-token-policy.mdc`** — token + `gitops-release` pattern.
+- **`bimross-git-dev-and-releases.mdc`** — human gate for tags/releases.

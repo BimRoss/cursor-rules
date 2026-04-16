@@ -52,3 +52,4 @@ Optional: **`gh release create ... --generate-notes`** as a **starting point**, 
 - Authorization to run this full path still comes from Grant’s deploy language—see **`bimross-git-dev-and-releases.mdc`** (human gate).
 - Multi-repo passes: **`bimross-okay-deploy.mdc`** (order, scope, no rollout polling).
 - After tag + Release are pushed: **stop** active tracking; CI/GitOps/Fleet and Slack deploy signals own verification unless Grant asks otherwise.
+- **`bimross/rancher-admin` application image tags:** never hand-edit `geeemoney/*` image version lines there to “deploy”—**`gitops-release`** on **`v*`** tags updates those. See **`bimross-rancher-admin-no-manual-image-tags.mdc`**.
