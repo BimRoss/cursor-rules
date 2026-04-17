@@ -1,22 +1,24 @@
 ---
-description: "Channel operator reaction mirroring on Slack bot messages (employee-factory)."
+description: "Human → bot reaction mirroring on Slack (employee-factory Socket Mode)."
 alwaysApply: true
 reviewBy: "2026-07-01"
 ---
 
-# Slack channel operator → bot reaction mirror
+# Slack human → bot reaction mirror
 
-Use this contract when implementing or reviewing Slack `reaction_added` handling in runtime code (for example `employee-factory`).
+Use this contract when implementing or reviewing Slack `reaction_added` handling in runtime code (for example `employee-factory`). Inbound **`reaction_added` is Socket Mode on each employee**, not slack-orchestrator.
 
 ## Trigger (required)
 
 - Inbound event is `reaction_added`.
-- Reactor is a **channel operator** for that channel: Slack user id appears in `owner_ids` (or merged legacy owner fields) on the Redis company-channel row. Empty `owner_ids` means **no** operators for that row—there is no global fallback user id.
-- Channels **not** in the registry do not treat any user as an operator for this feature (unless the registry is empty and broader channel allow rules apply elsewhere).
-- Reaction target item is a Slack `message` event item.
+- Reaction target item is a Slack `message` event item (not e.g. file).
+- Channel id and message timestamp are non-empty (includes public channels, private channels, and DMs).
 - Message belongs to the **current** bot (`item_user == bot_user_id` for this process).
-- Channel is allowed by runtime channel guards and is not a DM.
-- `general_auto_reaction_enabled` is true for the channel (same toggle as other reaction UX).
+- Reactor is non-empty, is **not** this bot’s user id (avoids echo when the bot adds the mirrored emoji), and is **not** a squad / multiagent bot id (`MULTIAGENT_BOT_USER_IDS`).
+
+**Not gated on:** company-channel registry membership, channel allowlist enforcement, `owner_ids`, `general_auto_reaction_enabled`, or DM vs channel. (Ownership-style tightening may return later.)
+
+**Still respected:** per-channel **out of office** (registry `out_of_office_enabled`) skips handling before mirror; outbound rate limiting for posting the reaction.
 
 ## Action (required)
 
@@ -25,15 +27,10 @@ Use this contract when implementing or reviewing Slack `reaction_added` handling
 
 ## Multi-agent note
 
-Each employee runs as a separate Slack app / deployment. When an operator reacts to **Joanne’s** message, only **Joanne’s** runtime has `item_user` matching; other squad processes ignore. Mirror is per authoring bot.
-
-## Registry / owners
-
-- List every human Slack user id that should count as an operator in `owner_ids` for each company channel (e.g. `#bimross`). Joanne append-owner flows add the requester; seed additional ids in Redis when needed.
-- Empty `owner_ids` after normalization means mirroring does not run for that channel row until owners are written.
+Each employee runs as a separate Slack app / deployment. When a human reacts to **Joanne’s** message, only **Joanne’s** runtime has `item_user` matching; other squad processes ignore. Mirror is per authoring bot.
 
 ## Safety and operability
 
 - Treat Slack `already_reacted` as success (idempotent behavior).
 - Keep behavior fully non-blocking and tolerant to transient Slack failures.
-- Log structured route decisions with at least: path, employee, channel, anchor timestamp, reactor user, mirrored reaction name.
+- Log structured route decisions with at least: path (`reaction_mirror_human`), employee, channel, anchor timestamp, reactor user, mirrored reaction name.
