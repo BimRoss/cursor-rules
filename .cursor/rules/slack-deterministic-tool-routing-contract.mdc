@@ -19,7 +19,7 @@ Keep tool behavior fast, reliable, and explainable:
 ## Deterministic-first dispatch (required)
 
 - For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.
-- In **threads without** a squad `@mention`, only the thread owner pod runs capability routing; the capability router LLM may classify `tool_intent: none` so broad keyword matches (for example “onboarding”) do not steal the thread from normal `handleThreadMessage` replies.
+- In **threads without** a squad `@mention`, only the **orchestrator-targeted** pod for that turn runs capability routing; the capability router LLM may classify `tool_intent: none` so broad keyword matches (for example “onboarding”) do not steal the thread from normal `handleThreadMessage` replies.
 - LLM intent classification may be used for observability and ambiguity diagnostics, but must not suppress deterministic direct intent execution **except** that thread-owner LLM `none` override above.
 - LLM must not introduce new direct tool dispatch decisions when deterministic detection does not match.
 
@@ -27,13 +27,14 @@ Keep tool behavior fast, reliable, and explainable:
 
 - In threads, owner-scoped tool execution requires explicit mention of the owning specialist in that same message.
 - Do not infer thread ownership as an execution grant for direct tool runs.
-- **Channel vs thread:** On **channel** messages, missing thread targeting may still use deterministic failure replies when appropriate. In **threads** without a squad `@mention`, only the **thread owner** pod evaluates capability routing; other pods skip silently. Do **not** broadcast `[router:thread_requires_explicit_mention]` from every pod—fall through so `handleThreadMessage` can let the thread owner respond to general chat; the human `@mentions` the specialist when they want that tool.
-- For locked advanced-tool threads (`tryHandleLockedAdvancedTask`), if the specialized tool handler does **not** consume the message (parse miss, thanks/chit-chat, etc.), **fall through** to normal `handleThreadMessage` LLM text — never post a canned “stay in the X flow” nudge.
+- **Channel vs thread:** On **channel** messages, missing thread targeting may still use deterministic failure replies when appropriate. In **threads** without a squad `@mention`, only the pod that **received** the inbound event evaluates capability routing (`slack-orchestrator` fan-out / targeting). Do **not** broadcast `[router:thread_requires_explicit_mention]` from every pod—fall through so `handleThreadMessage` can answer general chat; the human `@mentions` the specialist when they want that tool.
+- **No advanced-task locks:** `employee-factory` does **not** use Redis exclusivity, pinned “thread owner” rows, or `tryHandleLockedAdvancedTask`-style gating. If a specialized tool handler does **not** consume the message (parse miss, thanks/chit-chat, etc.), **fall through** to normal `handleThreadMessage` LLM text — never post a canned “stay in the X flow” nudge.
 
-## Thread owner persistence and handoff (required)
+## Orchestrator targeting vs organic threads (required)
 
-- Persisted thread owner (Redis `thread_owner` for `channel_id` + `thread_ts`) and **explicit CEO @mention of exactly one squad agent** override bot-root inference (a thread whose parent message is from another bot is not stuck on that bot forever).
-- When an advanced-task lock targets one specialist (for example Joanne email), **non-owner pods must not post** LLM replies for that thread (`shouldSuppressThreadReplyForLockedTask`)—the task owner owns follow-up; other pods skip silently.
+- **Routing** (which pod(s) get an event) is **`slack-orchestrator`** policy; workers do not fight over a lock.
+- Capability code may still use **explicit CEO `@mention` of exactly one squad agent** as the grant for owner-scoped tools in threads; that is mention policy, not a durable lock.
+- Joanne (and similar) **draft / confirmation** state lives in normal skill pending stores — not a cross-thread “lock” primitive in the Slack router.
 
 ## Failure contract (required)
 
@@ -46,9 +47,9 @@ When a route matches by intent but this runtime does **not** have that skill ass
 
 When routing selects a tool route but the route **Handle** returns false without posting (parse miss, guard, or “not handled yet”), the capability router **does not** emit a synthetic user error. It **falls through** (`handler_fallthrough` in logs) so the normal pipeline continues: capability desk → unsupported-capability → `handleThreadMessage` (threads) or channel multiagent / broadcast routing (roots). That preserves “try tool first, then general reply in thread” for @mentions and threads.
 
-In threads without an explicit squad mention, capability routing may **skip** without posting so the thread owner LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat to the thread owner.
+In threads without an explicit squad mention, capability routing may **skip** without posting so the normal thread LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat.
 
-`tryHandleLockedAdvancedTask` may still run **forced continuations** when a draft/pending state exists (for example Joanne doc/email with an active draft). That path is separate from capability-router `handler_fallthrough`.
+Skill-level **draft continuations** (for example Joanne doc/email pending state) are handled inside the skill / confirmation flow, not via a router-level lock; they are separate from capability-router `handler_fallthrough`.
 
 ## Logging contract (required)
 
