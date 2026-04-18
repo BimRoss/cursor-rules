@@ -18,7 +18,7 @@ reviewBy: "2026-09-30"
 ## Triggers to codify (do not wait for a special prompt)
 
 - The same **gotcha** appears twice (CI, Docker, `gh`, Fleet, env naming, multi-repo staging).
-- Grant corrects a **recurring preference** (how PRs work, when to tag, which repo owns a pattern).
+- The operator corrects a **recurring preference** (how PRs work, when to tag, which repo owns a pattern).
 - A **successful recovery** from failure is likely to recur (build flags, git mmap workaround, kubectl/compose patterns).
 - A **new repo or integration** lands; the **canonical workflow** should be referenced once (e.g. **`bimross-new-repo-bootstrap.mdc`**, **`rancher-admin-repo-token-policy.mdc`**) so Ross does not re-derive it each session.
 - **Fleet / new Kubernetes namespaces** in **`rancher-admin`** repeat the same Helm ownership trap—use **`bimross-fleet-namespace-gitops.mdc`** (`defaultNamespace` in **`fleet.yaml`**, avoid extra **`Namespace`** YAML unless greenfield-only).
@@ -28,9 +28,9 @@ reviewBy: "2026-09-30"
 
 - **App-level token** on the API client and **Ack per envelope** — see **`bimross-slack-go-socket-mode.mdc`** (slack-go + `slack-orchestrator` reference).
 
-## Cogito + OpenAI-compatible providers (Subnet Signal, future Slack agents)
+## Cogito + OpenAI-compatible providers (shared Slack / agent runtimes)
 
-- **`cogito.WithForceReasoning()`** turns the default **`reply` sink** back on. For **tool-only** flows (e.g. discovery must call `twitter_search`), apply **`cogito.DisableSinkState` after `WithForceReasoning`** so the model cannot “finish” without running real tools.
+- **`cogito.WithForceReasoning()`** turns the default **`reply` sink** back on. For **tool-only** flows where a tool call is mandatory, apply **`cogito.DisableSinkState` after `WithForceReasoning`** so the model cannot “finish” without running real tools.
 - **`Fragment.ExtractStructure`** forces a **`json` tool call** with strict schema. Some hosts return **plain JSON in `assistant.content`** instead of `tool_calls` → keep a **compat path** that unmarshals the last assistant message when extraction errors with `no tool calls` / `no choices`. Optionally **one corrective user nudge + second `ExtractStructure`** before that fallback (extra completion only on failure). Reuse that pattern for **Alex / Tim / Ross** runtimes that share the same stack.
 
 ## What not to do
@@ -39,6 +39,6 @@ reviewBy: "2026-09-30"
 - Do not duplicate **employee** voice or Hormozi/Ferriss harvesting into Ross rules—that is their lane.
 - Do not embed **secrets** or private URLs in tracked rules.
 
-## Closing the loop with Grant
+## Closing the loop with the operator
 
 After substantive rule changes in **`cursor-rules`**, **commit and push** so other agents and future Ross sessions inherit them (**`bimross-git-dev-and-releases.mdc`**). If a pattern is half-baked, say so in the response and still capture a **minimal** rule stub or TODO in the right file rather than relying on chat memory.

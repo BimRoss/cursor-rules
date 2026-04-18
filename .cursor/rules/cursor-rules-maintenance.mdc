@@ -70,6 +70,8 @@ Employees (`alex`, `tim`, …) are listed in **`personas/employees.txt`**. Edits
 
 Slack / Kubernetes use the **rendered** markdown, not the loose `.mdc` set. Skipping the sync step ships stale persona text. See **`sync-employee-personality.mdc`** (always-on reminder). Architecture: **`docs/employee-agents.md`**.
 
+**Slack/runtime bundles stay employer-agnostic:** shared prepended context lives in **`bimross-company.mdc`** (channel-first facts, multi-agent behavior). Operator- or customer-specific company narrative belongs in **`local-context.mdc`**, **`.cursor/rules/private/**`**, or per-channel tools—not duplicated as “I work at &lt;employer&gt;” across five personality files.
+
 ## Do not
 
 - Spam new rules for one-off trivia; use judgment.

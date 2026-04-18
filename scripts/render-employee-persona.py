@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Concatenate employee rule files into one persona markdown (frontmatter stripped).
 
-If ``.cursor/rules/bimross-company.mdc`` exists, it is prepended first (shared company identity).
+If ``.cursor/rules/bimross-company.mdc`` exists, it is prepended first as section ``## runtime-context`` (shared Slack/runtime context).
 
 Default: all ``.cursor/rules/{employee}-*.mdc`` files, sorted by filename.
 Optional ``--manifest`` overrides with an explicit path list (legacy / escape hatch).
@@ -164,7 +164,8 @@ def main() -> None:
         if body:
             if args.compact:
                 body = normalize_compact_body(body)
-            chunks.append(f"## bimross-company\n\n{body}\n")
+            # Heading is neutral in rendered bundles (filename remains bimross-company.mdc for repo conventions).
+            chunks.append(f"## runtime-context\n\n{body}\n")
 
     for path in paths:
         raw = path.read_text(encoding="utf-8")
