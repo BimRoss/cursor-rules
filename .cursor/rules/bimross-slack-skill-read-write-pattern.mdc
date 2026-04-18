@@ -1,7 +1,7 @@
 ---
 description: >-
-  Apply when adding or editing MakeACompany capability skills, slack-factory
-  skills-catalog.json, or employee-factory Slack runtime tooling—read-* vs
+  Apply when adding or editing MakeACompany capability skills, slack-orchestrator
+  capability_contract (or employee-factory Slack runtime tooling)—read-* vs
   write-* skill IDs define the default UX contract (immediate vs confirm).
 alwaysApply: true
 reviewBy: "2027-04-01"
@@ -9,7 +9,7 @@ reviewBy: "2027-04-01"
 
 # BimRoss Slack skill IDs: `read-*` vs `write-*`
 
-MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.json`** (seeded into Redis / consumed by **`makeacompany-ai`** and **`employee-factory`**). The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
+MakeACompany and BimRoss use **skill IDs** from the **slack-orchestrator** capability contract (`internal/inbound/capability_contract.go`; embedded on NATS dispatch and exported via `GET /debug/capability-catalog`). **`makeacompany-ai`** may mirror the same JSON into Redis for `/skills` / `/employees`; **`employee-factory`** consumes the inlined contract on each message. The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
 
 ## Naming contract
 
@@ -21,7 +21,7 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 ## Catalog copy
 
 - Each skill’s **`description`** should state whether it runs **immediately** or requires **explicit confirmation** before writes, so operators and `/admin` stay honest.
-- **`makeacompany-ai`** backend default catalog (`backend/internal/app/catalog.go`) and **data snapshots** should stay aligned when you change **`slack-factory`** descriptions.
+- **`makeacompany-ai`** backend default catalog (`backend/internal/app/catalog.go`) and **data snapshots** should stay aligned when you change **orchestrator** `capability_contract.go` (or merged Redis payloads).
 
 ## Runtime (`employee-factory`)
 
@@ -31,7 +31,7 @@ MakeACompany and BimRoss use **skill IDs** in **`slack-factory/skills-catalog.js
 
 ## Six-skill catalog (Joanne + Garth)
 
-Canonical skill IDs in **`slack-factory/skills-catalog.json`** (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync):
+Canonical skill IDs in **slack-orchestrator** `DefaultCapabilityContractV1` (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync):
 
 | Employee | Skill IDs |
 |----------|-----------|

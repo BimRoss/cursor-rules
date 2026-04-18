@@ -37,14 +37,14 @@ Use `cursor-rules/scripts/add-employee-workflow.sh --name <name> --role-title "<
    - Keep required scopes including `reactions:read` and `reactions:write`.
    - Run `./scripts/validate-manifests.sh`.
 5. **catalog + data model sync (channel-ready defaults)**:
-   - Update `slack-factory/skills-catalog.json`:
-     - Add employee in `coreEmployees`.
-     - Initialize `employeeSkillIds.<name>` (empty or mapped skills).
+   - Update **slack-orchestrator** `internal/inbound/capability_contract.go` (`DefaultCapabilityContractV1`):
+     - Add employee in `CoreEmployees`.
+     - Initialize `EmployeeSkillIDs[<name>]` (empty slice or mapped skill IDs).
      - Keep parameter names canonical (`intent`, `type`, `count`, `viewers`, `editors`, `commenters`).
-   - Update/verify `makeacompany-ai` catalog path and snapshots:
-     - `backend/internal/app/catalog.go` default catalog (if seed/default list is maintained there).
-     - `src/data/admin/team-snapshot.json` and `src/data/admin/skills-snapshot.json` via `npm run sync:team`.
-     - Confirm new employees preserve `coreEmployees` display order from `slack-factory/skills-catalog.json` and no hardcoded five-employee sorting assumptions remain.
+   - Refresh `makeacompany-ai` snapshots from the same contract (not slack-factory JSON):
+     - `npm run sync:team` with **`ORCHESTRATOR_URL`** (+ optional **`ORCHESTRATOR_DEBUG_TOKEN`**) to a running orchestrator, **or** offline: `(cd ../slack-orchestrator && go run ./cmd/catalog-export) > /tmp/cap.json` then **`CATALOG_JSON_PATH=/tmp/cap.json npm run sync:team`**.
+     - `backend/internal/app/catalog.go` if you still maintain a default catalog stub there—keep it aligned with orchestrator.
+     - Confirm `coreEmployees` display order matches `capability_contract.go` and no hardcoded roster-size assumptions remain.
    - Confirm admin cards render the new employee and assigned skills.
 6. **employee-factory runtime wiring**:
    - Ensure capability/runtime mapping includes the new employee where appropriate.

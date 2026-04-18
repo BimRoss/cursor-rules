@@ -39,7 +39,7 @@ Runtime `U…` IDs for Ross / Tim / Alex / Garth live in **`employee-factory`** 
 
 When employee capabilities or tool arguments change, keep both runtime sources aligned:
 
-- Shared catalog contract: `slack-factory/skills-catalog.json` (employees, skills, required/optional params).
+- Shared catalog contract: **slack-orchestrator** `internal/inbound/capability_contract.go` (exported via `GET /debug/capability-catalog` or `go run ./cmd/catalog-export` in that repo). **`makeacompany-ai`** may mirror this into Redis for web surfaces.
 - Runtime gating: `employee-factory` `EMPLOYEE_TOOLS` mapping (which tools are enabled now).
 
 Treat these as complementary: catalog defines what exists; runtime mapping defines what is currently active.

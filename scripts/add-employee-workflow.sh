@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SLACK_FACTORY_ROOT="${ROOT}/../slack-factory"
 MAKEACOMPANY_ROOT="${ROOT}/../makeacompany-ai"
+SLACK_ORCHESTRATOR_ROOT="${ROOT}/../slack-orchestrator"
 
 usage() {
   cat <<'EOF'
@@ -15,7 +16,8 @@ Examples:
   ./scripts/add-employee-workflow.sh --name "sam lee" --display-name "Sam" --lane strategy
 
 Notes:
-  - This script updates cursor-rules, slack-factory, and makeacompany-ai.
+  - This script updates cursor-rules, slack-factory, and (optionally) makeacompany-ai snapshots from **slack-orchestrator** catalog export.
+  - Capability contract source of truth: **slack-orchestrator** `internal/inbound/capability_contract.go` (not slack-factory JSON).
   - It does not install Slack apps or set runtime secrets; it prints manual follow-ups for employee-factory.
 EOF
 }
@@ -193,39 +195,38 @@ else
   echo "Manifest already exists for ${slug}: ${NEW_MANIFEST}"
 fi
 
-python3 - "${SLACK_FACTORY_ROOT}/skills-catalog.json" "$slug" "$display_name" "$description" <<'PY'
-import json
-import sys
-path, slug, label, desc = sys.argv[1:]
-with open(path, encoding="utf-8") as f:
-    doc = json.load(f)
-core = doc.setdefault("coreEmployees", [])
-if not any(str(item.get("id", "")).strip().lower() == slug for item in core):
-    core.append({"id": slug, "label": label, "description": desc})
-doc.setdefault("employeeSkillIds", {})
-doc["employeeSkillIds"].setdefault(slug, [])
-with open(path, "w", encoding="utf-8") as f:
-    json.dump(doc, f, indent=2)
-    f.write("\n")
-PY
-echo "Updated slack-factory skills catalog for ${slug}"
-
 "${SLACK_FACTORY_ROOT}/scripts/validate-manifests.sh"
 echo "Validated slack-factory manifests"
 
-(cd "$MAKEACOMPANY_ROOT" && npm run sync:team)
-echo "Synced makeacompany-ai snapshots"
+if [[ -d "${SLACK_ORCHESTRATOR_ROOT}" ]] && command -v go >/dev/null 2>&1; then
+  tmp="$(mktemp)"
+  if (cd "${SLACK_ORCHESTRATOR_ROOT}" && go run ./cmd/catalog-export > "$tmp"); then
+    (cd "$MAKEACOMPANY_ROOT" && CATALOG_JSON_PATH="$tmp" npm run sync:team)
+    echo "Synced makeacompany-ai snapshots from slack-orchestrator catalog export (current contract on disk)"
+    rm -f "$tmp"
+  else
+    rm -f "$tmp"
+    echo "warn: go run ./cmd/catalog-export in slack-orchestrator failed; skipped npm run sync:team" >&2
+  fi
+else
+  echo "Skip sync:team: need ../slack-orchestrator and Go on PATH (or run manually per makeacompany-ai README)."
+fi
 
 cat <<EOF
 
-Manual follow-ups (employee-factory / Slack install):
-  1) Create/install Slack app for ${display_name} and capture:
+Manual follow-ups:
+  1) **Capability contract** — Add ${slug} to ${SLACK_ORCHESTRATOR_ROOT:-../slack-orchestrator}/internal/inbound/capability_contract.go
+     (\`CoreEmployees\` row + \`employeeSkillIds\` entry). Then refresh web snapshots:
+       (cd ../slack-orchestrator && go run ./cmd/catalog-export) > /tmp/cap.json
+       (cd ../makeacompany-ai && CATALOG_JSON_PATH=/tmp/cap.json npm run sync:team)
+     Or use a running orchestrator: ORCHESTRATOR_URL=… npm run sync:team (see makeacompany-ai README).
+  2) **Slack app** — Create/install for ${display_name} and capture:
      - ${slug^^}_SLACK_APP_TOKEN
      - ${slug^^}_SLACK_BOT_TOKEN
      - ${slug^^}_SLACK_USER_TOKEN
      - ${slug^^}_SLACK_BOT_ID
-  2) Add runtime mappings in employee-factory config/gitops if this employee should join multiagent order.
-  3) Update employee-specific tool/env validation in employee-factory when adding new runtime capabilities.
+  3) Add runtime mappings in employee-factory config/gitops if this employee should join multiagent order.
+  4) Update employee-specific tool/env validation in employee-factory when adding new runtime capabilities.
 
 Scaffold complete for: ${slug}
 EOF
