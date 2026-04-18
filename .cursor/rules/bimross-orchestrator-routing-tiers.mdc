@@ -1,0 +1,60 @@
+---
+description: "slack-orchestrator routing tiers: Tier 0 triggers, Tier 1 explicit tool names only, Tier 2 reserved; tools.go and capability contract sync."
+globs: "**/slack-orchestrator/internal/routing/**/*.go"
+alwaysApply: false
+reviewBy: "2027-06-01"
+---
+
+# BimRoss: slack-orchestrator routing tiers (`tool_id` / `Kind`)
+
+Use this when changing **how** `slack-orchestrator` classifies messages for `routing.Decision` (NATS targets, admin/orchestrator debug UI). Implementation lives under **`slack-orchestrator/internal/routing/`** (`decide.go`, **`tools.go`**).
+
+## Tier 0 — Structural triggers (no text semantics)
+
+Handled in **`Decide`** / broadcast classification **before** tool vs conversation:
+
+- `<!everyone>` / `<!here>` / `@here`-style broadcast → fanout, **`KindConversation`** for the broadcast branch.
+- `<!channel>` / `@channel` → capped fanout, **`KindConversation`**.
+- Explicit squad **`@mention`** of bot users → mention trigger; may combine with Tier 1.
+- Plain thread follow-up uses **`ThreadPlainHandoffKey`** (last squad mention in thread) for single-target routing.
+
+Do not replace Tier 0 with LLM calls.
+
+## Tier 1 — Explicit tool name only (`ClassifyToolOrConversation`)
+
+**`ClassifyToolOrConversation`** in **`tools.go`** must match **only** when the user **names the canonical skill id** in natural text:
+
+- Hyphenated ids split into segments; allow **spaces, hyphens, or underscores** between segments (case-insensitive), e.g. `read-company`, `read company`, `read_company`.
+- Strip Slack angle tokens (`<@…>`, `<!…>`, `<#…>`) before matching so `<@UGARTH> read-twitter` works.
+
+**Do not** add Tier 1 “intent” shortcuts such as:
+
+- loose substrings: `onboard`, `create channel`, `search twitter for …`, `company digest`
+- synonym lists for paraphrases (that belongs in **Tier 2**, not `tools.go`)
+
+If no Tier 1 match → **`KindConversation`** (empty `tool_id`). That is intentional: casual chat must not get a false **`KindTool`** stamp.
+
+### Catalog sync
+
+- **`tier1ExplicitToolIDs`** in **`tools.go`** must stay aligned with skill **`id`** values in **`slack-orchestrator/internal/inbound.DefaultCapabilityContractV1`** (`Skills[].ID`). When you add a skill to the contract, add its id here **if** it should be Tier-1 invocable by name.
+- New ids should be **multi-segment** (`foo-bar-baz`); the pattern builder splits on `-`.
+
+## Tier 2 — Fuzzy / paraphrase routing (future)
+
+Reserved for a **separate** path (small model, embeddings, or LLM) that outputs the **same** `routing.Decision` schema — **not** ad hoc keyword lists in **`tools.go`**. Until that exists, unmatched text stays conversation-only at the orchestrator layer.
+
+## Relationship to workers (`employee-factory`)
+
+Orchestrator **`tool_id`** is **dispatch + observability**. **`employee-factory`** still enforces **assigned skills**, owner hints, and thread rules — see **`slack-deterministic-tool-routing-contract.mdc`**. A **`KindTool`** decision does not mean every targeted pod executes that runtime tool.
+
+## Tests
+
+- **`internal/routing/tools_test.go`** — Tier 1 positive/negative cases (explicit name vs “onboard” / keyword search).
+- **`internal/routing/routing_test.go`** — **`Decide`** integration: mention + tool uses messages that include an **explicit** Tier 1 phrase when **`KindTool`** is expected.
+
+When changing Tier 1 behavior, update both.
+
+## Related
+
+- **`slack-deterministic-tool-routing-contract.mdc`** — worker-side deterministic routing and fallthrough.
+- **`bimross-slack-go-socket-mode.mdc`** — Socket Mode transport for orchestrator and workers.

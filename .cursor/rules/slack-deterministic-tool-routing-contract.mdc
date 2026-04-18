@@ -16,6 +16,10 @@ Keep tool behavior fast, reliable, and explainable:
 - thread targeting is explicit,
 - failures are surfaced with typed diagnostics.
 
+## slack-orchestrator `tool_id` (Tier 1 = explicit names only)
+
+`slack-orchestrator` stamps **`routing.Decision.Kind` / `ToolID`** for NATS dispatch and admin/debug surfaces. **`ClassifyToolOrConversation`** (**`slack-orchestrator/internal/routing/tools.go`**) is **Tier 1**: users must **explicitly name** the canonical skill id (e.g. `read-company`, `read twitter`) — **not** broad keywords like “onboard” or “search twitter for …”. Do not reintroduce substring keyword lists there; fuzzy routing is **Tier 2** (future). Full tier policy: **`bimross-orchestrator-routing-tiers.mdc`**.
+
 ## Deterministic-first dispatch (required)
 
 - For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.

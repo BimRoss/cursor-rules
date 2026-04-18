@@ -16,7 +16,9 @@ Use this contract when implementing or reviewing Slack `reaction_added` handling
 - Message belongs to the **current** bot (`item_user == bot_user_id` for this process).
 - Reactor is non-empty, is **not** this bot’s user id (avoids echo when the bot adds the mirrored emoji), and is **not** a squad / multiagent bot id (`MULTIAGENT_BOT_USER_IDS`).
 
-**Not gated on:** company-channel registry membership, channel allowlist enforcement, `owner_ids`, `general_auto_reaction_enabled`, or DM vs channel. (Ownership-style tightening may return later.)
+**Gated on:** `GeneralAutoReactionEnabledForChannel` — same Redis `general_auto_reaction_enabled` / admin “Reactions” toggle as plain-message auto-reaction (legacy open mode when the registry is empty; per-row flag when the channel is registered; off for unknown channel ids when any channel is registered).
+
+**Not gated on:** channel allowlist enforcement for Socket Mode membership, or `owner_ids`. (Ownership-style tightening may return later.)
 
 **Still respected:** per-channel **out of office** (registry `out_of_office_enabled`) skips handling before mirror; outbound rate limiting for posting the reaction.
 
