@@ -36,7 +36,7 @@ If no Tier 1 match → **`KindConversation`** (empty `tool_id`). That is intenti
 
 ### Catalog sync
 
-- **`tier1ExplicitToolIDs`** in **`tools.go`** must stay aligned with skill **`id`** values in **`slack-orchestrator/internal/inbound.DefaultCapabilityContractV1`** (`Skills[].ID`). When you add a skill to the contract, add its id here **if** it should be Tier-1 invocable by name.
+- **`tier1PatternEntries`** in **`tools.go`** must include canonical skill **`id`** values from **`slack-orchestrator/internal/inbound.DefaultCapabilityContractV1`** (`Skills[].ID`) **if** they should be Tier-1 invocable by name. Add **legacy `write-*` pattern rows** that normalize to **`create-*`** when mutating skills were renamed, so explicit user phrasing stays stable.
 - New ids should be **multi-segment** (`foo-bar-baz`); the pattern builder splits on `-`.
 
 ## Tier 2 — Fuzzy / paraphrase routing (future)

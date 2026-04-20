@@ -7,7 +7,7 @@ reviewBy: "2027-04-01"
 
 # BimRoss skill factory checklist (new catalog skills)
 
-Use this when adding a **canonical skill ID** (e.g. `read-skills`, `write-email`) that appears in the squad capability matrix and Slack runtime.
+Use this when adding a **canonical skill ID** (e.g. `read-skills`, `create-email`) that appears in the squad capability matrix and Slack runtime.
 
 ## Routing philosophy (keywords vs LLM)
 
@@ -22,7 +22,7 @@ Use this when adding a **canonical skill ID** (e.g. `read-skills`, `write-email`
 
 ## 2. Orchestrator Tier 1 (explicit tool naming / pipelines)
 
-- If users should be able to **name the skill explicitly** (e.g. “read skills”, “read-skills”) or use it in **pipeline steps**, add the skill ID to **`tier1ExplicitToolIDs`** in `slack-orchestrator/internal/routing/tools.go`. Keep the comment in that file aligned with `Skills[].ID`.
+- If users should be able to **name the skill explicitly** (e.g. “read skills”, “read-skills”) or use it in **pipeline steps**, add the skill ID to **`tier1PatternEntries`** in `slack-orchestrator/internal/routing/tools.go` (canonical ids plus legacy `write-*` patterns when applicable). Keep the comment in that file aligned with `Skills[].ID`.
 - Tier policy: **`bimross-orchestrator-routing-tiers.mdc`**, **`slack-deterministic-tool-routing-contract.mdc`**.
 
 ## 3. Employee-factory runtime
@@ -32,12 +32,12 @@ Use this when adding a **canonical skill ID** (e.g. `read-skills`, `write-email`
 - **`internal/config/assigned_skills.go`** legacy list for Joanne/Garth when extending defaults.
 - Tests: `internal/slackbot` route tests + catalog fixtures in `capability_gate_test.go` (`testDefaultCapabilityCatalog`).
 
-## 4. Read vs write UX (prefix contract)
+## 4. Read vs create UX (prefix contract)
 
 - **`read-*`:** execute **immediately** when fired (no Confirm/Cancel for that tool).
-- **`write-*`:** default **Confirm/Cancel** (or established write-stack pattern) before side effects.
+- **`create-*`:** default **Confirm/Cancel** (or established write-stack pattern) before side effects.
 
-Details: **`bimross-slack-skill-read-write-pattern.mdc`**.
+Details: **`bimross-slack-skill-read-create-pattern.mdc`**.
 
 ## 5. Docs
 

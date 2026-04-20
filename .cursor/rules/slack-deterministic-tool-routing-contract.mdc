@@ -22,7 +22,7 @@ Keep tool behavior fast, reliable, and explainable:
 
 ## Deterministic-first dispatch (required)
 
-- For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.
+- For direct tool intents (for example `read-twitter`, `create-email`, `create-doc`, `read-slack`, `create-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.
 - In **threads without** a squad `@mention`, only the **orchestrator-targeted** pod for that turn runs capability routing; the capability router LLM may classify `tool_intent: none` so broad keyword matches (for example “onboarding”) do not steal the thread from normal `handleThreadMessage` replies.
 - When **thin deterministic paths** (Tier-1-style explicit naming, small catalog-alias sets) **do not** match, **capability router LLM** (`RouterCapabilityIntentLLM` in `employee-factory`) is the **preferred scalable layer** for NL→tool intent—**not** an ever-growing worker keyword matrix. **One structured router call per eligible turn** is an acceptable product cost for dynamic routing.
 - LLM intent classification is also used for observability and ambiguity diagnostics. It **must not override** a **clear deterministic direct intent** that already matched **except** the thread-owner LLM `none` override above (do not fight a confirmed keyword+alias match with a conflicting model guess).

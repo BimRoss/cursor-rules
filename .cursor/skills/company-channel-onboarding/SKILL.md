@@ -7,8 +7,8 @@ description: Use when Joanne is onboarding a new company Slack channel or when t
 
 ## Runtime (shipped)
 
-- **Create channel** (`write-slack`): confirm-first; invites **author + `@mentions` in the message + `CHAT_ALLOWED_USER_ID` (CEO) when set**. Then an **internal Redis queue** drives a Joanne **consumer** that posts **welcome + path question** in the **new channel** (not in `#humans`).
-- **Human replies** in that channel with *new* / *existing* / *ideate* (natural language variants); Joanne branches into fixed guidance. **Ideate** may **auto-invite Tim** when `ONBOARDING_TIM_SLACK_USER_ID` / `TIM_SLACK_BOT_ID` / multiagent `tim` is configured—gated by `joanne-write-slack`, logged as `intent=onboarding_invite_tim`.
+- **Create channel** (`create-slack`): confirm-first; invites **author + `@mentions` in the message + `CHAT_ALLOWED_USER_ID` (CEO) when set**. Then an **internal Redis queue** drives a Joanne **consumer** that posts **welcome + path question** in the **new channel** (not in `#humans`).
+- **Human replies** in that channel with *new* / *existing* / *ideate* (natural language variants); Joanne branches into fixed guidance. **Ideate** may **auto-invite Tim** when `ONBOARDING_TIM_SLACK_USER_ID` / `TIM_SLACK_BOT_ID` / multiagent `tim` is configured—gated by `joanne-create-slack`, logged as `intent=onboarding_invite_tim`.
 - **Do not conflate** with the hourly **channel-knowledge** digest job (different Redis keys and purpose).
 
 ## When to apply (doctrine / assistant)
