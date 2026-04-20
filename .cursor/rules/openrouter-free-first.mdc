@@ -8,7 +8,7 @@ alwaysApply: false
 
 When integrating or changing OpenRouter (or any LLM API) usage:
 
-1. **Default to a model that works** – Sentiment/discovery use structure/tool extraction; default is `nvidia/nemotron-3-super-120b-a12b:free` (free, slower; timeouts tuned). Paid/faster: `google/gemini-2.0-flash-001` or `google/gemini-2.0-flash-exp:free`. Override defaults via `OPENROUTER_MODEL` and your project’s model notes.
+1. **Default to a model that works** – Sentiment/discovery use structure/tool extraction; default is `nvidia/nemotron-3-super-120b-a12b:free` (free, slower; timeouts tuned). Paid/faster default for product paths (employee-factory, thread-pilot): `google/gemini-3-flash-preview`. Override via `LLM_MODEL` / `OPENROUTER_MODEL` and your project’s model notes.
 2. **Document the default** – In code, set the default model to the free one and allow override via env (e.g. `OPENROUTER_MODEL`) for overrides when needed.
 3. **Consistency** – If the rest of the repo already uses a free model for a given use case, new features (e.g. x-post summarizer) should use the same default unless specified otherwise.
 

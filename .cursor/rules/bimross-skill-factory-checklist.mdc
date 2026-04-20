@@ -1,7 +1,5 @@
 ---
-description: >-
-  Checklist when adding a new BimRoss Slack catalog skill: orchestrator contract,
-  Tier-1 tool IDs, employee-factory routes, read/write UX, and links to routing rules.
+description: "Checklist when adding a new BimRoss Slack catalog skill: orchestrator contract, Tier-1 tool IDs, employee-factory routes, read/write UX, and links to routing rules."
 globs: "**/slack-orchestrator/**,**/employee-factory/**,**/makeacompany-ai/**"
 alwaysApply: false
 reviewBy: "2027-04-01"

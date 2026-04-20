@@ -1,8 +1,5 @@
 ---
-description: >-
-  Apply when adding or editing MakeACompany capability skills, slack-orchestrator
-  capability_contract (or employee-factory Slack runtime tooling)—read-* vs
-  write-* skill IDs define the default UX contract (immediate vs confirm).
+description: "Apply when adding or editing MakeACompany capability skills, slack-orchestrator capability_contract (or employee-factory Slack runtime tooling)—read-* vs write-* skill IDs define the default UX contract (immediate vs confirm)."
 alwaysApply: true
 reviewBy: "2027-04-01"
 ---
