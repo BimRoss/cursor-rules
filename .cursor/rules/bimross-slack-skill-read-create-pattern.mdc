@@ -1,10 +1,10 @@
 ---
-description: "Apply when adding or editing MakeACompany capability skills, slack-orchestrator capability_contract (or employee-factory Slack runtime tooling)—read-* vs create-* skill IDs define the default UX contract (immediate vs confirm)."
+description: "Apply when adding or editing MakeACompany capability skills, slack-orchestrator capability_contract (or employee-factory Slack runtime tooling)—read-* vs mutating prefixes (create/update/delete) define the default UX contract (immediate vs confirm)."
 alwaysApply: true
 reviewBy: "2027-04-01"
 ---
 
-# BimRoss Slack skill IDs: `read-*` vs `create-*`
+# BimRoss Slack skill IDs: `read-*` vs mutating prefixes
 
 MakeACompany and BimRoss use **skill IDs** from the **slack-orchestrator** capability contract (`internal/inbound/capability_contract.go`; embedded on NATS dispatch and exported via `GET /debug/capability-catalog`). **`makeacompany-ai`** may mirror the same JSON into Redis for `/skills` / `/employees`; **`employee-factory`** consumes the inlined contract on each message. The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
 
@@ -13,7 +13,7 @@ MakeACompany and BimRoss use **skill IDs** from the **slack-orchestrator** capab
 | Prefix   | Meaning (default) | Slack UX expectation |
 |----------|-------------------|----------------------|
 | **`read-*`** | Observational / non-mutating from the user’s perspective (list, search, fetch, read history) | **Run immediately** after a successful parse—no Confirm/Cancel step for that tool. |
-| **`create-*`** | Mutates external or durable state (create channel, invite, send email, publish doc) | **Confirm before run** (explicit Confirm/Cancel or equivalent), unless a documented product exception exists. |
+| **`create-*`**, **`update-*`**, **`delete-*`** | Mutates external or durable state (create channel, invite, send email, publish doc, edit, destructive actions) | **Confirm before run** (explicit Confirm/Cancel or equivalent), unless a documented product exception exists. |
 
 Legacy catalog skill IDs **`write-*`** are normalized to **`create-*`** at runtime (and Tier-1 routing accepts both explicit phrasings where configured).
 
@@ -24,20 +24,21 @@ Legacy catalog skill IDs **`write-*`** are normalized to **`create-*`** at runti
 
 ## Runtime (`employee-factory`)
 
-- There is **no** single global interpreter that reads `read-` / `create-` from the ID string and enforces UX automatically.
-- New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `create-*` paths queue + confirm (or the established write-stack pattern for that vertical, e.g. Joanne email/docs).
+- There is **no** single global interpreter that reads prefixes from the ID string and enforces UX automatically. Helpers such as **`IsMutatingSkillPrefix`** (`mutating_skill_prefix.go`) document defaults only.
+- New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; mutating prefixes queue + confirm (or the established write-stack pattern for that vertical, e.g. Joanne email/docs).
+- **Capability router LLM** (`capability_intent_llm.go`): `tool_intent` must be a **canonical skill ID** from the schema enum (built from assigned skills ∩ `capabilityIntentCatalog`), or `none`. Legacy router strings still normalize for older prompts.
 - If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
 
 ## Catalog (Joanne + Garth)
 
-Canonical skill IDs in **slack-orchestrator** `DefaultCapabilityContractV1` (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync). Full checklist: **`bimross-skill-factory-checklist.mdc`**.
+Canonical skill IDs in **slack-orchestrator** `DefaultCapabilityContractV1` (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync). Full checklist: **`bimross-skill-factory-checklist.mdc`**. Parity tests: `employee-factory/internal/slackbot/capability_contract_sync_test.go` and `slack-orchestrator/internal/inbound/capability_contract_sync_test.go`.
 
 | Employee | Skill IDs |
 |----------|-----------|
 | **joanne** | `read-company`, `read-skills`, `create-company`, `create-doc`, `create-email` |
 | **garth** | `read-trends`, `read-twitter` |
 
-- **`create-company` / `joanne-create-company`:** company-channel provisioning, onboarding, create channel, invite—confirm before writes. Natural-language parsing lives in `employee-factory/internal/slackbot/joanne_slack.go` (`parseJoanneSlackAction`, **`tryHandleJoanneWriteCompany`**).
+- **`create-company` / `joanne-create-company`:** company-channel provisioning, onboarding, create channel, invite—confirm before writes. Natural-language parsing lives in `employee-factory/internal/slackbot/company_slack_parse.go` (`parseCompanySlackAction`, **`WriteSkill.TryHandleWriteCompany`**).
 - **`read-company`:** company digest from cached context—run immediately after successful parse when applicable.
 - **`read-skills` / `joanne-read-skills`:** squad capability outline from the runtime catalog—run immediately (no Confirm/Cancel).
 - **Garth** `read-twitter` / `read-trends`:** search vs trend list; keep routing distinct.

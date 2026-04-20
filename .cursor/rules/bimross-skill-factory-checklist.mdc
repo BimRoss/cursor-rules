@@ -17,7 +17,8 @@ Use this when adding a **canonical skill ID** (e.g. `read-skills`, `create-email
 
 ## 1. Contract source of truth
 
-- Add the skill to **`slack-orchestrator`** `DefaultCapabilityContractV1` in `internal/inbound/capability_contract.go` (`Skills[]` + `EmployeeSkillIDs`).
+- Add the skill to **`slack-orchestrator`** `DefaultCapabilityContractV1` in `internal/inbound/capability_contract.go` (`Skills[]` + `EmployeeSkillIDs`). Helpers: `internal/inbound/skill_ids.go` (`DefaultCapabilityContractSkillIDs`) avoid duplicating ID lists in tests.
+- Update **`employee-factory`** `internal/skillcontract/skillcontract.go` (`CanonicalDefaultSkillIDs`) in the same PR so worker parity tests keep passing.
 - Mirror the same shape in **`makeacompany-ai`** `defaultCapabilityCatalog()` (`backend/internal/app/catalog.go`) and update **`src/data/admin/skills-snapshot.json`** if that snapshot is committed.
 
 ## 2. Orchestrator Tier 1 (explicit tool naming / pipelines)
@@ -27,17 +28,21 @@ Use this when adding a **canonical skill ID** (e.g. `read-skills`, `create-email
 
 ## 3. Employee-factory runtime
 
-- Register an **`advancedCapabilityRoute`** in `internal/slackbot/skill_routes_*.go` with `SkillID`, `RuntimeTool`, `OwnerHint` (`skill_owner_hint.go`), and `Detect`/`Handle`.
-- Add **`capabilityIntent*`** wiring in `capability_mismatch.go` + **`capability_intent_llm.go`** enum if the router LLM should recognize the tool.
+- Register an **`advancedCapabilityRoute`** in `internal/slackbot/skill_routes_table.go` with `SkillID`, `RuntimeTool`, `OwnerHint` (`skill_owner_hint.go`), and `Detect`/`Handle`.
+- Add **`capabilityIntent*`** wiring in `capability_mismatch.go` (`capabilityIntentCatalog`) + ensure **`normalizeRouterToolIntent`** / dynamic **`capabilityRouterIntentSchema`** on `Bot` include the new skill ID when the router LLM should recognize the tool.
 - **`internal/config/assigned_skills.go`** legacy list for Joanne/Garth when extending defaults.
-- Tests: `internal/slackbot` route tests + catalog fixtures in `capability_gate_test.go` (`testDefaultCapabilityCatalog`).
+- Tests: `internal/slackbot` route tests + catalog fixtures in `capability_gate_test.go` (`testDefaultCapabilityCatalog`) + `capability_routes_sync_test.go` (route + `capabilityIntentCatalog` coverage vs `skillcontract`). Run **`scripts/check_skill_surface.sh`** in employee-factory and slack-orchestrator after changes.
 
-## 4. Read vs create UX (prefix contract)
+## 4. Read vs mutating UX (prefix contract)
 
 - **`read-*`:** execute **immediately** when fired (no Confirm/Cancel for that tool).
-- **`create-*`:** default **Confirm/Cancel** (or established write-stack pattern) before side effects.
+- **`create-*`**, **`update-*`**, **`delete-*`:** default **Confirm/Cancel** (or established write-stack pattern) before side effects.
 
 Details: **`bimross-slack-skill-read-create-pattern.mdc`**.
+
+## Skill chaining
+
+- Orchestrator **`PipelineStep`** / **`Decision`** (`slack-orchestrator/internal/routing/pipeline.go`, `decide.go`); worker mirror `orchestratorevent.PipelineStep` (`employee-factory/internal/orchestratorevent/v1.go`); **`pipelinectx`** await (`employee-factory/internal/pipelinectx/pipelinectx.go`). Keep pipeline **tool_id** values aligned with canonical skill IDs.
 
 ## 5. Docs
 
