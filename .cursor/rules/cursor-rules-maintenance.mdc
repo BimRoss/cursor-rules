@@ -11,6 +11,8 @@ Treat **`.cursor/rules/`** (and related skills under **`.cursor/skills/`** when 
 
 **Where to put a new rule:** company-wide BimRoss doctrine → **`cursor-rules`** repo; **repo-only** quirks → that repo’s **`.cursor/rules/`**—see **`bimross-workspace-repo-rule-layering.mdc`**.
 
+**New Slack catalog skills (BimRoss):** follow **`bimross-skill-factory-checklist.mdc`** so **slack-orchestrator** contracts, **Tier-1** `tier1ExplicitToolIDs`, and **employee-factory** routes stay aligned—do not add skills in only one repo.
+
 ## Default behavior
 
 - When you discover a **repeated mistake**, **stable convention**, **repo-specific gotcha**, or **user preference** that should stick: **capture it in a rule** (new file or extend an existing one) instead of relying on chat memory.

@@ -29,17 +29,18 @@ MakeACompany and BimRoss use **skill IDs** from the **slack-orchestrator** capab
 - New skills: implement handlers so **behavior matches the prefix**—`read-*` paths execute right away; `write-*` paths queue + confirm (or the established pattern for that vertical, e.g. Joanne email/docs).
 - If a skill must break the prefix (rare), document **why** in the PR and in the skill description.
 
-## Six-skill catalog (Joanne + Garth)
+## Catalog (Joanne + Garth)
 
-Canonical skill IDs in **slack-orchestrator** `DefaultCapabilityContractV1` (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync):
+Canonical skill IDs in **slack-orchestrator** `DefaultCapabilityContractV1` (keep **`makeacompany-ai`** default catalog and **`employee-factory`** routes in sync). Full checklist: **`bimross-skill-factory-checklist.mdc`**.
 
 | Employee | Skill IDs |
 |----------|-----------|
-| **joanne** | `read-company`, `write-company`, `write-doc`, `write-email` |
+| **joanne** | `read-company`, `read-skills`, `write-company`, `write-doc`, `write-email` |
 | **garth** | `read-trends`, `read-twitter` |
 
 - **`write-company` / `joanne-write-company`:** company-channel provisioning, onboarding, create channel, invite—confirm before writes. Natural-language parsing lives in `employee-factory/internal/slackbot/joanne_slack.go` (`parseJoanneSlackAction`, **`tryHandleJoanneWriteCompany`**).
 - **`read-company`:** company digest from cached context—run immediately after successful parse when applicable.
+- **`read-skills` / `joanne-read-skills`:** squad capability outline from the runtime catalog—run immediately (no Confirm/Cancel).
 - **Garth** `read-twitter` / `read-trends`:** search vs trend list; keep routing distinct.
 
 There is **no** separate catalog skill for Slack workspace settings, listing all channels, or reading arbitrary channel history—those are out of scope for the trimmed admin/runtime surface unless re-added deliberately everywhere above.

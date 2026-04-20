@@ -47,6 +47,8 @@ Reserved for a **separate** path (small model, embeddings, or LLM) that outputs 
 
 Orchestrator **`tool_id`** is **dispatch + observability**. **`employee-factory`** still enforces **assigned skills**, owner hints, and thread rules — see **`slack-deterministic-tool-routing-contract.mdc`**. A **`KindTool`** decision does not mean every targeted pod executes that runtime tool.
 
+**Paraphrase and fuzzy intent** should **not** be solved by stuffing **`tools.go`** with synonyms. At the worker, prefer a **small** deterministic surface (explicit names + catalog aliases) plus the **capability router LLM** for scalable NL→`tool_intent` when Tier 1 did not fire—see **`slack-deterministic-tool-routing-contract.mdc`** (“Worker: keep keyword matching minimal”) and **`bimross-skill-factory-checklist.mdc`**. Until a dedicated orchestrator Tier-2 exists, that router LLM is the practical Tier-2-like layer.
+
 ## Tests
 
 - **`internal/routing/tools_test.go`** — Tier 1 positive/negative cases (explicit name vs “onboard” / keyword search).

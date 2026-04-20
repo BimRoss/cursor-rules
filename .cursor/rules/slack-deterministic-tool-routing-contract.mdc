@@ -24,8 +24,13 @@ Keep tool behavior fast, reliable, and explainable:
 
 - For direct tool intents (for example `read-twitter`, `write-email`, `write-doc`, `read-slack`, `write-slack`), deterministic routing is authoritative on **channels** and when a thread message includes an explicit squad `@mention`.
 - In **threads without** a squad `@mention`, only the **orchestrator-targeted** pod for that turn runs capability routing; the capability router LLM may classify `tool_intent: none` so broad keyword matches (for example “onboarding”) do not steal the thread from normal `handleThreadMessage` replies.
-- LLM intent classification may be used for observability and ambiguity diagnostics, but must not suppress deterministic direct intent execution **except** that thread-owner LLM `none` override above.
-- LLM must not introduce new direct tool dispatch decisions when deterministic detection does not match.
+- When **thin deterministic paths** (Tier-1-style explicit naming, small catalog-alias sets) **do not** match, **capability router LLM** (`RouterCapabilityIntentLLM` in `employee-factory`) is the **preferred scalable layer** for NL→tool intent—**not** an ever-growing worker keyword matrix. **One structured router call per eligible turn** is an acceptable product cost for dynamic routing.
+- LLM intent classification is also used for observability and ambiguity diagnostics. It **must not override** a **clear deterministic direct intent** that already matched **except** the thread-owner LLM `none` override above (do not fight a confirmed keyword+alias match with a conflicting model guess).
+
+## Worker: keep keyword matching minimal (required)
+
+- Do **not** expand `capability_mismatch.go` with large synonym lists to mimic the router LLM. Prefer **catalog descriptions**, **Tier-1 explicit invocations**, and **router LLM** for paraphrase.
+- Adding a new skill should **not** default to “paste 20 `containsAny` phrases.” Invest in **tool_intent** enum + prompt slice in **`capability_intent_llm.go`** when natural language variance is high.
 
 ## Thread targeting contract (required)
 
@@ -49,7 +54,7 @@ Return explicit typed failure replies with stable tags when the router **cannot*
 
 When a route matches by intent but this runtime does **not** have that skill assigned, **do not** post a user-visible error (`runtime_tool_not_assigned` is log-only); **fall through** so the same agent answers with a normal in-context plaintext message (`handleThreadMessage` / channel routing).
 
-When routing selects a tool route but the route **Handle** returns false without posting (parse miss, guard, or “not handled yet”), the capability router **does not** emit a synthetic user error. It **falls through** (`handler_fallthrough` in logs) so the normal pipeline continues: capability desk → unsupported-capability → `handleThreadMessage` (threads) or channel multiagent / broadcast routing (roots). That preserves “try tool first, then general reply in thread” for @mentions and threads.
+When routing selects a tool route but the route **Handle** returns false without posting (parse miss, guard, or “not handled yet”), the capability router **does not** emit a synthetic user error. It **falls through** (`handler_fallthrough` in logs) so the normal pipeline continues: unsupported-capability → `handleThreadMessage` (threads) or channel multiagent / broadcast routing (roots). That preserves “try tool first, then general reply in thread” for @mentions and threads.
 
 In threads without an explicit squad mention, capability routing may **skip** without posting so the normal thread LLM path can answer; that is not “generic chat” fallback after a committed tool execution—it is deferring misclassified chit-chat.
 

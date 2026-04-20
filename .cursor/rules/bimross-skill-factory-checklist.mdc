@@ -1,0 +1,53 @@
+---
+description: >-
+  Checklist when adding a new BimRoss Slack catalog skill: orchestrator contract,
+  Tier-1 tool IDs, employee-factory routes, read/write UX, and links to routing rules.
+globs: "**/slack-orchestrator/**,**/employee-factory/**,**/makeacompany-ai/**"
+alwaysApply: false
+reviewBy: "2027-04-01"
+---
+
+# BimRoss skill factory checklist (new catalog skills)
+
+Use this when adding a **canonical skill ID** (e.g. `read-skills`, `write-email`) that appears in the squad capability matrix and Slack runtime.
+
+## Routing philosophy (keywords vs LLM)
+
+- **Minimize new worker keyword lists** (`containsAny`, long `matchesIntentAliases` branches). They do not scale; every new phrase becomes maintenance debt.
+- **Semi-desired LLM path:** `employee-factory` **capability router LLM** (`RouterCapabilityIntentLLM`, structured `tool_intent` in `capability_intent_llm.go`) is the right place for **paraphrase and intent** when Tier-1 explicit names and thin catalog aliases are not enough. Treat **one router LLM call** per eligible turn as a normal cost for **dynamic, scalable routing**—not a failure mode.
+- **Orchestrator Tier 1** stays **explicit skill ids only** (`tools.go`); do not smuggle fuzzy synonyms into Tier 1. Fuzzy meaning belongs in the worker router LLM or future Tier-2 orchestrator work—not growing `tools.go` keyword lists.
+
+## 1. Contract source of truth
+
+- Add the skill to **`slack-orchestrator`** `DefaultCapabilityContractV1` in `internal/inbound/capability_contract.go` (`Skills[]` + `EmployeeSkillIDs`).
+- Mirror the same shape in **`makeacompany-ai`** `defaultCapabilityCatalog()` (`backend/internal/app/catalog.go`) and update **`src/data/admin/skills-snapshot.json`** if that snapshot is committed.
+
+## 2. Orchestrator Tier 1 (explicit tool naming / pipelines)
+
+- If users should be able to **name the skill explicitly** (e.g. “read skills”, “read-skills”) or use it in **pipeline steps**, add the skill ID to **`tier1ExplicitToolIDs`** in `slack-orchestrator/internal/routing/tools.go`. Keep the comment in that file aligned with `Skills[].ID`.
+- Tier policy: **`bimross-orchestrator-routing-tiers.mdc`**, **`slack-deterministic-tool-routing-contract.mdc`**.
+
+## 3. Employee-factory runtime
+
+- Register an **`advancedCapabilityRoute`** in `internal/slackbot/skill_routes_*.go` with `SkillID`, `RuntimeTool`, `OwnerHint` (`skill_owner_hint.go`), and `Detect`/`Handle`.
+- Add **`capabilityIntent*`** wiring in `capability_mismatch.go` + **`capability_intent_llm.go`** enum if the router LLM should recognize the tool.
+- **`internal/config/assigned_skills.go`** legacy list for Joanne/Garth when extending defaults.
+- Tests: `internal/slackbot` route tests + catalog fixtures in `capability_gate_test.go` (`testDefaultCapabilityCatalog`).
+
+## 4. Read vs write UX (prefix contract)
+
+- **`read-*`:** execute **immediately** when fired (no Confirm/Cancel for that tool).
+- **`write-*`:** default **Confirm/Cancel** (or established write-stack pattern) before side effects.
+
+Details: **`bimross-slack-skill-read-write-pattern.mdc`**.
+
+## 5. Docs
+
+- **`employee-factory/docs/skill-runtime-architecture.md`** — file layout, orchestrator split, and **routing philosophy** (minimal keywords, capability router LLM).
+- Prefer **catalog copy + router LLM** over expanding substring gates. Remaining NL gates are **phased debt**.
+
+## Related rules
+
+- **`cursor-rules-maintenance.mdc`** — where to put new rules.
+- **`rules-lifecycle-reviewby.mdc`** — `reviewBy` for skill/routing matrices that drift with contracts.
+- **`skill-runtime-architecture.md`** (employee-factory repo).

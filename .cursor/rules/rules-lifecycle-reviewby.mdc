@@ -25,3 +25,4 @@ Use `reviewBy` frontmatter metadata for rules that can become stale as tooling o
 
 - Do not add `reviewBy` to timeless foundational rules unless they have known drift risk.
 - Prioritize `reviewBy` for environment-specific or repo-specific operational guidance.
+- Good candidates: **`bimross-skill-factory-checklist.mdc`**, **`bimross-slack-skill-read-write-pattern.mdc`**, **`slack-deterministic-tool-routing-contract.mdc`**, **`bimross-orchestrator-routing-tiers.mdc`** — skill matrices and routing tiers change when contracts or `tier1ExplicitToolIDs` move.
