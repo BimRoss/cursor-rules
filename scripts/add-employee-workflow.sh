@@ -223,7 +223,6 @@ Manual follow-ups:
   2) **Slack app** — Create/install for ${display_name} and capture:
      - ${slug^^}_SLACK_APP_TOKEN
      - ${slug^^}_SLACK_BOT_TOKEN
-     - ${slug^^}_SLACK_USER_TOKEN
      - ${slug^^}_SLACK_BOT_ID
   3) Add runtime mappings in employee-factory config/gitops if this employee should join multiagent order.
   4) Update employee-specific tool/env validation in employee-factory when adding new runtime capabilities.
