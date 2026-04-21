@@ -10,7 +10,7 @@ description: Use when Joanne is onboarding a new company Slack channel or when t
 - **Skill:** **`create-company`** / runtime tool **`joanne-create-company`** (confirm-first Slack write). Catalog requires **`name`**; **`founders`** is optional (defaults: message author; add others with `@mention`).
 - **Invites:** **Author + `@mentions`** in the create request (Joanne bot mention stripped). With multiple candidates, a **Cogito structured extract** may narrow cofounders vs FYI pings; output is always limited to IDs present in the message. The channel is **created by the bot**, so **Joanne is already a member**; batch invites add human founders.
 - After create, an **internal Redis queue** drives a Joanne **consumer** that posts **welcome + three questions** in the **new channel** (not in `#humans`).
-- **Human replies** in that channel **or in a thread** (e.g. under the welcome message). They can answer with **1 / 2 / 3** or natural language (**existing**, **new**, **idea**, and common variants). Joanne branches into fixed guidance.
+- **Human replies** at **channel root** or **in a thread** (e.g. under the welcome message). slack-orchestrator routes onboarding-shaped plain messages (1/2/3 and the same keywords) to **Joanne** so they are not lost to random plain-message assignment. They can answer with **1 / 2 / 3** or natural language (**existing**, **new**, **idea**, and common variants). Joanne branches into fixed guidance.
 - **Ideation (3):** Runtime may **auto-invite Tim** when `ONBOARDING_TIM_SLACK_USER_ID` / `TIM_SLACK_BOT_ID` / multiagent `tim` resolves—gated by `joanne-create-company`, logged as `intent=onboarding_invite_tim`.
 - **Do not conflate** with the hourly **channel-knowledge** digest job (different Redis keys and purpose).
 
