@@ -9,7 +9,8 @@ reviewBy: "2026-12-31"
 ## Convention
 
 - **Tracked:** **`.env.example`** at the **repository root** (unless the repo genuinely has no env-driven behavior—e.g. pure static docs).
-- **Gitignored:** **`.env`** (and common variants like **`.env.local`**) containing real secrets; never commit keys, tokens, or kubeconfigs.
+- **Gitignored:** **`.env`**, **`.env.dev`**, **`.env.prod`** (and common variants like **`.env.local`**) containing real secrets; never commit keys, tokens, or kubeconfigs.
+- **Dual environments (dev + prod):** Repos that run both **local/test** and **production** should use **`.env.dev`** and **`.env.prod`** (both gitignored), with **`.env.example`** as the committed template. **`./scripts/use-env.sh dev|prod`** symlinks **`.env`** → **`.env.dev`** or **`.env.prod`** so `docker compose`, `godotenv`, and tools that only read **`.env`** pick up the right mode—same pattern as **employee-factory**, **slack-orchestrator**, **makeacompany-ai**, and **stripe-factory**. Cluster/runtime pushes (e.g. **`scripts/update-rancher-secrets.sh`**) should source **`.env.prod`** only (makeacompany-ai defaults to **`.env.prod`** when that file exists).
 - **Purpose:** Operators and agents see **one obvious place** for “what variables exist” when the repo is open in Cursor or the BimRoss multi-root workspace—without opening Kubernetes or GitHub first.
 
 ## What to put in `.env.example`
