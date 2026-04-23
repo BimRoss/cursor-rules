@@ -11,7 +11,7 @@ description: Use when Joanne is onboarding a new company Slack channel or when t
 - **Invites:** **Author + `@mentions`** in the create request (Joanne bot mention stripped). With multiple candidates, a **Cogito structured extract** may narrow cofounders vs FYI pings; output is always limited to IDs present in the message. The channel is **created by the bot**, so **Joanne is already a member**; batch invites add human founders.
 - After create, an **internal Redis queue** drives a Joanne **consumer** that posts **(1)** welcome to the channel name, company-workspace line, squad intro (`<!here>`), and a `-----` separator, then **(2)** “Tell me,” with **@mentions** for human founders, the three numbered path prompts, and an optional **manage your company** link to `/{channelId}` on the MakeACompany web origin—in the **new channel** (not in `#humans`). That is the end of Joanne’s scripted onboarding; **no** Tim auto-invite and **no** follow-up bot messages from those numbered choices.
 - **Slack-orchestrator** uses the same **plain-message** routing as any other channel message (`pickPlainResponder` / thread handoff), so whatever the user types next is handled by the normal architecture—not a special Joanne onboarding path.
-- **Do not conflate** with the hourly **channel-knowledge** digest job (different Redis keys and purpose).
+- After the scripted welcome + “Tell me …” messages, Joanne **writes an initial channel-knowledge digest** to Redis (same markdown key as the hourly **channel-knowledge** refresh) so the founder portal transcript is not empty on first open; production still relies on the hourly CronJob (orchestrator token) to refresh all channels.
 
 ## When to apply (doctrine / assistant)
 
