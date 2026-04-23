@@ -51,5 +51,5 @@ On a **channel-root** message (not in a thread), capability **tools** run only i
 
 ## Related docs
 
-- **`slack-factory`** repo: [`README.md`](https://github.com/BimRoss/slack-factory/blob/main/README.md) — skills catalog section.
+- **Skill / capability catalog:** [`slack-orchestrator`](https://github.com/BimRoss/slack-orchestrator) — `internal/inbound/capability_contract.go`, `GET /debug/capability-catalog`. **`slack-factory`** holds Slack **app** manifests (`manifests/*/app-manifest.json`) only, not the capability catalog.
 - Deterministic routing in Slack: **`slack-deterministic-tool-routing-contract.mdc`** (direct tool intents; separate from confirm UX).
