@@ -1,0 +1,57 @@
+---
+description: >-
+  When adding or changing mutating Slack skills (especially create-*): required vs optional
+  catalog params, defaults, gather prompts, and confirm-first UX must follow one pipeline;
+  avoid create-company-style fallthrough where thread corrections skip confirmation blocks.
+alwaysApply: true
+reviewBy: "2027-04-01"
+---
+
+# BimRoss: create-* skills — gather, defaults, and confirmation
+
+Use this when authoring **capability skills** that **mutate** state (`create-*`, `update-*`, `delete-*` where product uses confirm UX), especially in **employee-factory** (`internal/skills/*`, `internal/slackbot/*`) with **slack-orchestrator** `capability_contract.go` / **makeacompany-ai** catalog mirrors.
+
+## One pipeline (match create-email / create-doc)
+
+Order handlers so **structured state always wins over the LLM** for the same thread anchor:
+
+1. **Confirm / cancel** — If the user text is an explicit confirm or cancel, resolve pending and execute or clear (shared patterns: `write_flow_confirmation.go`, per-skill confirmation handlers).
+2. **Gather / merge follow-ups** — If required catalog fields are missing, or the user is **refining** fields before confirm, apply **deterministic merge** (draft continuation, slug follow-up, structured extract). Do this **before** any path that calls the capability LLM for open-ended replies.
+3. **Preview + blocks** — Once all **required** fields are satisfied (after applying **defaults** for optional gaps), set **pending** state and post **the same Confirm/Cancel block pattern** as other write skills. Do not pivot to generic “what’s next?” copy while creation is still in flight unless the user explicitly cancels or confirms success.
+4. **Execute** — Only after confirm.
+
+**Reference implementations:** `internal/skills/email/skill.go` (`TryHandleEmailDraftContinuation` before `ResolveEmailAction`), `internal/skills/docs/skill.go` (`TryHandleDocOptionalDetailsRequest`, `TryHandleDocDraftContinuation` before LLM draft). Contrast: `internal/skills/company/write_skill.go` + `company_slack_parse.go` for **`create-company`** (simpler parser; easier to fall through).
+
+## Catalog alignment
+
+For each skill, keep **slack-orchestrator** `DefaultCapabilityContractV1`, **employee-factory** `capability_catalog.go` / gate tests, and **makeacompany-ai** defaults in sync:
+
+- **`requiredParams`** — Must be gathered (or inferable from safe defaults) before preview.
+- **`optionalParams`** — Document in catalog; runtime may use `optionalFieldsHintForSkill` / `formatMissingRequiredPrompt` (`skill_continuation.go`) for gather copy where applicable.
+- **`paramDefaults`** — Spell out **fallback defaults** (e.g. create-company: **`founders`** defaults to **message author** + **`@mentions`**; **`name`** is the Slack channel slug / company identifier).
+
+## Defaults (create-company doctrine)
+
+- **`name` (required):** channel slug derived from user text; if ambiguous, prompt with catalog-aligned copy (`*name*` field), not a generic question.
+- **`founders` (optional):** always include **message author**; add cofounders from **`@mentions`** in the same message; dedupe user IDs in confirmation and execute paths.
+
+## Pre-confirmation edits (non-negotiable)
+
+If there is **already a pending preview** (Confirm/Cancel shown), thread messages that **correct** parameters (e.g. “name is **brothas**”, “actually call it **x**”) must either:
+
+- **Merge** into the pending action and **re-post** the confirmation summary + **same** Confirm/Cancel blocks, or  
+- **Clear** pending and return to gather — but still end in **preview + blocks**, not an open-ended assistant reply.
+
+Do **not** gate slug-only follow-up on “no pending” only (`isAwaitingCompanyChannelSlugOnly`-style), or corrections sent after the first preview will fail to parse, **`TryHandle*` returns false**, and the **LLM** may answer without blocks — the failure mode in Joanne **create-company** threads.
+
+## Parser hygiene for `name`
+
+Avoid treating natural phrases as part of the slug when they are **structural English** (e.g. “**me** and **@User** are founders” vs “company called **brothas**”). Prefer **explicit delimiters** (quoted string, `called` / `named` with a trimmed tail, `#slug`) and **roster tails** (`with`, `and <@U>`, cofounder phrases) that stop slug extraction — see `trimCompanySlackChannelNameFragment` patterns in `company_slack_parse.go` for the idea; extend similarly for new skills.
+
+## Checklist when adding a create-* skill
+
+- [ ] Handler order: confirm → gather/merge → LLM (if any).  
+- [ ] Thread continuation / Redis run state matches **skill ID** + anchor (`skill_continuation.go` patterns).  
+- [ ] Missing required → `formatMissingRequiredPrompt`-style copy with **catalog field names**.  
+- [ ] After preview: user corrections update pending and **re-show blocks**.  
+- [ ] Contract + worker + admin snapshot tests updated (`capability_contract_sync_test`, etc.).
