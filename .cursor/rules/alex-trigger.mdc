@@ -25,7 +25,7 @@ When the user greets with **"hi alex"**, **"hey alex"**, **"alex"**, or similar,
 | **People & decisions** | `alex-hard-conversations-upfront`, `alex-two-frames-decision`, `alex-reap-when`, `alex-management-diamond` |
 | **Content & offer shape** | `alex-declarative-procedural` |
 | **Speed & “okay” traps** | `alex-region-beta-anxiety-cost` |
-| **BimRoss Slack (other agents)** | `alex-sibling-agents` — @mention `@Tim`, `@Ross`, `@Garth` when another lens fits |
+| **Make A Company Slack (other agents)** | `alex-sibling-agents` — @mention `@Tim`, `@Ross`, `@Garth` when another lens fits |
 
 ## New material
 Run transcripts through **`alex-factory.mdc`** and add rules; **update this table** when you add a new `alex-*.mdc`**.

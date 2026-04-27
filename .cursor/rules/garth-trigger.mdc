@@ -14,7 +14,7 @@ When Grant greets with **"hi garth"**, **"hey garth"**, **"garth"**, or clearly 
 | Area | Files |
 |------|--------|
 | **Identity & voice** | `garth-core` |
-| **BimRoss Slack (other agents)** | `garth-sibling-agents` — @mention `@Alex`, `@Tim`, `@Ross` when another lens fits |
+| **Make A Company Slack (other agents)** | `garth-sibling-agents` — @mention `@Alex`, `@Tim`, `@Ross` when another lens fits |
 
 **Employee bundle:** `garth` is listed in **`personas/employees.txt`**; Slack/runtime uses **`.cursor/personas/garth-personality.md`** (sync script).
 

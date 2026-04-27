@@ -1,11 +1,11 @@
 ---
-description: "Checklist when adding a new BimRoss Slack catalog skill: orchestrator contract, Tier-1 tool IDs, employee-factory routes, read/write UX, and links to routing rules."
+description: "Checklist when adding a new Make A Company Slack catalog skill: orchestrator contract, Tier-1 tool IDs, employee-factory routes, read/write UX, and links to routing rules."
 globs: "**/slack-orchestrator/**,**/employee-factory/**,**/makeacompany-ai/**"
 alwaysApply: false
 reviewBy: "2027-04-01"
 ---
 
-# BimRoss skill factory checklist (new catalog skills)
+# Make A Company skill factory checklist (new catalog skills)
 
 Use this when adding a **canonical skill ID** (e.g. `read-skills`, `create-email`) that appears in the squad capability matrix and Slack runtime.
 

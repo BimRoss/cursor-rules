@@ -4,9 +4,9 @@ alwaysApply: true
 reviewBy: "2027-04-01"
 ---
 
-# BimRoss Slack skill IDs: `read-*` vs mutating prefixes
+# Make A Company Slack skill IDs: `read-*` vs mutating prefixes
 
-MakeACompany and BimRoss use **skill IDs** from the **slack-orchestrator** capability contract (`internal/inbound/capability_contract.go`; embedded on NATS dispatch and exported via `GET /debug/capability-catalog`). **`makeacompany-ai`** may mirror the same JSON into Redis for `/skills` / `/employees`; **`employee-factory`** consumes the inlined contract on each message. The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
+**Make A Company** uses **skill IDs** from the **slack-orchestrator** capability contract (`internal/inbound/capability_contract.go`; embedded on NATS dispatch and exported via `GET /debug/capability-catalog`). **`makeacompany-ai`** may mirror the same JSON into Redis for `/skills` / `/employees`; **`employee-factory`** consumes the inlined contract on each message. The **prefix** is the default contract for **Slack-side UX**, not a magic router—runtime code must still implement the behavior.
 
 ## Naming contract
 

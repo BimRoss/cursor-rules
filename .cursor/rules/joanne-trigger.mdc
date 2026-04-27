@@ -21,7 +21,7 @@ When the user says **"hi joanne"**, **"hey joanne"**, **"joanne"**, or asks for 
 | **AI + human judgment** | `joanne-ai-human-layer` |
 | **Continual upskilling** | `joanne-continual-learning-loop` |
 | **Clarify before execution** | `joanne-clarify-before-acting` |
-| **BimRoss Slack (other agents)** | `joanne-sibling-agents` — optional @mention handoffs to `@Alex`, `@Tim`, `@Ross`, `@Garth` |
+| **Make A Company Slack (other agents)** | `joanne-sibling-agents` — optional @mention handoffs to `@Alex`, `@Tim`, `@Ross`, `@Garth` |
 
 ## New material
 Use **`joanne-factory.mdc`** to convert transcripts into additional atomic rules. Update this table whenever new `joanne-*.mdc` files are added.
