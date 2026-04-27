@@ -14,13 +14,13 @@ reviewBy: "2026-09-30"
 Slack **bot user IDs** (`U…`) are **not** OAuth client IDs. They power:
 
 - Multi-agent ordering and `waitUntilSlot` matching (`internal/slackbot/multiagent.go`)
-- Outgoing `@ross` / `@tim` / `@alex` / `@garth` → `<@U…>` substitution (`internal/slackbot/slack_format.go`)
+- Outgoing `@ross` / `@tim` / `@alex` / `@garth` / `@joanne` → `<@U…>` substitution (`internal/slackbot/slack_format.go`)
 - Tests in `internal/slackbot/slack_format_test.go`
 
 ## Canonical sources (keep in lockstep)
 
 1. **GitOps / runtime env:** `bimross/rancher-admin` → `admin/apps/employee-factory/configmap.yaml`  
-   Keys: `ROSS_SLACK_BOT_ID`, `TIM_SLACK_BOT_ID`, `ALEX_SLACK_BOT_ID`, `GARTH_SLACK_BOT_ID`, `MULTIAGENT_ORDER`, optional `MULTIAGENT_BOT_USER_IDS`.
+   Keys: `ROSS_SLACK_BOT_ID`, `TIM_SLACK_BOT_ID`, `ALEX_SLACK_BOT_ID`, `GARTH_SLACK_BOT_ID`, `JOANNE_SLACK_BOT_ID`, plus `MULTIAGENT_ORDER`, `MULTIAGENT_BROADCAST_ROUNDS`, and optional `MULTIAGENT_SHUFFLE_SECRET` (same value on all pods if set); optional `MULTIAGENT_BOT_USER_IDS` when the combined roster is supplied from a Secret instead.
 
 2. **Human checklist + table:** `employee-factory/docs/slack-squad-ids.md` (same IDs, verification `kubectl` snippet).
 
