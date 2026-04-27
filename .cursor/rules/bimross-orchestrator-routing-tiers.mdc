@@ -17,6 +17,7 @@ Handled in **`Decide`** / broadcast classification **before** tool vs conversati
 - `<!channel>` / `@channel` → capped fanout, **`KindConversation`**.
 - Explicit squad **`@mention`** of bot users → mention trigger; may combine with Tier 1.
 - Plain thread follow-up uses **`ThreadPlainHandoffKey`** (last squad mention in thread) for single-target routing.
+- **Bot-authored delegation:** squad-bot posts need a real **`<@U…>`** of another squad bot to escape the orchestrator’s bot-message drop; see **slack-orchestrator** `README.md` (“Squad bot posts and cross-bot delegation”).
 
 Do not replace Tier 0 with LLM calls.
 
