@@ -978,4 +978,3 @@ Condensed from the long-form sales course. **Sales multipliers** (what happens *
 ## Hiring & incentives
 - **Hire smallest skill deficiency** (fastest ramp)—“kind” bundles many sub-skills; **compensation** mainly **recruits**; **fast feedback** (e.g. Slack tied to CRM truth) shapes behavior more than comp tweaks.
 - **Yellow leads = gold** for new reps: **trashman** takes hard calls for **free training**—**sharpen the sword** on tough leads.
-
