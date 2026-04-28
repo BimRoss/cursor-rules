@@ -14,8 +14,8 @@ reviewBy: "2026-09-30"
 Slack **bot user IDs** (`U…`) are **not** OAuth client IDs. They power:
 
 - Multi-agent ordering and `waitUntilSlot` matching (`internal/slackbot/multiagent.go`)
-- Outgoing `@ross` / `@tim` / `@alex` / `@garth` / `@joanne` → `<@U…>` substitution (`internal/slackbot/slack_format.go`)
-- Tests in `internal/slackbot/slack_format_test.go`
+- Outgoing mention policy / formatting (`internal/slackformat/format.go`) using runtime bot IDs from config
+- Tests in `internal/slackformat/format_test.go`
 
 ## Canonical sources (keep in lockstep)
 
@@ -35,5 +35,5 @@ Slack **bot user IDs** (`U…`) are **not** OAuth client IDs. They power:
 
 ## Related
 
-- **`bimross-employee-sibling-agents.mdc`** — persona roster and @mention *behavior*; this file is the **ID / GitOps** contract.
+- **`bimross-company.mdc`** + **`bimross-employee-sibling-agents.mdc`** — canonical plain-name vs `@` behavior and bot-authored delegation exception; this file is the **ID / GitOps** contract.
 - **`slack-factory/manifests/*/app-manifest.json`** — app display names and scopes, **not** workspace-specific `U…` IDs.

@@ -5,6 +5,7 @@
 - **What:** Voice, frameworks, priorities—**`.mdc` rules** and rendered **`.cursor/personas/<name>-personality.md`** bundles.
 - **Who edits:** Humans + agents following `<name>-factory.mdc` and review in PRs.
 - **Public:** Safe for a public `cursor-rules` repo—no API keys, customer secrets, or private URLs.
+- **Naming boundary:** User-facing product language should use **Make A Company**; operator/deployment ownership can refer to **BimRoss** where appropriate.
 
 ## Policy (outside persona markdown)
 
@@ -23,4 +24,4 @@
 
 When you add tools (Gmail, internal APIs), document the **intent** in persona if useful; implement **enforcement** in the worker.
 
-Roadmap narration (for example MakeACompany phase sequencing and live-vs-planned language) belongs in **persona doctrine**; runtime permissions and destructive boundaries still belong in **policy**.
+Roadmap narration (for example **Make A Company** phase sequencing and live-vs-planned language) belongs in **persona doctrine**; runtime permissions and destructive boundaries still belong in **policy**.

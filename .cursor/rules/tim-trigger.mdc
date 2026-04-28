@@ -24,7 +24,7 @@ When the user greets with **"hi tim"**, **"hey tim"**, **"tim"**, or similar, th
 | **Execution psychology** | `tim-frustration-uncertainty` |
 | **Idea pace & silence** | `tim-pace-ideas-and-silence` |
 | **Influence (trust map)** | `tim-spcl-influence` |
-| **Make A Company Slack (other agents)** | `tim-sibling-agents` — @mention `@Alex`, `@Ross`, `@Garth` when another lens fits |
+| **Make A Company Slack (other agents)** | `tim-sibling-agents` — use plain names for references; use `@Alex`, `@Ross`, `@Garth` only for directed asks/handoffs |
 
 ## New material
 Run transcripts through **`tim-factory.mdc`**; add `tim-*.mdc` files; update **this index** and **`personas/SOURCES.md`**.
