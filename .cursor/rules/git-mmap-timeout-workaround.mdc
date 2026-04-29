@@ -49,6 +49,17 @@ Verify:
 git config --local --get-regexp '^pack\.'
 ```
 
+**New clones in `Documents`:** set the same three `pack.*` keys once so the first big fetch/push is less likely to trip the driver.
+
+## iCloud + `Documents` (reducing pain outside Git)
+
+Git and **iCloud Drive “Desktop & Documents Folders”** are a bad mix: the filesystem can return **`ETIMEDOUT`** on reads, placeholder files, and long sync latency. The **`pack.*` mitigation above** helps Git; it does not fix the underlying sync model.
+
+1. **Strongest fix (recommended for heavy dev):** keep repositories **outside** iCloud—e.g. `~/Developer`, `~/src`, or `~/code`—and leave `Documents` for files that actually benefit from sync.
+2. **If code must live under iCloud `Documents`:** in **System Settings → Apple ID → iCloud → iCloud Drive → Options…**, consider turning **off** “**Desktop & Documents**” (only if you are okay with those folders no longer being synced to iCloud), *or* stop using a Documents subfolder for git and move the repo to a path that is **not** in iCloud.
+3. **“Optimize Mac Storage”:** in **System Settings → General → Storage** (or Apple ID iCloud), minimize **eviction/placeholder** behavior for folders where you run `git` daily—full local copies are more reliable for `.git/objects` than on-demand download.
+4. **Stopgap** (already in “Required behavior”): for a one-off when push still fails, push from a **`/tmp` clone** and **`git am`** / cherry-pick is still valid; prefer fixing location or iCloud for recurring repos.
+
 ## Safety constraints
 
 - Never edit global git config as part of this workaround.
