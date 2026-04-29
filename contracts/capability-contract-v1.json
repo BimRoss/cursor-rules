@@ -9,6 +9,7 @@
   ],
   "skills": [
     { "id": "create-company" },
+    { "id": "create-connect" },
     { "id": "create-doc" },
     { "id": "create-email" },
     { "id": "delete-company" },
@@ -27,6 +28,8 @@
     { "pattern_id": "write-doc", "canonical_id": "create-doc" },
     { "pattern_id": "create-company", "canonical_id": "create-company" },
     { "pattern_id": "write-company", "canonical_id": "create-company" },
+    { "pattern_id": "create-connect", "canonical_id": "create-connect" },
+    { "pattern_id": "write-connect", "canonical_id": "create-connect" },
     { "pattern_id": "delete-company", "canonical_id": "delete-company" },
     { "pattern_id": "read-company", "canonical_id": "read-company" },
     { "pattern_id": "read-internet", "canonical_id": "read-internet" },
