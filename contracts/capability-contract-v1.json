@@ -1,0 +1,46 @@
+{
+  "revision": "default",
+  "employees": [
+    { "id": "alex", "label": "Alex" },
+    { "id": "tim", "label": "Tim" },
+    { "id": "ross", "label": "Ross" },
+    { "id": "garth", "label": "Garth" },
+    { "id": "joanne", "label": "Joanne" }
+  ],
+  "skills": [
+    { "id": "create-company" },
+    { "id": "create-doc" },
+    { "id": "create-email" },
+    { "id": "delete-company" },
+    { "id": "read-company" },
+    { "id": "read-internet" },
+    { "id": "read-skills" },
+    { "id": "read-user" },
+    { "id": "read-trends" },
+    { "id": "read-twitter" },
+    { "id": "update-terms" }
+  ],
+  "tier1_aliases": [
+    { "pattern_id": "create-email", "canonical_id": "create-email" },
+    { "pattern_id": "write-email", "canonical_id": "create-email" },
+    { "pattern_id": "create-doc", "canonical_id": "create-doc" },
+    { "pattern_id": "write-doc", "canonical_id": "create-doc" },
+    { "pattern_id": "create-company", "canonical_id": "create-company" },
+    { "pattern_id": "write-company", "canonical_id": "create-company" },
+    { "pattern_id": "delete-company", "canonical_id": "delete-company" },
+    { "pattern_id": "read-company", "canonical_id": "read-company" },
+    { "pattern_id": "read-internet", "canonical_id": "read-internet" },
+    { "pattern_id": "read-google", "canonical_id": "read-internet" },
+    { "pattern_id": "read-skills", "canonical_id": "read-skills" },
+    { "pattern_id": "read-user", "canonical_id": "read-user" },
+    { "pattern_id": "read-twitter", "canonical_id": "read-twitter" },
+    { "pattern_id": "read-trends", "canonical_id": "read-trends" },
+    { "pattern_id": "update-terms", "canonical_id": "update-terms" }
+  ],
+  "thread_pin_skill_ids": [
+    "create-email",
+    "create-doc",
+    "create-company",
+    "delete-company"
+  ]
+}
