@@ -14,11 +14,12 @@
     { "id": "create-email" },
     { "id": "delete-company" },
     { "id": "read-company" },
-    { "id": "read-internet" },
+    { "id": "read-web" },
     { "id": "read-skills" },
     { "id": "read-user" },
     { "id": "read-trends" },
     { "id": "read-twitter" },
+    { "id": "update-issue" },
     { "id": "update-terms" }
   ],
   "tier1_aliases": [
@@ -32,12 +33,15 @@
     { "pattern_id": "write-connect", "canonical_id": "create-connect" },
     { "pattern_id": "delete-company", "canonical_id": "delete-company" },
     { "pattern_id": "read-company", "canonical_id": "read-company" },
-    { "pattern_id": "read-internet", "canonical_id": "read-internet" },
-    { "pattern_id": "read-google", "canonical_id": "read-internet" },
+    { "pattern_id": "read-web", "canonical_id": "read-web" },
+    { "pattern_id": "read-google", "canonical_id": "read-web" },
+    { "pattern_id": "read-internet", "canonical_id": "read-web" },
     { "pattern_id": "read-skills", "canonical_id": "read-skills" },
     { "pattern_id": "read-user", "canonical_id": "read-user" },
     { "pattern_id": "read-twitter", "canonical_id": "read-twitter" },
     { "pattern_id": "read-trends", "canonical_id": "read-trends" },
+    { "pattern_id": "update-issue", "canonical_id": "update-issue" },
+    { "pattern_id": "edit-issue", "canonical_id": "update-issue" },
     { "pattern_id": "update-terms", "canonical_id": "update-terms" }
   ],
   "thread_pin_skill_ids": [

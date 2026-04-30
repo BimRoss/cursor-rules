@@ -6,7 +6,7 @@
 |-------|----------------|----------------------|------------|-----------------|--------------------------|---------------------|
 | **Alex** | `alex-*.mdc` | `.cursor/personas/alex-personality.md` | Yes (employee-factory) | Yes | Gmail, calendar, … (policy in app) | Per-employee API keys / OAuth in secrets—not in persona |
 | **Tim** | `tim-*.mdc` | `.cursor/personas/tim-personality.md` | Planned | Planned | Same pattern | Same |
-| **Ross** | `ross-*.mdc` | `.cursor/personas/ross-personality.md` | Yes (employee-factory `EMPLOYEE_ID=ross`; **Head of Automation** persona) | Planned | Same pattern | Same |
+| **Ross** | `ross-*.mdc` | `.cursor/personas/ross-personality.md` | Yes (employee-factory `EMPLOYEE_ID=ross`; **Head of Automation** persona) | Planned | `update-issue` (GitHub issue title/body/status), plus same pattern | Same |
 | **Garth** | `garth-*.mdc` | `.cursor/personas/garth-personality.md` | Yes (employee-factory `EMPLOYEE_ID=garth`; **Head of Interns** persona) | Planned | Same pattern | Same |
 | **Joanne** | `joanne-*.mdc` | `.cursor/personas/joanne-personality.md` | Yes (employee-factory `EMPLOYEE_ID=joanne`; **Head of Executive Operations** persona) | Planned | Email + Google Docs + capability desk | Same |
 
