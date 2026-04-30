@@ -26,6 +26,10 @@ description: Update a GitHub issue by number for BimRoss, including title/body c
   - new body (optional),
   - new status label (optional; must match an available project option).
 
+## Interaction with shipped code (agents)
+
+Closing issues via merge is separate from editing metadata here: when code **completes** a ticket, commits that reach default branch should use **`Fixes`** / **`Closes`** (including **`Fixes owner/repo#n`** for cross-repo planning issues), not **`Refs`** alone — see **`bimross-ticket-issue-commit-done-workflow.mdc`**. Use this skill when the user asks to move/edit issues directly on the board.
+
 ## Update workflow
 
 1. Resolve repository and confirm issue exists.

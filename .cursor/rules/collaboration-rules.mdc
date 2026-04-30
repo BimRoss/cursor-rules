@@ -71,6 +71,8 @@ Balance speed with quality:
 
 **BimRoss repos:** default branch is **dev integration**—push finished work so Grant can review passively on GitHub; **do not tag, GitHub Release, or cut `v*`** without explicit ask. When Grant asks **deploy**, use **`bimross-deploy-tag-and-release.mdc`** (semver tag **and** readable Release). See also **`bimross-git-dev-and-releases.mdc`**.
 
+**Issues / tickets:** When implementation satisfies a GitHub issue, put a **closing keyword** in the commit (or squash merge message) that lands on default branch: **`Fixes #n`** same repo, **`Fixes owner/repo#n`** when the issue lives elsewhere (e.g. **`BimRoss/create-issue#n`**). **`Refs`** does not close the issue and will not drive **Done** on Projects that trigger on **closed**. Full checklist: **`bimross-ticket-issue-commit-done-workflow.mdc`**.
+
 1. After we're happy with code iterations:
    - Create new branch (when using PR flow), or commit to default branch if that’s the repo norm
    - Commit with clear messages

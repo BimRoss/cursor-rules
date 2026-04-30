@@ -22,6 +22,19 @@ Supported keywords (case-insensitive): **`closes`**, **`closed`**, **`close`**, 
 
 Use one footer line per issue unless multiple closures are intentional. **Squash merges**: put the keyword in the **squash commit message** so it survives the merge.
 
+### Do not use `Refs` for “done” work (critical)
+
+| Footer | Effect when merged to default branch |
+|--------|--------------------------------------|
+| **`Fixes owner/repo#n`** / **`Closes …`** | Closes the issue (and triggers Project automation that keys off **closed**). |
+| **`Refs owner/repo#n`** | Timeline link only — issue stays **open**; boards that move on **closed** stay put. |
+
+**Agent default:** If the change **completes** the ticket (acceptance criteria met, ready to ship), use **`Fixes`** or **`Closes`**, never **`Refs`** alone.
+
+**Rare exception:** Multi-phase tickets that must stay open after this commit (spike, partial PR under explicit instruction). Then **`Refs`** is acceptable **only when** the issue is intentionally left open; the **final** shipping commit to default branch must still use **`Fixes`** / **`Closes`** so the issue closes and the card can move to **Done**.
+
+Do not mix habits like “Refs for cross-repo, Fixes for same repo” — **cross-repo needs full `owner/repo#n` with a closing keyword**, same as same-repo needs `#n` with a closing keyword.
+
 Direct push to default branch and PR merge **both** count, as long as the closing commit ends up on the default branch.
 
 ## “Done” on the org Project board
@@ -37,5 +50,5 @@ If cards stay open after close, the automation is missing or keyed only to **PR 
 
 1. Resolve scope from the issue; implement in the correct **implementation repo** (not necessarily the issue repo).
 2. **`go test` / CI green** as usual before push.
-3. Final commit message includes **`Fixes …`** / **`Closes …`** with **`owner/repo#`** when cross-repo.
-4. After push: confirm closure with `gh issue view <n> --repo owner/repo --json state`.
+3. Final commit message includes **`Fixes …`** / **`Closes …`** with **`owner/repo#`** when cross-repo — **not** **`Refs`** unless the ticket is deliberately staying open after this merge.
+4. After push: confirm closure with `gh issue view <n> --repo owner/repo --json state` (expect **`CLOSED`** when the issue should be done).
