@@ -1,0 +1,41 @@
+---
+description: "Ticket-driven work: GitHub issues as source of truth, commits that close issues on merge to default branch, and Project automation so closed issues land in Done."
+globs: "*"
+alwaysApply: true
+reviewBy: "2027-04-01"
+---
+
+# Ticket → commit → closed issue → Done (GitHub)
+
+Work **often starts from a GitHub issue** (tracking ticket): paste the issue URL or `owner/repo#n`. Prefer **`gh`** to load title/body/state before implementing (`gh issue view`, `--repo` when needed).
+
+## Link commits to the issue (closes on default branch)
+
+When the implementation is ready to ship, include a **closing keyword** and the issue reference in the **commit message** (subject + body). After that commit reaches the repo’s **default branch** (`master`/`main`), GitHub **closes** the linked issue and threads the commit on the issue timeline.
+
+Supported keywords (case-insensitive): **`closes`**, **`closed`**, **`close`**, **`fixes`**, **`fixed`**, **`fix`**, **`resolves`**, **`resolved`**, **`resolve`**.
+
+| Situation | Footer line (example) |
+|-----------|------------------------|
+| Issue lives in the **same** repo as the code | `Fixes #8` |
+| Issue lives in a **different** repo (common: `create-issue`, planning repo) | `Fixes BimRoss/create-issue#8` |
+
+Use one footer line per issue unless multiple closures are intentional. **Squash merges**: put the keyword in the **squash commit message** so it survives the merge.
+
+Direct push to default branch and PR merge **both** count, as long as the closing commit ends up on the default branch.
+
+## “Done” on the org Project board
+
+Git **does not** move Project columns. To mirror “merged / shipped → **Done**” automatically:
+
+1. In **GitHub Projects** (org/project), open **Project settings → Workflows** (or the Workflows / automation entry point for that project).
+2. Ensure a workflow exists such as **when an issue is closed → set Status to Done** (wording varies by template). That way a **`Fixes …`** merge/push that **closes** the issue also triggers the card to move.
+
+If cards stay open after close, the automation is missing or keyed only to **PR merged** without closing the issue—fix the workflow or keep using **`Fixes owner/repo#n`** on the commit that lands on default branch.
+
+## Agent checklist
+
+1. Resolve scope from the issue; implement in the correct **implementation repo** (not necessarily the issue repo).
+2. **`go test` / CI green** as usual before push.
+3. Final commit message includes **`Fixes …`** / **`Closes …`** with **`owner/repo#`** when cross-repo.
+4. After push: confirm closure with `gh issue view <n> --repo owner/repo --json state`.
