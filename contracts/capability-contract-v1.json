@@ -50,7 +50,6 @@
     { "pattern_id": "read-an-issue", "canonical_id": "read-issue" },
     { "pattern_id": "read-company", "canonical_id": "read-company" },
     { "pattern_id": "read-google", "canonical_id": "read-web" },
-    { "pattern_id": "read-internet", "canonical_id": "read-web" },
     { "pattern_id": "read-issue", "canonical_id": "read-issue" },
     { "pattern_id": "read-issues", "canonical_id": "read-issue" },
     { "pattern_id": "read-skills", "canonical_id": "read-skills" },

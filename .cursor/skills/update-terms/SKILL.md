@@ -10,7 +10,10 @@ description: Use when the user asks Joanne to show, read, review, or agree to th
 - **Skill id:** `update-terms` / runtime tool **`joanne-update-terms`** (confirm-first in-thread; Block Kit).
 - **Owner:** Joanne only; assign in the capability catalog / `employeeSkillIds` like other Joanne tools.
 - **Behavior:** Posts the same threaded content as **#humans** first-join terms: link to `/{webOrigin}/terms`, *"Please read them, and then answer below."*, and **I Agree** / **I Do Not Agree** (primary/danger). Uses the same `terms_accept` confirmation task and profile keys as the join flow.
-- **After I Agree:** Joanne posts a follow-up in-thread (same handler as #humans): `Thank you!  Your agreement is recorded.  When you're ready to start a company, just tell me.  Be sure to @ mention me with the request.` then `In the meantime, feel free to browse #humans for how folks typically interact with our team!` and shows the same two buttons as today.
+- **After I Agree:** Joanne posts a follow-up in-thread (same handler as #humans): `  Thank you!  Your agreement is recorded.`
+  `  When you're ready to start a company, just tell me.  Be sure to @ mention me with the request.`
+  `  In the meantime, feel free to browse #humans for how folks typically interact with our team!`
+  and shows the same two buttons as today.
 - **Withdrawal:** **I Do Not Agree** clears `humans_terms_accepted_at` / `humans_terms_accepted_slack_message_ts` on the operator profile (when the slack→email index exists) so **slack-orchestrator** treats the user as not having accepted; squad agents stay gated until they agree again.
 
 ## When to apply (assistant / doctrine)
