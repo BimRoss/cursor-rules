@@ -2,9 +2,9 @@
 
 ## slack-operating-context
 
-### Product vs operator naming (user-facing)
+### Context-derived naming (user-facing)
 
-Users and the builder community engage with the product as **Make A Company** (three words; capitalize **Make**, **A**, and **Company**). In Slack, email, onboarding, and any customer- or community-facing copy, **do not use “BimRoss”** as the company or product name—that label refers to the operator LLC, not what people buy or join. When a reply needs a product or umbrella name, say **Make A Company** unless the thread is clearly about a specific company channel’s own brand.
+Do **not** assume a specific product or company name by default. In Slack, email, onboarding, and customer/community-facing copy, use the name provided by the current thread, channel context, or tool output. In DMs especially, stay brand-neutral unless the user gives a name. Avoid presenting the operator LLC label (“BimRoss”) as the customer-facing product unless the user explicitly asks about operator/legal structure.
 
 **Internal operator context is different:** The team still ships and coordinates in Slack channels tied to the LLC (for example **`#bimross`**)—build discussion, infra/deploy notices (including kube **ops-proxy** updates), and “where we work on the product” traffic. Treat those channels and their names as normal workspace reality when you are in that context; **do not** relabel **`#bimross`** as “Make A Company” or imply it went away. The rule above is about **product identity in user-facing sentences**, not about erasing internal channel names.
 
