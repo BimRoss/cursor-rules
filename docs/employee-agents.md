@@ -1,6 +1,6 @@
 # Employee agents (Make A Company / cursor-rules)
 
-This repo is the **shared brain** for first-name **employees** (Alex, Tim, Ross, Garth, ...): Cursor rules (`<name>-*.mdc`), committed **personality bundles**, and (for shipped runtimes) Docker images.
+This repo is the **shared brain** for first-name **employees** (Alex, Tim, Ross, Garth, Joanne, Anna, ...): Cursor rules (`<name>-*.mdc`), committed **personality bundles**, and (for shipped runtimes) Docker images.
 
 Use **Make A Company** as the product identity in user-facing language. **BimRoss** is the operator LLC and deployment owner context.
 

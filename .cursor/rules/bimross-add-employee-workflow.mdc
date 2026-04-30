@@ -49,6 +49,9 @@ Use `cursor-rules/scripts/add-employee-workflow.sh --name <name> --role-title "<
 6. **employee-factory runtime wiring**:
    - Ensure capability/runtime mapping includes the new employee where appropriate.
    - Update roster/sibling references or deterministic capability desk outputs/tests if they assume fixed employees.
+   - Add legacy/default assignment handling in `internal/config/assigned_skills.go` when needed for non-explicit local runs.
+   - Keep `internal/slackbot/employee_roster.go` and read-skills presentation metadata in sync with the new employee.
+   - If adding a new canonical skill for that employee, update contract exports + generated ID surfaces before runtime assignment.
 7. **manual steps (explicitly call out, do not fake)**:
    - Slack app creation/install approvals.
    - Bot token/socket mode secrets.
@@ -71,3 +74,4 @@ Never mark onboarding complete if manual Slack/runtime secrets are still pending
 - Keep names and IDs consistent across repos (`<name>`, lower-case slug).
 - Keep data model normalized for future multi-channel expansion; avoid one-off field names.
 - If adding an employee modifies any `<employee>-*.mdc`, always sync and commit matching personality bundles.
+- Never commit raw API keys or tokens in rules, examples, manifests, or code; use runtime env/secret names only.
