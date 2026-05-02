@@ -56,6 +56,7 @@ When planning (especially in Ask/Plan Mode):
 - When **removing or changing a feature**, also remove or update anything that only existed for it: unused env vars, config, comments, dead code, optional dependencies.
 - Prefer **less surface area**: drop unused config from CronJobs/manifests, trim .env.example and docs so they match reality.
 - Don’t leave “we might need this later” wiring in place unless there’s a concrete near-term use; we can add it back when needed.
+- Don’t add **optional env toggles** for core product behavior by default — ship features on for eligible deployments; see **`bimross-ship-features-without-default-env-toggles.mdc`**.
 
 ## Code Review & Self-Review
 

@@ -1,0 +1,37 @@
+---
+description: Ship product behavior by default; do not add optional env toggles for core features unless Grant asks or risk clearly requires a kill switch.
+globs: "*"
+alwaysApply: true
+reviewBy: "2027-01-01"
+---
+
+# BimRoss: ship features without default env toggles
+
+## Default stance
+
+When implementing **product behavior** (new Slack paths, onboarding, routing, UX copy wired in code), **ship it on** for deployments that already run that employee/skill surface. Do **not** introduce **`FEATURE_X_ENABLED`**-style env vars **by habit** or “so ops can turn it off.”
+
+Prefer:
+
+- **Code + manifest + docs** as the contract.
+- **Narrow operational escapes** only where truly needed (see below), not a blanket feature flag on every addition.
+
+## When env toggles *are* appropriate
+
+Use explicit env/config switches when at least one applies:
+
+- **Secrets and endpoints** (tokens, URLs, provider choice).
+- **Capacity / tuning** (timeouts, limits, sampling) — not on/off for whole features.
+- **Grant explicitly asks** for a rollout gate or staged enablement.
+- **Production kill switch** after an incident class (document it + link to runbook); remove once stable if the toggle adds permanent confusion.
+- **Multi-tenant or workspace-specific policy** that must differ by installation without separate builds.
+
+## Agent checklist
+
+1. If you reach for **`parseBoolEnv(..., false)`** for a **new user-visible feature**, pause: default **on** in code for eligible deployments, or justify an exception in the PR/commit note.
+2. If removing a toggle, delete the env key from **`.env.example`**, **Config** structs, **docs**, and **manifest commentary** so drift does not accumulate (see **`collaboration-rules.mdc`** tech debt section).
+
+## Relation to other rules
+
+- **`bimross-git-dev-and-releases.mdc`** — human gate for tags/releases, not an excuse to hide behavior behind env defaults.
+- **`cursor-rules-maintenance.mdc`** — promote repeated mistakes into rules; this file encodes the “no gratuitous feature flags” preference.
