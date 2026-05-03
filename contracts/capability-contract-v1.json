@@ -25,6 +25,7 @@
     { "id": "read-user" },
     { "id": "read-trends" },
     { "id": "read-twitter" },
+    { "id": "update-company" },
     { "id": "update-issue" },
     { "id": "update-terms" }
   ],
@@ -63,6 +64,7 @@
     { "pattern_id": "read-web", "canonical_id": "read-web" },
     { "pattern_id": "update-a-issue", "canonical_id": "update-issue" },
     { "pattern_id": "update-an-issue", "canonical_id": "update-issue" },
+    { "pattern_id": "update-company", "canonical_id": "update-company" },
     { "pattern_id": "update-issue", "canonical_id": "update-issue" },
     { "pattern_id": "update-terms", "canonical_id": "update-terms" },
     { "pattern_id": "write-company", "canonical_id": "create-company" },
@@ -80,6 +82,7 @@
     "create-issue",
     "create-company",
     "delete-company",
+    "update-company",
     "update-issue"
   ]
 }
